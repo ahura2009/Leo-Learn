@@ -122,7 +122,7 @@ export default function MotivationOnboardingPage() {
             >
               Continue
             </Button>
-            <form action="/onboarding/goals" className="w-full">
+            <form action={assetPath("/onboarding/goals")} className="w-full">
               <Button type="submit" variant="ghost" className="w-full">
                 Back
               </Button>
