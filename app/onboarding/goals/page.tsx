@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { assetPath } from "@/lib/asset-path";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Container } from "@/components/ui/Container";
@@ -131,7 +132,7 @@ export default function GoalsOnboardingPage() {
             >
               Continue
             </Button>
-            <form action="/onboarding/level" className="w-full">
+            <form action={assetPath("/onboarding/level")} className="w-full">
               <Button type="submit" variant="ghost" className="w-full">
                 Back
               </Button>

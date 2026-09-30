@@ -37,12 +37,12 @@ export default function WelcomePage() {
           </div>
 
           <div className="mt-[var(--space-12)] flex w-full flex-col gap-[var(--space-3)]">
-            <form action="/onboarding" className="w-full">
+            <form action={assetPath("/onboarding")} className="w-full">
               <Button type="submit" className="w-full">
                 Get Started
               </Button>
             </form>
-            <form action="/home" className="w-full">
+            <form action={assetPath("/home")} className="w-full">
               <Button type="submit" variant="ghost" className="w-full">
                 Explore the demo
               </Button>

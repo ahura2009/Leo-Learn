@@ -46,12 +46,12 @@ export default function OnboardingPage() {
           </div>
 
           <div className="flex w-full flex-col gap-[var(--space-3)] pt-[var(--space-8)]">
-            <form action="/onboarding/level" className="w-full">
+            <form action={assetPath("/onboarding/level")} className="w-full">
               <Button type="submit" className="w-full">
                 Continue
               </Button>
             </form>
-            <form action="/onboarding/level" className="w-full">
+            <form action={assetPath("/onboarding/level")} className="w-full">
               <Button type="submit" variant="ghost" className="w-full">
                 Skip
               </Button>
