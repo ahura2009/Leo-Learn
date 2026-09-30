@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { assetPath } from "@/lib/asset-path";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -14,7 +15,7 @@ export default function SplashPage() {
           className="flex w-full flex-col items-center text-center"
         >
           <Image
-            src="/images/leo-app-icon.png"
+            src={assetPath("/images/leo-app-icon.png")}
             alt="Leo Learn app icon"
             width={132}
             height={132}

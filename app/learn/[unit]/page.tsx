@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import Image from "next/image";
+import { assetPath } from "@/lib/asset-path";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -492,7 +493,7 @@ export default function UnitPage() {
 
             {activeExercise.kind === "response" && activeExercise.situation ? (
               <div className="mt-5 flex items-end gap-3 rounded-[var(--radius-md)] bg-[var(--color-navy-tint)] p-4">
-                <Image src="/images/leo-character.png" alt="" width={44} height={44} className="mb-0.5 h-11 w-11 shrink-0 object-contain" />
+                <Image src={assetPath("/images/leo-character.png")} alt="" width={44} height={44} className="mb-0.5 h-11 w-11 shrink-0 object-contain" />
                 <div>
                   <Typography variant="caption" as="p" className="font-semibold text-[var(--color-primary-navy)]">
                     {activeExercise.speaker}
@@ -604,7 +605,7 @@ export default function UnitPage() {
         <div className="space-y-6">
           <Card variant="hero" className="border-0 bg-[var(--color-primary-navy)] p-5 text-white shadow-[0_12px_28px_rgba(0,37,111,0.16)]">
             <div className="flex items-center gap-4">
-              <Image src="/images/leo-character.png" alt="" width={72} height={72} className="h-auto w-[72px] shrink-0 object-contain" />
+              <Image src={assetPath("/images/leo-character.png")} alt="" width={72} height={72} className="h-auto w-[72px] shrink-0 object-contain" />
               <div>
                 <Typography variant="label" as="p" className="uppercase tracking-[0.12em] text-[var(--color-gold)]">
                   LESSON COMPLETE

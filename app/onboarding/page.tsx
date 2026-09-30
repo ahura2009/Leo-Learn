@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { assetPath } from "@/lib/asset-path";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Typography } from "@/components/ui/Typography";
@@ -22,7 +23,7 @@ export default function OnboardingPage() {
 
           <div className="flex flex-1 flex-col items-center justify-center text-center">
             <Image
-              src="/images/leo-character.png"
+              src={assetPath("/images/leo-character.png")}
               alt="Leo, the English learning companion"
               width={220}
               height={220}

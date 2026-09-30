@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { assetPath } from "@/lib/asset-path";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AppShell } from "@/components/layout/AppShell";
@@ -74,7 +75,7 @@ export default function HomePage() {
         <header className="border-b border-[var(--color-border)] bg-[var(--color-white)]">
           <Container className="flex max-w-[640px] items-center justify-between py-3">
             <div className="flex items-center gap-2.5">
-              <Image src="/images/leo-app-icon.png" alt="" width={36} height={36} className="h-9 w-9 rounded-[var(--radius-sm)]" />
+              <Image src={assetPath("/images/leo-app-icon.png")} alt="" width={36} height={36} className="h-9 w-9 rounded-[var(--radius-sm)]" />
               <Typography as="span" variant="h3" className="text-[var(--color-primary-navy)]">
                 Leo Learn
               </Typography>
@@ -117,7 +118,7 @@ export default function HomePage() {
                 Start with a conversation you could have today.
               </Typography>
             </div>
-            <Image src="/images/leo-character.png" alt="" width={156} height={156} priority className="absolute -bottom-3 -right-5 h-auto w-[142px] max-w-[48%] object-contain" />
+            <Image src={assetPath("/images/leo-character.png")} alt="" width={156} height={156} priority className="absolute -bottom-3 -right-5 h-auto w-[142px] max-w-[48%] object-contain" />
           </div>
           <Button onClick={() => router.push("/learn/unit-2#lesson-2")} className="relative z-10 mt-1 w-full border-0 bg-[var(--color-gold)] text-[var(--color-dark-navy)] hover:bg-[#ffcf3e] active:bg-[#e7ae00]">
             Start today’s lesson
@@ -220,7 +221,7 @@ export default function HomePage() {
         </section>
 
         <Card className="flex items-center gap-4 border-0 bg-[var(--color-navy-tint)]">
-          <Image src="/images/leo-character.png" alt="" width={68} height={68} className="h-auto w-[68px] shrink-0 object-contain" />
+          <Image src={assetPath("/images/leo-character.png")} alt="" width={68} height={68} className="h-auto w-[68px] shrink-0 object-contain" />
           <div>
             <Typography variant="h3" as="h2" className="text-base">A note from Leo</Typography>
             <Typography variant="body" className="mt-1 text-[var(--color-text-secondary)]">

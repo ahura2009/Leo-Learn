@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { assetPath } from "@/lib/asset-path";
 import { useEffect, useRef, useState } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { TopNavigation } from "@/components/layout/TopNavigation";
@@ -218,7 +219,7 @@ export default function LeoPage() {
               <div key={`${conversationKey}-${message.id}`} className={`flex items-end gap-2.5 ${isLeo ? "" : "flex-row-reverse"}`}>
                 {isLeo ? (
                   <Image
-                    src="/images/leo-character.png"
+                    src={assetPath("/images/leo-character.png")}
                     alt=""
                     width={40}
                     height={40}
@@ -264,7 +265,7 @@ export default function LeoPage() {
 
           {isLeoReplying ? (
             <div className="flex items-end gap-2.5">
-              <Image src="/images/leo-character.png" alt="" width={40} height={40} className="mb-1 h-10 w-10 shrink-0 object-contain" />
+              <Image src={assetPath("/images/leo-character.png")} alt="" width={40} height={40} className="mb-1 h-10 w-10 shrink-0 object-contain" />
               <div aria-hidden="true" className="flex items-center gap-1.5 rounded-[var(--radius-lg)] rounded-bl-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-white)] px-4 py-4">
                 <span className="h-2 w-2 animate-bounce rounded-[var(--radius-pill)] bg-[var(--color-text-muted)] [animation-delay:-0.3s]" />
                 <span className="h-2 w-2 animate-bounce rounded-[var(--radius-pill)] bg-[var(--color-text-muted)] [animation-delay:-0.15s]" />

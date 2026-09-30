@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { assetPath } from "@/lib/asset-path";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
@@ -53,7 +54,7 @@ export default function MotivationOnboardingPage() {
               </Typography>
             </div>
             <Image
-              src="/images/leo-character.png"
+              src={assetPath("/images/leo-character.png")}
               alt="Leo, the English learning companion"
               width={92}
               height={92}

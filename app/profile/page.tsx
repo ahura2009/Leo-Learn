@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { assetPath } from "@/lib/asset-path";
 import { useState } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { TopNavigation } from "@/components/layout/TopNavigation";
@@ -339,7 +340,7 @@ export default function ProfilePage() {
 
         <Card className="flex items-center gap-4 border-0 bg-[var(--color-navy-tint)]">
           <Image
-            src="/images/leo-character.png"
+            src={assetPath("/images/leo-character.png")}
             alt=""
             width={64}
             height={64}

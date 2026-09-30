@@ -45,6 +45,12 @@ npx.cmd tsc --noEmit
 npm run lint
 ```
 
+## GitHub Pages deployment
+
+The GitHub Actions workflow in `.github/workflows/deploy-pages.yml` builds a static export and deploys the generated `out/` directory on pushes to `main` or when run manually. In the repository, select **Settings → Pages → Build and deployment → Source: GitHub Actions**. The site URL is `https://ahura2009.github.io/Leo-Learn/`.
+
+To test the Pages build locally, set `NEXT_PUBLIC_BASE_PATH=/Leo-Learn` when running `npm run build`. This enables static export, the repository base path, trailing-slash routes, and unoptimized local images. The default `npm run build` and `npm run start` commands remain unchanged for Vercel and local server deployment; `next start` does not serve a static `out/` export.
+
 ## What this prototype includes
 
 - Home, Learn, Unit, Lesson preview, Practice, Completion, Progress, Leo Chat, and Profile screens
