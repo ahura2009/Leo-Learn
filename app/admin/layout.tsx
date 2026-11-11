@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { assetPath } from "@/lib/asset-path";
 import "./admin.css";
+import "./browse.css";
 
 export const metadata: Metadata = {
   title: { default: "Admin preview | Leo Learn", template: "%s | Leo Learn Admin" },

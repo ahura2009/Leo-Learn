@@ -1,16 +1,6 @@
-import AdminPlaceholder from "@/components/admin/AdminPlaceholder";
+import { AdminBrowser } from "@/components/admin/AdminBrowser";
+import { browseDatasets } from "@/lib/admin/browse-data";
 
 export default function LessonsPage() {
-  return (
-    <AdminPlaceholder
-      eyebrow="Learning content"
-      title="Lessons"
-      description="A planned lesson editor for preparing learning content and reviewing exercises."
-      features={[
-        "Draft lesson instructions, exercises, and learning objectives.",
-        "Organize lesson content within course units.",
-        "Preview and review content before publishing approved lessons.",
-      ]}
-    />
-  );
+  return <AdminBrowser key="lessons" dataset={browseDatasets.lessons} />;
 }

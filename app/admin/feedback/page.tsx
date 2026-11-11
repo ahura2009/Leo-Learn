@@ -1,16 +1,6 @@
-import AdminPlaceholder from "@/components/admin/AdminPlaceholder";
+import { AdminBrowser } from "@/components/admin/AdminBrowser";
+import { browseDatasets } from "@/lib/admin/browse-data";
 
 export default function FeedbackPage() {
-  return (
-    <AdminPlaceholder
-      eyebrow="Learner feedback"
-      title="Feedback"
-      description="A planned review space for learner feedback and reported content issues."
-      features={[
-        "Review submitted feedback and lesson issue reports.",
-        "Organize feedback by topic, course, and review status.",
-        "Track follow-up decisions and resolution notes.",
-      ]}
-    />
-  );
+  return <AdminBrowser key="feedback" dataset={browseDatasets.feedback} />;
 }

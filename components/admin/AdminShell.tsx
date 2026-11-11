@@ -19,7 +19,7 @@ function Navigation({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
-  return <><Brand /><Navigation onNavigate={onNavigate} /><div className="admin-sidebar-note"><span className="admin-sidebar-note-icon" aria-hidden="true">✦</span><strong>A little progress, every day.</strong><p>A thoughtful space for everything that helps learners grow.</p><span>LEO IDENTITY · PHASE 01</span></div><Link href="/home" className="admin-student-link" onClick={onNavigate}>View student app <span aria-hidden="true">↗</span></Link></>;
+  return <><Brand /><Navigation onNavigate={onNavigate} /><div className="admin-sidebar-note"><span className="admin-sidebar-note-icon" aria-hidden="true">✦</span><strong>A little progress, every day.</strong><p>A thoughtful space for everything that helps learners grow.</p><span>LEO IDENTITY · PHASE 02</span></div><Link href="/home" className="admin-student-link" onClick={onNavigate}>View student app <span aria-hidden="true">↗</span></Link></>;
 }
 
 export function AdminShell({ children }: { children: ReactNode }) {
@@ -73,7 +73,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       <header className="admin-header"><div className="admin-header-location"><button ref={menuRef} type="button" className="admin-menu-button" onClick={openMenu} aria-label="Open admin menu" aria-haspopup="dialog"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg></button><span className="admin-header-parent">Workspace</span><span className="admin-header-divider" aria-hidden="true">/</span><span>{current?.label ?? "Admin"}</span></div><div className="admin-header-actions"><span className="admin-preview-pill"><span aria-hidden="true" />UI preview</span><Link className="admin-header-student" href="/home">Student app <span aria-hidden="true">↗</span></Link></div></header>
       <div className="admin-preview-notice" role="note"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><circle cx="12" cy="12" r="9" /><path d="M12 11v6M12 7v1" /></svg><p><strong>Preview workspace.</strong> Mock data only · No authentication · No changes are saved.</p></div>
       <main id="admin-content" tabIndex={-1} className="admin-main">{children}</main>
-      <footer className="admin-footer"><span>Leo Learn <span aria-hidden="true">/</span> Built for learning, designed with care.</span><span>Phase 1 · UI preview</span></footer>
+      <footer className="admin-footer"><span>Leo Learn <span aria-hidden="true">/</span> Built for learning, designed with care.</span><span>Phase 2 · Read-only preview</span></footer>
     </div>
   </div>;
 }
