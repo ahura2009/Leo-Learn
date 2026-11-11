@@ -1,0 +1,40 @@
+[Unit]
+Description=Leo Learn Next.js production server
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=leolearn
+Group=leolearn
+WorkingDirectory=/var/www/leo-learn
+Environment=NODE_ENV=production
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+UnsetEnvironment=NEXT_PUBLIC_BASE_PATH
+ExecStart=/usr/bin/npm start -- --hostname 127.0.0.1 --port 3000
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+KillMode=control-group
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=leo-learn
+UMask=0027
+
+# Keep application files read-only to the running service, except Next.js caches.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/www/leo-learn/.next
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+[Install]
+WantedBy=multi-user.target
