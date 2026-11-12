@@ -3,13 +3,13 @@ import AdminPlaceholder from "@/components/admin/AdminPlaceholder";
 export default function SettingsPage() {
   return (
     <AdminPlaceholder
-      eyebrow="Workspace configuration"
-      title="Settings"
-      description="A planned configuration area for administrative access and learning workspace preferences."
+      eyebrow="پیکربندی فضای کاری"
+      title="تنظیمات"
+      description="بخش برنامه‌ریزی‌شده تنظیمات دسترسی مدیریت و ترجیحات فضای یادگیری."
       features={[
-        "Review workspace preferences and learning configuration.",
-        "Manage authorized administrator roles and access permissions.",
-        "Review data connection and integration configuration.",
+        "بررسی ترجیحات فضا و پیکربندی یادگیری.",
+        "مدیریت نقش‌های مدیران مجاز و سطح دسترسی آن‌ها.",
+        "بررسی پیکربندی اتصال داده و یکپارچه‌سازی‌ها.",
       ]}
     />
   );

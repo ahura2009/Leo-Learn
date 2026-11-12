@@ -1,3 +1,25 @@
+/* Relative asset URLs are bundled by Next.js, including the deployment base path. */
+@font-face {
+  font-family: "Admin Yekan Bakh FaNum";
+  src: url("../../public/Fonts/YekanBakhFaNum-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Admin Yekan Bakh FaNum";
+  src: url("../../public/Fonts/YekanBakhFaNum-SemiBold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Admin Yekan Bakh FaNum";
+  src: url("../../public/Fonts/YekanBakhFaNum-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
 /* Every selector is admin-scoped; student tokens and component defaults stay intact. */
 .admin-root {
   --admin-ink: #15233b;
@@ -144,9 +166,72 @@
 .admin-root .admin-empty-state p { color: var(--admin-muted); font-size: 12px; line-height: 1.9; margin: 12px 0; }
 .admin-root .admin-planned-features { border-top: 1px solid var(--admin-border); padding: 28px; max-width: 760px; margin: 0 auto; }
 .admin-root .admin-feature-list { text-align: left; padding: 18px 24px 18px 40px; background: #f7f9fc; border: 1px solid var(--admin-border); border-radius: 10px; margin: 24px 0; color: #48566b; list-style: disc; font-size: 12px; line-height: 2.2; }
+.admin-root .admin-analytics-callout { display: flex; align-items: center; gap: 14px; padding: 16px 18px; margin-bottom: 26px; background: #f8f9f2; border: 1px solid #e2e7d7; border-radius: 11px; color: #40502b; }
+.admin-root .admin-analytics-callout-mark { display: grid; place-items: center; width: 34px; height: 34px; flex-shrink: 0; border-radius: 9px; background: #edf1e4; color: var(--admin-olive); font-size: 18px; }
+.admin-root .admin-analytics-callout strong { display: block; font-size: 12px; font-weight: 650; }
+.admin-root .admin-analytics-callout p { margin-top: 3px; color: #687456; font-size: 11px; line-height: 1.7; }
+.admin-root .admin-analytics-callout .admin-status { margin-left: auto; }
+.admin-root .admin-analytics-grid { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(300px, 1fr); gap: 22px; margin-bottom: 24px; }
+.admin-root .admin-chart-period { color: var(--admin-muted); font-size: 11px; white-space: nowrap; }
+.admin-root .admin-bar-chart { display: flex; min-height: 235px; padding: 6px 25px 22px 18px; }
+.admin-root .admin-chart-axis { display: flex; flex-direction: column; justify-content: space-between; width: 39px; padding: 2px 8px 24px 0; color: var(--admin-muted); font-size: 10px; text-align: right; }
+.admin-root .admin-bars { display: flex; align-items: stretch; justify-content: space-around; flex: 1; gap: 12px; border-bottom: 1px solid var(--admin-border); background: repeating-linear-gradient(to bottom, transparent 0, transparent calc(25% - 1px), #edf0f5 calc(25% - 1px), #edf0f5 25%); }
+.admin-root .admin-bar-column { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; flex: 1; min-width: 28px; gap: 7px; }
+.admin-root .admin-bar-value { color: var(--admin-ink); font-size: 10px; font-weight: 600; }
+.admin-root .admin-bar-track { display: flex; align-items: flex-end; height: 168px; width: min(34px, 100%); }
+.admin-root .admin-bar-fill { display: block; width: 100%; min-height: 4px; border-radius: 5px 5px 0 0; background: var(--admin-navy); transition: height .25s ease; }
+.admin-root .admin-bar-column:hover .admin-bar-fill { background: var(--admin-olive); }
+.admin-root .admin-bar-label { color: var(--admin-muted); font-size: 10px; }
+.admin-root .admin-insight-list { list-style: none; display: grid; gap: 0; padding: 0 23px 7px; margin: 0; }
+.admin-root .admin-insight-list li { display: flex; align-items: flex-start; gap: 12px; padding: 17px 0; border-top: 1px solid var(--admin-border); }
+.admin-root .admin-insight-icon { display: grid; place-items: center; width: 28px; height: 28px; flex-shrink: 0; border-radius: 8px; background: #eef3ff; color: var(--admin-navy); font-size: 16px; font-weight: 600; }
+.admin-root .admin-insight-icon-olive { background: #eff4e9; color: var(--admin-olive); }
+.admin-root .admin-insight-icon-gold { background: #fff8e1; color: #8b6a00; }
+.admin-root .admin-insight-list strong { display: block; font-size: 11px; font-weight: 600; line-height: 1.7; }
+.admin-root .admin-insight-list small { display: block; margin-top: 3px; color: var(--admin-muted); font-size: 11px; line-height: 1.7; }
+.admin-root .admin-analytics-table td:first-child strong { font-size: 12px; font-weight: 600; }
+.admin-root .admin-progress-cell { display: flex; align-items: center; gap: 10px; min-width: 150px; }
+.admin-root .admin-progress-cell strong { width: 34px; font-size: 11px; font-weight: 600; }
+.admin-root .admin-progress-track { display: block; width: 100px; height: 6px; overflow: hidden; border-radius: 999px; background: #e9edf3; }
+.admin-root .admin-progress-track span { display: block; height: 100%; border-radius: inherit; background: var(--admin-olive); }
 @media (min-width: 1600px) { .admin-root .admin-main { padding-top: 44px; } }
 @media (max-width: 1299px) { .admin-root .admin-main { padding: 28px; } .admin-root .admin-header { padding-inline: 28px; } .admin-root .admin-dashboard-grid { grid-template-columns: minmax(0, 1fr); } .admin-root .admin-course-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; } .admin-root .admin-course-item { flex-direction: column; } .admin-root .admin-quick-links { gap: 10px; } .admin-root .admin-quick-link { gap: 7px; padding: 10px; } }
 @media (max-width: 1099px) { .admin-root .admin-sidebar { display: none; } .admin-root .admin-workspace { margin-left: 0; } .admin-root .admin-menu-button { display: flex; } .admin-root .admin-header { height: 72px; } .admin-root .admin-stat-card { padding: 18px; } }
 @media (max-width: 719px) { .admin-root .admin-main { padding: 25px 16px; } .admin-root .admin-header { padding-inline: 16px; gap: 10px; } .admin-root .admin-header-location { gap: 10px; } .admin-root .admin-header-parent, .admin-root .admin-header-divider, .admin-root .admin-header-student { display: none; } .admin-root .admin-preview-notice { justify-content: flex-start; padding: 10px 16px; font-size: 11px; } .admin-root .admin-overview-heading { align-items: flex-start; flex-direction: column; gap: 13px; } .admin-root .admin-page-heading h1 { font-size: 27px; } .admin-root .admin-page-heading p { font-size: 11px; } .admin-root .admin-welcome-copy { padding: 25px; } .admin-root .admin-welcome h2 { font-size: 23px; } .admin-root .admin-welcome-art { display: none; } .admin-root .admin-section-label { align-items: flex-start; flex-direction: column; gap: 5px; } .admin-root .admin-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .admin-root .admin-stat-card { padding: 16px; } .admin-root .admin-stat-top { font-size: 11px; gap: 5px; } .admin-root .admin-stat-icon { width: 28px; height: 28px; } .admin-root .admin-stat-value { font-size: 34px; } .admin-root .admin-stat-detail { font-size: 11px; } .admin-root .admin-panel-heading { padding: 20px 17px; gap: 10px; } .admin-root .admin-section-title { font-size: 14px; } .admin-root .admin-course-list { display: block; padding-inline: 17px; } .admin-root .admin-course-item { flex-direction: row; } .admin-root .admin-quick-links { grid-template-columns: minmax(0, 1fr); padding: 0 17px 17px; } .admin-root .admin-quick-link { min-height: 72px; padding: 12px; gap: 13px; } .admin-root .admin-quick-link strong { font-size: 11px; } .admin-root .admin-quick-link small { font-size: 11px; } .admin-root .admin-footer { padding: 0 16px 22px; flex-direction: column; gap: 8px; } .admin-root .admin-empty-state { padding: 32px 20px; } }
-@media (prefers-reduced-motion: reduce) { .admin-root * { transition: none !important; scroll-behavior: auto !important; } }
+@media (max-width: 719px) {
+  .admin-root .admin-analytics-callout { align-items: flex-start; flex-wrap: wrap; }
+  .admin-root .admin-analytics-callout .admin-status { margin-left: 48px; }
+  .admin-root .admin-analytics-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .admin-root .admin-bar-chart { padding-inline: 15px; }
+  .admin-root .admin-bars { gap: 5px; }
+  .admin-root .admin-progress-cell { min-width: 130px; }
+}
+
+@media (prefers-reduced-motion: reduce) { .admin-root .admin-bar-fill { transition: none; } }
+/* Persian admin presentation: the student UI remains outside this scope. */
+.admin-root { direction: rtl; font-family: "Admin Yekan Bakh FaNum", Tahoma, Arial, sans-serif; text-align: right; }
+.admin-root :where(button, input, select, textarea) { font-family: inherit; }
+.admin-root [dir="ltr"], .admin-root [lang="en"] { font-family: var(--font-sora), Arial, sans-serif; }
+.admin-root [dir="ltr"] { direction: ltr; }
+.admin-root .admin-sidebar { inset: 0 0 0 auto; }
+.admin-root .admin-workspace { margin-left: 0; margin-right: 250px; }
+.admin-root .admin-nav-indicator { margin-left: 0; margin-right: auto; }
+.admin-root .admin-header-location, .admin-root .admin-header-actions { direction: rtl; }
+.admin-root .admin-header-student { border-left: 0; border-right: 1px solid var(--admin-border); padding-left: 0; padding-right: 18px; }
+.admin-root .admin-welcome-copy, .admin-root .admin-panel, .admin-root .admin-stat-card, .admin-root .admin-page-heading { text-align: right; }
+.admin-root .admin-welcome-art { order: -1; }
+.admin-root .admin-quick-arrow { margin-left: 0; margin-right: auto; }
+.admin-root .admin-sidebar-note, .admin-root .admin-student-link { text-align: right; }
+.admin-root .admin-table { text-align: right; }
+.admin-root .admin-table th:first-child, .admin-root .admin-table td:first-child { padding-left: 18px; padding-right: 23px; }
+.admin-root .admin-table th:last-child, .admin-root .admin-table td:last-child { text-align: left; }
+.admin-root .admin-mobile-sidebar { margin-right: 0; margin-left: auto; }
+.admin-root .admin-menu-close { right: auto; left: 15px; }
+.admin-root .admin-chart-axis { text-align: left; }
+.admin-root .admin-browse-toolbar, .admin-root .admin-browse-summary, .admin-root .admin-browse-pagination { direction: rtl; }
+.admin-root .admin-detail-header, .admin-root .admin-detail-content, .admin-root .admin-detail-footer { text-align: right; }
+.admin-root .admin-detail-footer { justify-content: flex-start; }
+.admin-root .admin-progress-cell { direction: ltr; justify-content: flex-end; }
+@media (max-width: 1099px) { .admin-root .admin-workspace { margin-right: 0; } }
+@media (max-width: 719px) { .admin-root .admin-header-parent, .admin-root .admin-header-divider, .admin-root .admin-header-student { display: none; } .admin-root .admin-analytics-callout .admin-status { margin-left: 0; margin-right: 48px; } }
 @media (forced-colors: active) { .admin-root .admin-nav-group a[aria-current="page"] { border: 2px solid Highlight; } .admin-root .admin-status, .admin-root .admin-preview-pill, .admin-root .admin-button { border: 1px solid ButtonText; } }

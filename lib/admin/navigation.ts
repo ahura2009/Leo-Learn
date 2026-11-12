@@ -1,14 +1,14 @@
 export type AdminIconName = "overview" | "students" | "courses" | "lessons" | "enrollments" | "analytics" | "feedback" | "settings";
 
 export const adminNavigation = [
-  { href: "/admin", label: "Overview", icon: "overview", group: "Workspace" },
-  { href: "/admin/students", label: "Students", icon: "students", group: "Manage learning" },
-  { href: "/admin/courses", label: "Courses", icon: "courses", group: "Manage learning" },
-  { href: "/admin/lessons", label: "Lessons", icon: "lessons", group: "Manage learning" },
-  { href: "/admin/enrollments", label: "Enrollments", icon: "enrollments", group: "Manage learning" },
-  { href: "/admin/analytics", label: "Analytics", icon: "analytics", group: "Insights" },
-  { href: "/admin/feedback", label: "Feedback", icon: "feedback", group: "Insights" },
-  { href: "/admin/settings", label: "Settings", icon: "settings", group: "Workspace settings" },
+  { href: "/admin", label: "نمای کلی", icon: "overview", group: "فضای کاری" },
+  { href: "/admin/students", label: "یادگیرندگان", icon: "students", group: "مدیریت یادگیری" },
+  { href: "/admin/courses", label: "دوره‌ها", icon: "courses", group: "مدیریت یادگیری" },
+  { href: "/admin/lessons", label: "درس‌ها", icon: "lessons", group: "مدیریت یادگیری" },
+  { href: "/admin/enrollments", label: "ثبت‌نام‌ها", icon: "enrollments", group: "مدیریت یادگیری" },
+  { href: "/admin/analytics", label: "تحلیل‌ها", icon: "analytics", group: "بینش‌ها" },
+  { href: "/admin/feedback", label: "بازخورد", icon: "feedback", group: "بینش‌ها" },
+  { href: "/admin/settings", label: "تنظیمات", icon: "settings", group: "تنظیمات فضا" },
 ] as const;
 
 export function isAdminRouteActive(pathname: string, href: string) {

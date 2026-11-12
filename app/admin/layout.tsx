@@ -5,8 +5,8 @@ import "./admin.css";
 import "./browse.css";
 
 export const metadata: Metadata = {
-  title: { default: "Admin preview | Leo Learn", template: "%s | Leo Learn Admin" },
-  description: "Leo Learn admin UI preview. Synthetic data only; no authentication or backend connection.",
+  title: { default: "پیش‌نمایش مدیریت | Leo Learn", template: "%s | مدیریت Leo Learn" },
+  description: "پیش‌نمایش پنل مدیریت Leo Learn؛ داده‌ها ساختگی‌اند و اتصال احراز هویت یا backend وجود ندارد.",
   robots: { index: false, follow: false },
   icons: {
     icon: { url: assetPath("/images/leo-app-icon.png"), type: "image/png" },
