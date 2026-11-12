@@ -1,101 +1,18 @@
-import {
-  previewStudents, previewCourses, previewLessons, previewEnrollments, previewFeedback,
-} from "./mock-data";
+import { previewStudents, previewCourses, previewLessons, previewEnrollments, previewFeedback } from "./mock-data";
 import type { BrowseDataset, BrowseRecord, BrowseFilter } from "./browse-query";
-
-const studentName = (id: string) => previewStudents.find((student) => student.id === id)?.name ?? "Unknown sample learner";
-const courseTitle = (id: string) => previewCourses.find((course) => course.id === id)?.title ?? "Unknown sample course";
-const filtersFor = (records: BrowseRecord[], entries: [string, string][]): BrowseFilter[] => entries.map(([key, label]) => ({
-  key, label,
-  options: [...new Set(records.map((record) => String(record.values[key])))].sort((a, b) => a.localeCompare(b, "en", { numeric: true })),
-}));
-
-const courses: BrowseRecord[] = previewCourses.map((course) => ({
-  id: course.id,
-  values: { title: course.title, level: course.level, lessons: course.lessons, status: course.status },
-  details: [
-    { label: "Course ID", value: course.id },
-    { label: "Level", value: course.level },
-    { label: "Sample content status", value: `${course.status} (illustrative only)` },
-    { label: "Description", value: course.description },
-  ],
-  sections: [{ title: "Sample lesson sequence", items: previewLessons.filter((lesson) => lesson.courseId === course.id).sort((a, b) => a.order - b.order).map((lesson) => `${lesson.order}. ${lesson.title} · ${lesson.minutes} min`) }],
-}));
-const lessons: BrowseRecord[] = previewLessons.map((lesson) => ({
-  id: lesson.id,
-  values: { title: lesson.title, course: courseTitle(lesson.courseId), order: lesson.order, minutes: lesson.minutes, type: lesson.exerciseType },
-  details: [
-    { label: "Lesson ID", value: lesson.id },
-    { label: "Sample course", value: courseTitle(lesson.courseId) },
-    { label: "Sequence", value: String(lesson.order) },
-    { label: "Duration", value: `${lesson.minutes} minutes` },
-    { label: "Exercise type", value: lesson.exerciseType },
-    { label: "Learning objective", value: lesson.objective },
-  ],
-}));
-const students: BrowseRecord[] = previewStudents.map((student) => ({
-  id: student.id,
-  values: { name: student.name, level: student.level, enrollments: previewEnrollments.filter((enrollment) => enrollment.studentId === student.id).length },
-  details: [{ label: "Learner ID", value: student.id }, { label: "Sample level", value: student.level }],
-  sections: [
-    { title: "Sample learning goals", items: student.goals },
-    { title: "Sample enrollments", items: previewEnrollments.filter((enrollment) => enrollment.studentId === student.id).map((enrollment) => `${courseTitle(enrollment.courseId)} · ${enrollment.status}`) },
-  ],
-}));
-const enrollments: BrowseRecord[] = previewEnrollments.map((enrollment) => ({
-  id: enrollment.id,
-  values: { learner: studentName(enrollment.studentId), course: courseTitle(enrollment.courseId), status: enrollment.status },
-  details: [
-    { label: "Enrollment ID", value: enrollment.id },
-    { label: "Sample learner", value: studentName(enrollment.studentId) },
-    { label: "Learner ID", value: enrollment.studentId },
-    { label: "Sample course", value: courseTitle(enrollment.courseId) },
-    { label: "Course ID", value: enrollment.courseId },
-    { label: "Sample progress status", value: enrollment.status },
-  ],
-}));
-const feedback: BrowseRecord[] = previewFeedback.map((item) => ({
-  id: item.id,
-  values: { learner: studentName(item.studentId), course: courseTitle(item.courseId), topic: item.topic, status: item.status },
-  details: [
-    { label: "Feedback ID", value: item.id },
-    { label: "Sample learner", value: studentName(item.studentId) },
-    { label: "Sample course", value: courseTitle(item.courseId) },
-    { label: "Topic", value: item.topic },
-    { label: "Sample review status", value: item.status },
-    { label: "Fictional feedback message", value: item.message },
-  ],
-}));
-
+import { faCourse, faLearner, faLevel, faNumber, faText } from "./i18n";
+const studentName = (id: string) => faLearner(previewStudents.find((student) => student.id === id)?.name ?? "یادگیرنده نمونه");
+const courseTitle = (id: string) => faCourse(previewCourses.find((course) => course.id === id)?.title ?? "دوره نمونه");
+const filtersFor = (records: BrowseRecord[], entries: [string, string][]): BrowseFilter[] => entries.map(([key, label]) => ({ key, label, options: [...new Set(records.map((record) => String(record.values[key])))].sort((a, b) => a.localeCompare(b, "fa", { numeric: true })) }));
+const courses: BrowseRecord[] = previewCourses.map((course) => ({ id: course.id, values: { title: faCourse(course.title), level: faLevel(course.level), lessons: faNumber(course.lessons), status: faText(course.status) }, details: [{ label: "شناسه دوره", value: course.id }, { label: "سطح", value: faLevel(course.level) }, { label: "وضعیت محتوای نمونه", value: `${faText(course.status)} (صرفاً نمایشی)` }, { label: "توضیحات", value: faText(course.description) }], sections: [{ title: "ترتیب درس‌های نمونه", items: previewLessons.filter((lesson) => lesson.courseId === course.id).sort((a, b) => a.order - b.order).map((lesson) => `${faNumber(lesson.order)}. ${faText(lesson.title)} · ${faNumber(lesson.minutes)} دقیقه`) }] }));
+const lessons: BrowseRecord[] = previewLessons.map((lesson) => ({ id: lesson.id, values: { title: faText(lesson.title), course: courseTitle(lesson.courseId), order: faNumber(lesson.order), minutes: faNumber(lesson.minutes), type: faText(lesson.exerciseType) }, details: [{ label: "شناسه درس", value: lesson.id }, { label: "دوره نمونه", value: courseTitle(lesson.courseId) }, { label: "ترتیب", value: faNumber(lesson.order) }, { label: "مدت", value: `${faNumber(lesson.minutes)} دقیقه` }, { label: "نوع تمرین", value: faText(lesson.exerciseType) }, { label: "هدف یادگیری", value: faText(lesson.objective) }] }));
+const students: BrowseRecord[] = previewStudents.map((student) => ({ id: student.id, values: { name: faLearner(student.name), level: faLevel(student.level), enrollments: faNumber(previewEnrollments.filter((enrollment) => enrollment.studentId === student.id).length) }, details: [{ label: "شناسه یادگیرنده", value: student.id }, { label: "سطح نمونه", value: faLevel(student.level) }], sections: [{ title: "هدف‌های یادگیری نمونه", items: student.goals.map(faText) }, { title: "ثبت‌نام‌های نمونه", items: previewEnrollments.filter((enrollment) => enrollment.studentId === student.id).map((enrollment) => `${courseTitle(enrollment.courseId)} · ${faText(enrollment.status)}`) }] }));
+const enrollments: BrowseRecord[] = previewEnrollments.map((enrollment) => ({ id: enrollment.id, values: { learner: studentName(enrollment.studentId), course: courseTitle(enrollment.courseId), status: faText(enrollment.status) }, details: [{ label: "شناسه ثبت‌نام", value: enrollment.id }, { label: "یادگیرنده نمونه", value: studentName(enrollment.studentId) }, { label: "شناسه یادگیرنده", value: enrollment.studentId }, { label: "دوره نمونه", value: courseTitle(enrollment.courseId) }, { label: "شناسه دوره", value: enrollment.courseId }, { label: "وضعیت پیشرفت نمونه", value: faText(enrollment.status) }] }));
+const feedback: BrowseRecord[] = previewFeedback.map((item) => ({ id: item.id, values: { learner: studentName(item.studentId), course: courseTitle(item.courseId), topic: faText(item.topic), status: faText(item.status) }, details: [{ label: "شناسه بازخورد", value: item.id }, { label: "یادگیرنده نمونه", value: studentName(item.studentId) }, { label: "دوره نمونه", value: courseTitle(item.courseId) }, { label: "موضوع", value: faText(item.topic) }, { label: "وضعیت بررسی نمونه", value: faText(item.status) }, { label: "پیام بازخورد ساختگی", value: faText(item.message) }] }));
 export const browseDatasets: Record<"courses" | "lessons" | "students" | "enrollments" | "feedback", BrowseDataset> = {
-  courses: {
-    id: "courses", title: "Courses", singular: "course", eyebrow: "A CONSIDERED CURRICULUM",
-    description: "Explore the sample course library, inspect lesson sequences, and find room for the next little win.",
-    primaryKey: "title", columns: [{ key: "title", label: "Course" }, { key: "level", label: "Level" }, { key: "lessons", label: "Lessons" }, { key: "status", label: "Content status", badge: true }],
-    filters: filtersFor(courses, [["level", "Level"], ["status", "Content status"]]), records: courses,
-  },
-  lessons: {
-    id: "lessons", title: "Lessons", singular: "lesson", eyebrow: "SMALL STEPS. REAL POSSIBILITIES.",
-    description: "Browse fictional lessons, their learning objectives, and the sequence that brings a sample course together.",
-    primaryKey: "title", columns: [{ key: "title", label: "Lesson" }, { key: "course", label: "Course" }, { key: "order", label: "Sequence" }, { key: "minutes", label: "Minutes" }, { key: "type", label: "Exercise type" }],
-    filters: filtersFor(lessons, [["course", "Course"], ["type", "Exercise type"]]), records: lessons,
-  },
-  students: {
-    id: "students", title: "Students", singular: "learner", eyebrow: "EVERY LEARNER HAS A NEXT STEP",
-    description: "Explore fictional learner profiles, sample goals, and course assignments. No real student accounts are connected.",
-    primaryKey: "name", columns: [{ key: "name", label: "Learner" }, { key: "level", label: "Level" }, { key: "enrollments", label: "Enrollments" }],
-    filters: filtersFor(students, [["level", "Level"]]), records: students,
-  },
-  enrollments: {
-    id: "enrollments", title: "Enrollments", singular: "enrollment", eyebrow: "CONNECTING THE LEARNING JOURNEY",
-    description: "Inspect sample course assignments and progress labels. These records do not reflect real learning activity.",
-    primaryKey: "learner", columns: [{ key: "learner", label: "Learner" }, { key: "course", label: "Course" }, { key: "status", label: "Progress status", badge: true }],
-    filters: filtersFor(enrollments, [["course", "Course"], ["status", "Progress status"]]), records: enrollments,
-  },
-  feedback: {
-    id: "feedback", title: "Feedback", singular: "feedback item", eyebrow: "A SPACE FOR LISTENING",
-    description: "Browse fictional feedback examples. No messages have been submitted by real learners, and no replies or review changes are available.",
-    primaryKey: "learner", columns: [{ key: "learner", label: "Learner" }, { key: "course", label: "Course" }, { key: "topic", label: "Topic" }, { key: "status", label: "Review status", badge: true }],
-    filters: filtersFor(feedback, [["topic", "Topic"], ["status", "Review status"]]), records: feedback,
-  },
+  courses: { id: "courses", title: "دوره‌ها", singular: "دوره", eyebrow: "برنامه درسی سنجیده", description: "کتابخانه دوره‌های نمونه را بررسی کنید، ترتیب درس‌ها را ببینید و قدم بعدی را پیدا کنید.", primaryKey: "title", columns: [{ key: "title", label: "دوره" }, { key: "level", label: "سطح" }, { key: "lessons", label: "درس‌ها" }, { key: "status", label: "وضعیت محتوا", badge: true }], filters: filtersFor(courses, [["level", "سطح"], ["status", "وضعیت محتوا"]]), records: courses },
+  lessons: { id: "lessons", title: "درس‌ها", singular: "درس", eyebrow: "قدم‌های کوچک، امکان‌های واقعی", description: "درس‌های ساختگی، هدف‌های یادگیری و ترتیب کنار هم قرار گرفتن یک دوره نمونه را ببینید.", primaryKey: "title", columns: [{ key: "title", label: "درس" }, { key: "course", label: "دوره" }, { key: "order", label: "ترتیب" }, { key: "minutes", label: "دقیقه" }, { key: "type", label: "نوع تمرین" }], filters: filtersFor(lessons, [["course", "دوره"], ["type", "نوع تمرین"]]), records: lessons },
+  students: { id: "students", title: "یادگیرندگان", singular: "یادگیرنده", eyebrow: "هر یادگیرنده قدم بعدی دارد", description: "پروفایل‌های ساختگی، هدف‌های نمونه و دوره‌های اختصاص‌یافته را بررسی کنید. هیچ حساب واقعی متصل نیست.", primaryKey: "name", columns: [{ key: "name", label: "یادگیرنده" }, { key: "level", label: "سطح" }, { key: "enrollments", label: "ثبت‌نام‌ها" }], filters: filtersFor(students, [["level", "سطح"]]), records: students },
+  enrollments: { id: "enrollments", title: "ثبت‌نام‌ها", singular: "ثبت‌نام", eyebrow: "پیوند دادن مسیر یادگیری", description: "اختصاص دوره‌ها و برچسب‌های پیشرفت نمونه را ببینید. این رکوردها فعالیت واقعی یادگیری نیستند.", primaryKey: "learner", columns: [{ key: "learner", label: "یادگیرنده" }, { key: "course", label: "دوره" }, { key: "status", label: "وضعیت پیشرفت", badge: true }], filters: filtersFor(enrollments, [["course", "دوره"], ["status", "وضعیت پیشرفت"]]), records: enrollments },
+  feedback: { id: "feedback", title: "بازخورد", singular: "مورد بازخورد", eyebrow: "فضایی برای شنیدن", description: "نمونه‌های بازخورد ساختگی را ببینید. هیچ پیامی از یادگیرنده واقعی ارسال نشده و پاسخ یا تغییر بررسی در دسترس نیست.", primaryKey: "learner", columns: [{ key: "learner", label: "یادگیرنده" }, { key: "course", label: "دوره" }, { key: "topic", label: "موضوع" }, { key: "status", label: "وضعیت بررسی", badge: true }], filters: filtersFor(feedback, [["topic", "موضوع"], ["status", "وضعیت بررسی"]]), records: feedback },
 };
