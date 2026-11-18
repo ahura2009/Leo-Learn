@@ -11,6 +11,7 @@
   "dependencies": {
     "@tailwindcss/postcss": "latest",
     "next": "latest",
+    "pdfjs-dist": "^4.10.38",
     "react": "latest",
     "react-dom": "latest"
   },
