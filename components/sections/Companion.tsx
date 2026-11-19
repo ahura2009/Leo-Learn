@@ -141,6 +141,12 @@ export function Companion() {
           <div className={styles.media}>
             <span className={styles.mediaGlow} aria-hidden="true" />
             <div className={styles.mediaStage}>
+              {/* مدار بیضی — همان مسیری که لئوها رویش می‌چرخند.
+                  دیده‌شدنش باعث می‌شود حرکت «دور چیزی گشتن» خوانده
+                  شود، نه جابه‌جایی تصادفی. */}
+              <span className={styles.orbit} aria-hidden="true" />
+              <span className={styles.floorGlow} aria-hidden="true" />
+
               <div className={styles.mediaRing}>
                 {/* هر چهار لئو روی یک دایره می‌نشستند و با هم می‌چرخند.
                     نقش فعال همیشه جلو و وسط است؛ بقیه در عمق عقب‌تر،
@@ -152,20 +158,32 @@ export function Companion() {
                     (((index - active) % roles.length) + roles.length) %
                     roles.length;
 
-                  // θ: زاویه روی دایره. ۰ = جلو، ۱۸۰ = ته.
+                  // θ: زاویه روی دایره. ۰ = جلو، π = ته.
                   const theta = (offset / roles.length) * Math.PI * 2;
-                  const depth = (1 - Math.cos(theta)) / 2; // ۰ جلو، ۱ عقب
 
-                  // اعداد رُند می‌شوند تا استایل خوانا بماند
+                  // cos: ۱ جلو، −۱ ته.  sin: چپ/راست.
+                  const cos = Math.cos(theta);
+                  const sin = Math.sin(theta);
+
+                  // عمق ۰ (جلو) تا ۱ (ته)
+                  const depth = (1 - cos) / 2;
+
                   const r = (n: number) => Math.round(n * 100) / 100;
 
+                  /* دایره شیب دارد: محور افقی پهن (۱۳۰px) و محور عمودی
+                     کم‌ارتفاع (۴۲px). این همان چیزی است که به چشم
+                     «حلقهٔ خوابیده روی زمین» می‌آید — نه دایرهٔ روبه‌رو.
+                     لئوی پشتی کمی بالاتر و کوچک‌تر دیده می‌شود. */
                   const style = {
-                    "--x": `${r(Math.sin(theta) * 120)}px`,
-                    "--y": `${r(depth * -46)}px`,
-                    "--scale": `${r(1 - depth * 0.45)}`,
-                    "--dim": `${r(1 - depth * 0.7)}`,
-                    "--blur": `${r(depth * 2.6)}px`,
+                    "--x": `${r(sin * 130)}px`,
+                    "--y": `${r(depth * -58)}px`,
+                    "--scale": `${r(1 - depth * 0.42)}`,
+                    "--dim": `${r(1 - depth * 0.62)}`,
+                    "--blur": `${r(depth * 2.2)}px`,
+                    "--saturate": `${r(1 - depth * 0.35)}`,
                     "--layer": `${roles.length - offset}`,
+                    // سایهٔ زیر هر لئو، به اندازهٔ فاصله‌اش از زمین
+                    "--shadow": `${r(1 - depth * 0.5)}`,
                   } as React.CSSProperties;
 
                   return (

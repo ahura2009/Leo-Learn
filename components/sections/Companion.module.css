@@ -190,13 +190,51 @@
 /* صحنه — چرخ‌فلک لئوها.
    هر نقش از جاوااسکریپت موقعیتش را می‌گیرد: --x افقی، --y عمودی،
    --scale بزرگی، --dim روشنایی، --blur تاری، --layer ترتیب روی هم.
-   با عوض شدن نقش فعال همه در نرمی جابه‌جا می‌شوند. */
+   حرکت نرم و طولانی است تا حس چرخش دور یک محور بدهد. */
 .mediaStage {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 440px;
-  aspect-ratio: 1 / 1;
+  max-width: 460px;
+  /* بلندتر از عرض — فضای بالا برای لئوی پشتی که از پسِ لئوی جلو
+     بیرون می‌زند و دیده می‌شود */
+  aspect-ratio: 1 / 1.22;
+}
+
+/* مدار بیضی‌شکل — مسیر چرخش.
+   پهن (۲۶۰px) و کم‌ارتفاع (۸۴px)، که به چشم «حلقهٔ خوابیده روی زمین»
+   بیاید. لبه‌اش با گرادیان محو می‌شود تا تیز و مصنوعی نباشد. */
+.orbit {
+  position: absolute;
+  left: 50%;
+  bottom: 12%;
+  width: 260px;
+  height: 84px;
+  margin-left: -130px;
+  border-radius: 50%;
+  border: 1px solid rgba(244, 189, 13, 0.16);
+  box-shadow:
+    inset 0 0 30px rgba(244, 189, 13, 0.05),
+    0 0 24px rgba(244, 189, 13, 0.04);
+  pointer-events: none;
+}
+
+/* درخشش کف — نور طلایی نرم زیر مدار */
+.floorGlow {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  width: 300px;
+  height: 130px;
+  margin-left: -150px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(244, 189, 13, 0.1) 0%,
+    rgba(244, 189, 13, 0.04) 42%,
+    rgba(244, 189, 13, 0) 72%
+  );
+  pointer-events: none;
 }
 
 .mediaRing {
@@ -214,20 +252,43 @@
 
   transform: translate(var(--x), var(--y)) scale(var(--scale));
   opacity: var(--dim);
-  filter: blur(var(--blur)) brightness(0.62);
+  filter: blur(var(--blur)) brightness(0.6) saturate(var(--saturate));
+
+  /* منحنی نرم و کشیده — نه پرش، نه توقف ناگهانی */
   transition:
-    transform 0.9s cubic-bezier(0.33, 1, 0.68, 1),
-    opacity 0.9s ease,
-    filter 0.9s ease;
+    transform 1.15s cubic-bezier(0.25, 0.8, 0.35, 1),
+    opacity 1.15s cubic-bezier(0.25, 0.8, 0.35, 1),
+    filter 1.15s cubic-bezier(0.25, 0.8, 0.35, 1);
+
   pointer-events: none;
+  will-change: transform, opacity, filter;
 }
 
-/* نقش جلو — پرنور، تیز و با سایه */
+/* نقش جلو — پرنور، تیز و بزرگ‌تر از همه */
 .mediaImageActive {
   z-index: 10;
   opacity: 1;
-  filter: drop-shadow(0 28px 56px rgba(0, 0, 0, 0.45));
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5)) brightness(1.03);
   transform: translate(0, 0) scale(1);
+}
+
+/* درخشش کف آرام نفس می‌کشد تا صحنه زنده بماند.
+   روی تصویر فعال نمی‌گذاریمش، چون transform تصویر را
+   بازنویسی می‌کرد و ورود از عقب را می‌شکست. */
+.floorGlow {
+  animation: pulseGlow 5.5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -235,5 +296,8 @@
     transition:
       opacity 0.3s ease,
       filter 0.3s ease;
+  }
+  .floorGlow {
+    animation: none;
   }
 }
