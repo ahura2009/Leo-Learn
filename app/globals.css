@@ -35,9 +35,13 @@
   --text-secondary: #9aa8bf;
   --text-muted: #6b7a92;
 
-  /* فونت */
-  --font-heading: var(--font-dana), system-ui, sans-serif;
-  --font-body: var(--font-iran-yekan), system-ui, sans-serif;
+  /* فونت.
+     متغیرهای --font-dana و --font-iran-yekan توسط next/font/local
+     روی <body> تعریف می‌شوند. اینجا فقط اسم خانواده را مستقیم
+     می‌نویسیم — نه با var(). اگر در var() بپیچیم، بعضی مرورگرها
+     تا لحظهٔ محاسبهٔ نهایی فونت پیش‌فرض نشان می‌دهند. */
+  --font-heading: dana, "dana Fallback", system-ui, sans-serif;
+  --font-body: iranYekan, "iranYekan Fallback", system-ui, sans-serif;
 
   /* اندازه‌های پیمانه‌ای */
   /* عرض محتوا. ۱۳۶۰px با گاتر ۴۰px یعنی روی نمایشگرهای ۱۴۴۰ تا ۱۶۸۰
