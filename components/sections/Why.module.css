@@ -1,0 +1,110 @@
+/* ============================================================
+   Why — بخش چرا
+   بَج وسط‌چین → تیتر دوخطی وسط‌چین → زیرتیتر → چهار کارت در یک ردیف
+   ============================================================ */
+
+.why {
+  position: relative;
+  padding: 120px 0 40px;
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---------- سرِ بخش ---------- */
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  max-width: 780px;
+  margin-top: 0;
+  font-family: var(--font-heading);
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.55;
+  letter-spacing: -0.3px;
+  color: var(--text);
+}
+
+.subtitle {
+  max-width: 620px;
+  margin-top: 16px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 2;
+  color: var(--text-secondary);
+}
+
+/* ---------- ردیف کارت‌ها ---------- */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 56px;
+}
+
+/* هر کارت داخل قاب Reveal است؛ آن قاب ستون grid می‌شود
+   و کارت داخلش تمام ارتفاع را پر می‌کند. */
+.cards > * {
+  min-width: 0;
+}
+
+.card {
+  height: 100%;
+  padding: 26px 24px 30px;
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(22, 31, 49, 0.9) 0%,
+    rgba(17, 24, 39, 0.9) 100%
+  );
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.card:hover {
+  border-color: rgba(244, 189, 13, 0.26);
+  transform: translateY(-2px);
+}
+
+/* آیکون در مربعِ گرد، بالای کارت و در سمت راست */
+.cardIcon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(244, 189, 13, 0.12);
+  color: var(--gold);
+}
+
+.cardTitle {
+  margin-top: 18px;
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.cardText {
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.95;
+  color: var(--text-secondary);
+}

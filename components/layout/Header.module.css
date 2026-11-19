@@ -1,0 +1,174 @@
+/* ============================================================
+   Header
+   ساختار از تاکینو، رنگ از پالت Leo Learn.
+   ============================================================ */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  height: var(--header-height);
+  background: rgba(11, 18, 32, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  width: 100%;
+  max-width: var(--page-width);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---------- لوگو ---------- */
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.logoMark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: linear-gradient(145deg, var(--gold), #d9a300);
+  color: var(--dark-navy);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.logoText {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1.35;
+  letter-spacing: 0.2px;
+  color: var(--text);
+}
+
+/* شعار کوچک زیر نام برند */
+.logoBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.logoTagline {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-muted);
+  letter-spacing: 0;
+}
+
+/* ---------- منوی وسط ---------- */
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.navLink {
+  position: relative;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  transition: color 0.18s ease;
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  color: var(--text);
+}
+
+/* خط طلایی محو زیر لینکِ فعال */
+.navLinkActive {
+  color: var(--text);
+}
+
+.navLinkActive::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: -26px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--gold);
+}
+
+/* ---------- دکمه‌ها ---------- */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.iconButton {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-secondary);
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.iconButton:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  padding: 0 22px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--gold);
+  color: #241a00;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    background 0.16s ease;
+}
+
+.cta:hover {
+  background: #ffd23f;
+  box-shadow: 0 6px 20px rgba(244, 189, 13, 0.28);
+  transform: translateY(-1px);
+}
+
+.cta:active {
+  transform: translateY(0);
+}

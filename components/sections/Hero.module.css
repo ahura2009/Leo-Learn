@@ -1,0 +1,383 @@
+/* ============================================================
+   Hero
+   متن سمت راست، ستون چپ برای موبایل رزرو شده (خالی).
+   ============================================================ */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 96px 0 120px;
+  /* پس‌زمینه اینجا تعریف نمی‌شود — هاله‌ها در globals.css روی کل
+     صفحه پخش‌اند تا بافت یکپارچه بماند. */
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 56px;
+  width: 100%;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---------- ستون متن (راست) ---------- */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border: 1px solid rgba(244, 189, 13, 0.22);
+  border-radius: var(--radius-pill);
+  background: rgba(244, 189, 13, 0.09);
+  color: #ffcc3d;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.title {
+  margin-top: 26px;
+  font-family: var(--font-heading);
+  font-size: clamp(46px, 3.6vw, 60px);
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: -0.4px;
+  color: var(--text);
+}
+
+.accent {
+  color: var(--gold);
+}
+
+.subtitle {
+  max-width: 540px;
+  margin-top: 20px;
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 2.05;
+  color: var(--text-secondary);
+}
+
+/* ---------- دکمه‌ها ---------- */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 40px;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  padding: 0 34px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    background 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.primary {
+  background: var(--gold);
+  color: #241a00;
+}
+
+.primary:hover {
+  background: #ffd23f;
+  box-shadow: 0 10px 28px rgba(244, 189, 13, 0.3);
+  transform: translateY(-2px);
+}
+
+.secondary {
+  border: 1px solid var(--hairline-strong);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+}
+
+.secondary:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-2px);
+}
+
+.primary:active,
+.secondary:active {
+  transform: translateY(0);
+}
+
+/* ---------- ستون چپ — شخصیت لئو و ابرهای فکری ---------- */
+
+.media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 640px;
+}
+
+/* هالهٔ نرم پشت لئو تا از پس‌زمینه جدا شود */
+.media::before {
+  content: "";
+  position: absolute;
+  width: 620px;
+  height: 620px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(244, 189, 13, 0.13) 0%,
+    rgba(244, 189, 13, 0) 68%
+  );
+  pointer-events: none;
+}
+
+/* قاب دور لئو و ابرها — مرجع موقعیت‌دهی ابرها */
+.leoWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 640px;
+}
+
+.mediaImage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.45));
+
+  /* شناوری آرام — لئو ثابت نمی‌ماند */
+  animation: float 6.5s ease-in-out infinite;
+  transform-origin: 50% 88%;
+  transition: filter 0.5s ease;
+  will-change: transform;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.6deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(0.6deg);
+  }
+}
+
+/* ---------- حباب‌های پیام ---------- */
+
+.bubbles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.bubble {
+  position: absolute;
+  padding: 10px 18px;
+  border: 1px solid rgba(244, 189, 13, 0.28);
+  border-radius: 16px;
+  background: rgba(22, 31, 49, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--text);
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* دُم حباب — مثلث کوچک رو به لئو */
+.bubble::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: inherit;
+  border: 1px solid rgba(244, 189, 13, 0.28);
+  transform: rotate(45deg);
+}
+
+/* خط اتصال محو — از حباب تا لئو */
+.bubble::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(
+    to left,
+    rgba(244, 189, 13, 0.35),
+    rgba(244, 189, 13, 0)
+  );
+  pointer-events: none;
+}
+
+/* ---------- موقعیت‌ها: نزدیک لئو، دور تا دور ---------- */
+
+/* بالا-چپ */
+.bubble0 {
+  top: 2%;
+  left: 16%;
+  animation: bob 5.2s ease-in-out infinite;
+}
+.bubble0::before {
+  bottom: -6px;
+  right: 28px;
+  border-top-color: transparent;
+  border-left-color: transparent;
+}
+
+/* بالای-راست */
+.bubble1 {
+  top: 20%;
+  right: 12%;
+  animation: bob 6.4s ease-in-out infinite 0.6s;
+}
+.bubble1::before {
+  bottom: -6px;
+  left: 28px;
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+
+/* چپ-وسط */
+.bubble2 {
+  top: 50%;
+  left: 8%;
+  animation: bob 5.8s ease-in-out infinite 1.2s;
+}
+.bubble2::before {
+  top: 50%;
+  right: -6px;
+  margin-top: -6px;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+/* خط اتصال به سمت راست (به لئو) */
+.bubble2::after {
+  top: 50%;
+  right: -52px;
+  width: 52px;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    to right,
+    rgba(244, 189, 13, 0.35),
+    rgba(244, 189, 13, 0)
+  );
+}
+
+/* پایین-راست */
+.bubble3 {
+  bottom: 12%;
+  right: 10%;
+  animation: bob 7.1s ease-in-out infinite 1.8s;
+}
+.bubble3::before {
+  top: -6px;
+  left: 28px;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+}
+/* خط اتصال به سمت چپ (به لئو) */
+.bubble3::after {
+  top: 50%;
+  left: -46px;
+  width: 46px;
+  transform: translateY(-50%);
+}
+
+/* خط اتصال برای دو حباب بالایی */
+.bubble0::after {
+  top: 50%;
+  left: -44px;
+  width: 44px;
+  transform: translateY(-50%);
+}
+.bubble1::after {
+  top: 50%;
+  right: -40px;
+  width: 40px;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    to left,
+    rgba(244, 189, 13, 0.35),
+    rgba(244, 189, 13, 0)
+  );
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(4px, -7px);
+  }
+  66% {
+    transform: translate(-3px, -3px);
+  }
+}
+
+/* ---------- واکنش به موس ---------- */
+
+/* هاور روی لئو: کل مجموعه (تصویر + حباب‌ها) با هم بزرگ می‌شود.
+   چون حباب‌ها فرزند این قاب هستند، با scale آن‌ها هم بزرگ می‌شوند. */
+.leoWrap {
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transform-origin: 50% 85%;
+}
+
+.leoWrap:has(.mediaImage:hover) {
+  transform: scale(1.045);
+}
+
+/* ابرها هنگام هاور آرام‌تر شناور می‌شوند */
+.leoWrap:has(.mediaImage:hover) .bubble {
+  animation-duration: 13s;
+  border-color: rgba(244, 189, 13, 0.4);
+}
+
+.bubble {
+  transition: border-color 0.5s ease;
+}
+
+/* لئو هنگام هاور کمی روشن‌تر و سایه‌دارتر می‌شود */
+.mediaImage:hover {
+  filter: drop-shadow(0 34px 68px rgba(0, 0, 0, 0.52)) brightness(1.05);
+}
+
+/* اگر کاربر حرکت را کم کرده باشد */
+@media (prefers-reduced-motion: reduce) {
+  .mediaImage,
+  .bubble {
+    animation: none;
+  }
+}

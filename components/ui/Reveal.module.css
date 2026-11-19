@@ -1,0 +1,57 @@
+/* ============================================================
+   Reveal — ظهور هنگام اسکرول
+   محتوا از پایین کمی بالا می‌آید و هم‌زمان ظاهر می‌شود.
+   ============================================================ */
+
+.reveal {
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+/* هنوز اندازه‌گیری نشده — نامرئی، ولی در چیدمان جا می‌گیرد */
+.reveal:not(.visible):not(.hidden) {
+  opacity: 0;
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateY(34px);
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* کاربرانی که حرکت را کم می‌خواهند: فقط محو شدن، بدون جابه‌جایی */
+@media (prefers-reduced-motion: reduce) {
+  .hidden {
+    transform: none;
+  }
+  .reveal {
+    transition: opacity 0.4s ease;
+  }
+}
+
+/* ============================================================
+   وقتی Reveal جای فرزندِ مستقیم یک grid یا flex است:
+   کلاس چیدمانِ والد را به فرزندانش منتقل می‌کند تا قاب اضافه،
+   شبکه را نشکند.
+   ============================================================ */
+
+/* ردیف کارت‌ها در «چرا»: چهار ستون */
+.cards > .reveal {
+  min-width: 0;
+}
+
+/* سه کارت روش SRC */
+.cards > .reveal > article {
+  height: 100%;
+}
+
+/* ستون‌های دو‌تایی Path و Companion */
+.gridCell {
+  display: contents;
+}

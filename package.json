@@ -9,9 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@tailwindcss/postcss": "latest",
     "next": "latest",
-    "pdfjs-dist": "^4.10.38",
     "react": "latest",
     "react-dom": "latest"
   },
@@ -22,7 +20,6 @@
     "@types/react-dom": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest",
-    "tailwindcss": "latest",
     "typescript": "latest"
   }
 }

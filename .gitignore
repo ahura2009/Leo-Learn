@@ -37,3 +37,6 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local reference material (screenshots, font archives)
+/Files/
