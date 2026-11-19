@@ -80,10 +80,17 @@ export function Companion() {
   const [settled, setSettled] = useState(true);
   // با هر انتخاب کاربر، شمارنده بالا می‌رود و تایمر از نو شروع می‌شود
   const [tick, setTick] = useState(0);
+  /* وقتی کاربر نقشی را انتخاب می‌کند که چند خانه دورتر است، به‌جای
+     پرش مستقیم، خانه‌به‌خانه دور حلقه می‌چرخیم. تا رسیدن به هدف،
+     این مقدار شمارش معکوس گام‌های باقی‌مانده است. */
+  const [stepsLeft, setStepsLeft] = useState(0);
 
   /* چرخش خودکار. کلیک کاربر آن را متوقف نمی‌کند — فقط از نقش
-     انتخاب‌شده ادامه می‌دهد، به همین دلیل tick در وابستگی‌هاست. */
+     انتخاب‌شده ادامه می‌دهد، به همین دلیل tick در وابستگی‌هاست.
+     وقتی در حال گام‌برداشتن به سمت هدف هستیم، تایمر خودکار
+     دخالت نمی‌کند. */
   useEffect(() => {
+    if (stepsLeft > 0) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const id = setInterval(() => {
@@ -93,20 +100,45 @@ export function Companion() {
     }, ROTATE_MS);
 
     return () => clearInterval(id);
-  }, [active, tick]);
+  }, [active, tick, stepsLeft]);
 
-  /* بعد از پایان حرکت، لایه‌ها به ترتیب نهایی مرتب می‌شوند */
+  /* گام‌های انتخاب کاربر — یکی‌یکی، با همان سرعت حرکت عادی */
   useEffect(() => {
-    if (settled) return;
+    if (stepsLeft <= 0) return;
+
+    const id = setTimeout(() => {
+      setPrevActive(active);
+      setActive((prev) => (prev + 1) % roles.length);
+      setSettled(false);
+      setStepsLeft((n) => n - 1);
+    }, MOVE_MS);
+
+    return () => clearTimeout(id);
+  }, [stepsLeft, active]);
+
+  /* بعد از پایان حرکت، لایه‌ها به ترتیب نهایی مرتب می‌شوند.
+     بین گام‌ها عجله نداریم — تا گام آخر صبر می‌کنیم. */
+  useEffect(() => {
+    if (settled || stepsLeft > 0) return;
     const id = setTimeout(() => setSettled(true), MOVE_MS);
     return () => clearTimeout(id);
-  }, [settled, active]);
+  }, [settled, active, stepsLeft]);
 
-  /* کلیک روی نقش: از همین‌جا حرکت ادامه می‌یابد */
+  /* کلیک روی نقش.
+     اگر نقش یکی جلوتر است، یک گام. اگر چند خانه دورتر است،
+     همان تعداد گام دور حلقه — نه پرش مستقیم. این‌طور لئوی
+     پشتی با همان حرکت دایره‌ای می‌آید جلو، نه با ظاهر شدن
+     ناگهانی. */
   const select = (index: number) => {
     if (index === active) return;
+
+    // چند گام رو به جلو لازم است تا به این نقش برسیم
+    const distance =
+      ((index - active) % roles.length + roles.length) % roles.length;
+
     setPrevActive(active);
-    setActive(index);
+    setStepsLeft(distance - 1);
+    setActive((prev) => (prev + 1) % roles.length);
     setSettled(false);
     setTick((t) => t + 1);
   };
@@ -163,7 +195,6 @@ export function Companion() {
           <div className={styles.media}>
             <span className={styles.mediaGlow} aria-hidden="true" />
             <div className={styles.mediaStage}>
-              <span className={styles.orbit} aria-hidden="true" />
               <span className={styles.floorGlow} aria-hidden="true" />
 
               <div className={styles.mediaRing}>
@@ -192,11 +223,16 @@ export function Companion() {
 
                   const r = (n: number) => Math.round(n * 100) / 100;
 
+                  /* حلقهٔ پهن و کم‌ارتفاع: فاصلهٔ افقی زیاد است تا
+                     لئوی چپ و راست روی لئوی وسط نیفتند، و فاصلهٔ
+                     عمودی کم تا لئوی پشتی بالای جلویی بماند.
+                     اندازهٔ کناری‌ها هم کوچک‌تر است تا کنار هم جا
+                     شوند بدون هم‌پوشانی. */
                   const style = {
-                    "--x": `${r(sin * 130)}px`,
-                    "--y": `${r(depth * -58)}px`,
-                    "--scale": `${r(1 - depth * 0.42)}`,
-                    "--blur": `${r(depth * 2)}px`,
+                    "--x": `${r(sin * 170)}px`,
+                    "--y": `${r(depth * -72)}px`,
+                    "--scale": `${r(1 - depth * 0.5)}`,
+                    "--blur": `${r(depth * 1.6)}px`,
                     "--layer": `${z}`,
                   } as React.CSSProperties;
 
