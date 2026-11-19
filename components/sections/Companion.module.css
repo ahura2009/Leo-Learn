@@ -265,11 +265,13 @@
   will-change: transform;
 }
 
-/* نقش جلو — بزرگ‌تر، تیز و با سایه.
-   blur صفر است پس هیچ محوی روی تصویر فعال نمی‌ماند. */
+/* نقش جلو — بزرگ‌تر و با سایه.
+   عمداً blur صفر نمی‌نویسیم: کوچک‌کنندهٔ CSS آن را به blur()
+   تبدیل می‌کرد و مرورگر کل فیلتر را دور می‌ریخت. متغیر --blur
+   برای نقش فعال خودش صفر است. */
 .mediaImageActive {
   z-index: 10;
-  filter: blur(0px) drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
   transform: translate(0, 0) scale(1);
 }
 
