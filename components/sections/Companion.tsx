@@ -1,13 +1,46 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import { assetPath } from "@/lib/asset-path";
 import { Reveal } from "@/components/ui/Reveal";
 import styles from "./Companion.module.css";
 
+/* هر نقش می‌تواند تصویر مخصوص خودش را داشته باشد.
+   نقش‌هایی که هنوز عکسی ندارند، تصویر پیش‌فرض (گارسون) را نشان می‌دهند. */
 const roles = [
-  { name: "گارسون کافه", desc: "سفارش غذا و نوشیدنی" },
-  { name: "مصاحبه‌گر", desc: "مصاحبهٔ شغلی و معرفی خود" },
-  { name: "همکار جدید", desc: "گفت‌وگوی روزمرهٔ محیط کار" },
-  { name: "پزشک", desc: "توضیح علائم و شکایت" },
+  {
+    name: "گارسون کافه",
+    desc: "سفارش غذا و نوشیدنی",
+    image: "/images/leo-barista.png",
+    alt: "لئو با پیش‌بند گارسون کافه",
+    width: 1230,
+    height: 1278,
+  },
+  {
+    name: "مصاحبه‌گر",
+    desc: "مصاحبهٔ شغلی و معرفی خود",
+    image: "/images/leo-interview.png",
+    alt: "لئو در نقش مصاحبه‌گر شغلی",
+    width: 1254,
+    height: 1254,
+  },
+  {
+    name: "همکار جدید",
+    desc: "گفت‌وگوی روزمرهٔ محیط کار",
+    image: "/images/leo-barista.png",
+    alt: "لئو با پیش‌بند گارسون کافه",
+    width: 1230,
+    height: 1278,
+  },
+  {
+    name: "پزشک",
+    desc: "توضیح علائم و شکایت",
+    image: "/images/leo-barista.png",
+    alt: "لئو با پیش‌بند گارسون کافه",
+    width: 1230,
+    height: 1278,
+  },
 ];
 
 /** آیکون سادهٔ آدم — هم‌اندازه برای همهٔ نقش‌ها */
@@ -31,6 +64,9 @@ function PersonIcon() {
 }
 
 export function Companion() {
+  const [active, setActive] = useState(0);
+  const current = roles[active];
+
   return (
     <section
       id="leo"
@@ -56,15 +92,26 @@ export function Companion() {
             </p>
 
             <ul className={styles.roles}>
-              {roles.map((role) => (
-                <li key={role.name} className={styles.role}>
-                  <span className={styles.roleAvatar}>
-                    <PersonIcon />
-                  </span>
-                  <div>
-                    <div className={styles.roleName}>{role.name}</div>
-                    <div className={styles.roleDesc}>{role.desc}</div>
-                  </div>
+              {roles.map((role, index) => (
+                <li key={role.name}>
+                  <button
+                    type="button"
+                    onClick={() => setActive(index)}
+                    onMouseEnter={() => setActive(index)}
+                    onFocus={() => setActive(index)}
+                    aria-pressed={active === index}
+                    className={`${styles.role} ${
+                      active === index ? styles.roleActive : ""
+                    }`}
+                  >
+                    <span className={styles.roleAvatar}>
+                      <PersonIcon />
+                    </span>
+                    <span className={styles.roleBody}>
+                      <span className={styles.roleName}>{role.name}</span>
+                      <span className={styles.roleDesc}>{role.desc}</span>
+                    </span>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -74,11 +121,31 @@ export function Companion() {
           <div className={styles.media}>
             <span className={styles.mediaGlow} aria-hidden="true" />
             <div className={styles.mediaFrame}>
+              {/* تصویرهای دیگر از قبل بارگذاری می‌شوند تا لحظهٔ کلیک
+                  روی «مصاحبه‌گر» تصویر خالی نماند. */}
+              {roles
+                .filter((role) => role.image !== current.image)
+                .map((role) => (
+                  <Image
+                    key={`pre-${role.name}`}
+                    src={assetPath(role.image)}
+                    alt=""
+                    width={role.width}
+                    height={role.height}
+                    sizes="1px"
+                    aria-hidden="true"
+                    className={styles.preload}
+                  />
+                ))}
+
+              {/* کلید روی نام نقش است تا با هر تغییر، تصویر دوباره
+                  ساخته شود و انتقال محو انجام شود. */}
               <Image
-                src={assetPath("/images/leo-barista.png")}
-                alt="لئو با پیش‌بند گارسون کافه"
-                width={1230}
-                height={1278}
+                key={current.image + current.name}
+                src={assetPath(current.image)}
+                alt={current.alt}
+                width={current.width}
+                height={current.height}
                 sizes="440px"
                 className={styles.mediaImage}
               />
