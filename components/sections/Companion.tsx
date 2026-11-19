@@ -1,21 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { assetPath } from "@/lib/asset-path";
 import { Reveal } from "@/components/ui/Reveal";
 import styles from "./Companion.module.css";
 
-/* هر نقش می‌تواند تصویر مخصوص خودش را داشته باشد.
-   نقش‌هایی که هنوز عکسی ندارند، تصویر پیش‌فرض (گارسون) را نشان می‌دهند. */
+/* هر نقش تصویر خودش را دارد. چرخه هر ۲ ثانیه یک‌بار جلو می‌رود
+   و بعد از نقش چهارم به اولی برمی‌گردد. */
 const roles = [
   {
     name: "گارسون کافه",
     desc: "سفارش غذا و نوشیدنی",
     image: "/images/leo-barista.png",
     alt: "لئو با پیش‌بند گارسون کافه",
-    width: 1230,
-    height: 1278,
+    width: 1235,
+    height: 1274,
   },
   {
     name: "مصاحبه‌گر",
@@ -28,20 +28,22 @@ const roles = [
   {
     name: "همکار جدید",
     desc: "گفت‌وگوی روزمرهٔ محیط کار",
-    image: "/images/leo-barista.png",
-    alt: "لئو با پیش‌بند گارسون کافه",
-    width: 1230,
-    height: 1278,
+    image: "/images/leo-colleague.png",
+    alt: "لئو در نقش همکار جدید",
+    width: 1235,
+    height: 1274,
   },
   {
     name: "پزشک",
     desc: "توضیح علائم و شکایت",
-    image: "/images/leo-barista.png",
-    alt: "لئو با پیش‌بند گارسون کافه",
-    width: 1230,
-    height: 1278,
+    image: "/images/leo-doctor.png",
+    alt: "لئو در نقش پزشک",
+    width: 1235,
+    height: 1274,
   },
 ];
+
+const ROTATE_MS = 2000;
 
 /** آیکون سادهٔ آدم — هم‌اندازه برای همهٔ نقش‌ها */
 function PersonIcon() {
@@ -65,7 +67,27 @@ function PersonIcon() {
 
 export function Companion() {
   const [active, setActive] = useState(0);
+  // وقتی کاربر خودش نقشی را انتخاب می‌کند، چرخش خودکار متوقف می‌شود
+  const [manual, setManual] = useState(false);
   const current = roles[active];
+
+  useEffect(() => {
+    if (manual) return;
+
+    // کاربرانی که حرکت را کم می‌خواهند، چرخش خودکار نبینند
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const id = setInterval(() => {
+      setActive((prev) => (prev + 1) % roles.length);
+    }, ROTATE_MS);
+
+    return () => clearInterval(id);
+  }, [manual]);
+
+  const select = (index: number) => {
+    setActive(index);
+    setManual(true);
+  };
 
   return (
     <section
@@ -96,9 +118,7 @@ export function Companion() {
                 <li key={role.name}>
                   <button
                     type="button"
-                    onClick={() => setActive(index)}
-                    onMouseEnter={() => setActive(index)}
-                    onFocus={() => setActive(index)}
+                    onClick={() => select(index)}
                     aria-pressed={active === index}
                     className={`${styles.role} ${
                       active === index ? styles.roleActive : ""
@@ -121,34 +141,24 @@ export function Companion() {
           <div className={styles.media}>
             <span className={styles.mediaGlow} aria-hidden="true" />
             <div className={styles.mediaFrame}>
-              {/* تصویرهای دیگر از قبل بارگذاری می‌شوند تا لحظهٔ کلیک
-                  روی «مصاحبه‌گر» تصویر خالی نماند. */}
-              {roles
-                .filter((role) => role.image !== current.image)
-                .map((role) => (
-                  <Image
-                    key={`pre-${role.name}`}
-                    src={assetPath(role.image)}
-                    alt=""
-                    width={role.width}
-                    height={role.height}
-                    sizes="1px"
-                    aria-hidden="true"
-                    className={styles.preload}
-                  />
-                ))}
-
-              {/* کلید روی نام نقش است تا با هر تغییر، تصویر دوباره
-                  ساخته شود و انتقال محو انجام شود. */}
-              <Image
-                key={current.image + current.name}
-                src={assetPath(current.image)}
-                alt={current.alt}
-                width={current.width}
-                height={current.height}
-                sizes="440px"
-                className={styles.mediaImage}
-              />
+              {/* هر چهار تصویر رندر می‌شوند و فقط تصویر فعال دیده
+                  می‌شود. این‌طور همه از قبل بارگذاری شده‌اند و هیچ
+                  تعویضی خالی نمی‌ماند. */}
+              {roles.map((role, index) => (
+                <Image
+                  key={role.name}
+                  src={assetPath(role.image)}
+                  alt={index === active ? role.alt : ""}
+                  width={role.width}
+                  height={role.height}
+                  sizes="440px"
+                  aria-hidden={index !== active}
+                  priority
+                  className={`${styles.mediaImage} ${
+                    index === active ? styles.mediaImageActive : ""
+                  }`}
+                />
+              ))}
             </div>
           </div>
         </Reveal>
