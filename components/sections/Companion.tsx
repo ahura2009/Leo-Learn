@@ -44,6 +44,13 @@ const roles = [
 ];
 
 const ROTATE_MS = 2000;
+/** مدت انتقال در CSS — باید با transition در Companion.module.css یکی باشد */
+const MOVE_MS = 1250;
+
+/** فاصلهٔ هر نقش از نقش فعال، روی حلقه (۰ = جلو) */
+function ringOffset(index: number, activeIndex: number, total: number) {
+  return ((index - activeIndex) % total + total) % total;
+}
 
 /** آیکون سادهٔ آدم — هم‌اندازه برای همهٔ نقش‌ها */
 function PersonIcon() {
@@ -67,26 +74,41 @@ function PersonIcon() {
 
 export function Companion() {
   const [active, setActive] = useState(0);
-  // وقتی کاربر خودش نقشی را انتخاب می‌کند، چرخش خودکار متوقف می‌شود
-  const [manual, setManual] = useState(false);
-  const current = roles[active];
+  // نقش فعالِ قبلی — برای ترتیب لایه‌ها در طول حرکت لازم است
+  const [prevActive, setPrevActive] = useState(0);
+  // آیا حرکت تازه تمام شده؟ تا تمام نشود، لایه‌ها جابه‌جا نمی‌شوند
+  const [settled, setSettled] = useState(true);
+  // با هر انتخاب کاربر، شمارنده بالا می‌رود و تایمر از نو شروع می‌شود
+  const [tick, setTick] = useState(0);
 
+  /* چرخش خودکار. کلیک کاربر آن را متوقف نمی‌کند — فقط از نقش
+     انتخاب‌شده ادامه می‌دهد، به همین دلیل tick در وابستگی‌هاست. */
   useEffect(() => {
-    if (manual) return;
-
-    // کاربرانی که حرکت را کم می‌خواهند، چرخش خودکار نبینند
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const id = setInterval(() => {
+      setPrevActive(active);
       setActive((prev) => (prev + 1) % roles.length);
+      setSettled(false);
     }, ROTATE_MS);
 
     return () => clearInterval(id);
-  }, [manual]);
+  }, [active, tick]);
 
+  /* بعد از پایان حرکت، لایه‌ها به ترتیب نهایی مرتب می‌شوند */
+  useEffect(() => {
+    if (settled) return;
+    const id = setTimeout(() => setSettled(true), MOVE_MS);
+    return () => clearTimeout(id);
+  }, [settled, active]);
+
+  /* کلیک روی نقش: از همین‌جا حرکت ادامه می‌یابد */
   const select = (index: number) => {
+    if (index === active) return;
+    setPrevActive(active);
     setActive(index);
-    setManual(true);
+    setSettled(false);
+    setTick((t) => t + 1);
   };
 
   return (
@@ -141,47 +163,41 @@ export function Companion() {
           <div className={styles.media}>
             <span className={styles.mediaGlow} aria-hidden="true" />
             <div className={styles.mediaStage}>
-              {/* مدار بیضی — همان مسیری که لئوها رویش می‌چرخند.
-                  دیده‌شدنش باعث می‌شود حرکت «دور چیزی گشتن» خوانده
-                  شود، نه جابه‌جایی تصادفی. */}
               <span className={styles.orbit} aria-hidden="true" />
               <span className={styles.floorGlow} aria-hidden="true" />
 
               <div className={styles.mediaRing}>
-                {/* هر چهار لئو روی یک دایره می‌نشستند و با هم می‌چرخند.
-                    نقش فعال همیشه جلو و وسط است؛ بقیه در عمق عقب‌تر،
-                    کوچک‌تر و کم‌نورتر. موقعیت هر کدام از زاویه‌اش روی
-                    دایره حساب می‌شود — نه با rotateY، چون آن تصویر
-                    پشتی را آینه می‌کند. */}
                 {roles.map((role, index) => {
-                  const offset =
-                    (((index - active) % roles.length) + roles.length) %
-                    roles.length;
+                  const offset = ringOffset(index, active, roles.length);
 
-                  // θ: زاویه روی دایره. ۰ = جلو، π = ته.
+                  // زاویه روی حلقه: ۰ = جلو، π = ته
                   const theta = (offset / roles.length) * Math.PI * 2;
-
-                  // cos: ۱ جلو، −۱ ته.  sin: چپ/راست.
                   const cos = Math.cos(theta);
                   const sin = Math.sin(theta);
+                  const depth = (1 - cos) / 2; // ۰ جلو، ۱ ته
 
-                  // عمق ۰ (جلو) تا ۱ (ته)
-                  const depth = (1 - cos) / 2;
+                  /* ترتیب لایه‌ها.
+                     اگر مستقیم از عمق گرفته شود، لئوی تازه انتخاب‌شده
+                     همان لحظهٔ اول روی همه می‌پرد و بعد حرکت می‌کند —
+                     همان «لایه‌ها روی هم می‌آیند» که دیده می‌شد.
+                     راه‌حل: در طول حرکت، بزرگ‌ترین لایهٔ دو حالت (قبل و
+                     بعد) را نگه می‌داریم. این‌طور هیچ لئویی روی دیگری
+                     نمی‌پرد؛ فقط بعد از رسیدن، یک عنصر — همان که از جلو
+                     می‌رود — عقب می‌نشیند. */
+                  const zNow = roles.length - offset;
+                  const zBefore =
+                    roles.length -
+                    ringOffset(index, prevActive, roles.length);
+                  const z = settled ? zNow : Math.max(zNow, zBefore);
 
                   const r = (n: number) => Math.round(n * 100) / 100;
 
-                  /* دایره شیب دارد: محور افقی پهن (۱۳۰px) و محور عمودی
-                     کم‌ارتفاع (۵۸px). به چشم «حلقهٔ خوابیده روی زمین»
-                     می‌آید — نه دایرهٔ روبه‌رو.
-                     عمداً هیچ متغیر روشنایی یا محوی نمی‌فرستیم: هر چهار
-                     لئو کامل دیده می‌شوند و عمق فقط با اندازه و تاری
-                     بیان می‌شود، تا حرکت پرشِ نور نداشته باشد. */
                   const style = {
                     "--x": `${r(sin * 130)}px`,
                     "--y": `${r(depth * -58)}px`,
                     "--scale": `${r(1 - depth * 0.42)}`,
                     "--blur": `${r(depth * 2)}px`,
-                    "--layer": `${roles.length - offset}`,
+                    "--layer": `${z}`,
                   } as React.CSSProperties;
 
                   return (
