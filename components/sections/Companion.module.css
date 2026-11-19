@@ -265,10 +265,11 @@
   will-change: transform;
 }
 
-/* نقش جلو — بزرگ‌تر و تیزترین */
+/* نقش جلو — بزرگ‌تر، تیز و با سایه.
+   blur صفر است پس هیچ محوی روی تصویر فعال نمی‌ماند. */
 .mediaImageActive {
   z-index: 10;
-  filter: blur(0) drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
+  filter: blur(0px) drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
   transform: translate(0, 0) scale(1);
 }
 
