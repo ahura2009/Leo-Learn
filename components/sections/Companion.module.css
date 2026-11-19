@@ -187,47 +187,53 @@
   pointer-events: none;
 }
 
-/* قاب تصویر — ارتفاع ثابت تا با تعویض نقش صفحه نپرد.
-   فرزندانش absolute هستند، پس خودش باید ابعاد بدهد. */
-.mediaFrame {
+/* صحنه — چرخ‌فلک لئوها.
+   هر نقش از جاوااسکریپت موقعیتش را می‌گیرد: --x افقی، --y عمودی،
+   --scale بزرگی، --dim روشنایی، --blur تاری، --layer ترتیب روی هم.
+   با عوض شدن نقش فعال همه در نرمی جابه‌جا می‌شوند. */
+.mediaStage {
   position: relative;
   z-index: 1;
   width: 100%;
   max-width: 440px;
   aspect-ratio: 1 / 1;
-  display: grid;
-  place-items: center;
 }
 
-/* تصویرها روی هم می‌نشینند؛ فقط فعال دیده می‌شود و بقیه با محو
-   کنار می‌روند. همه از ابتدا رندر شده‌اند، پس تعویض بدون مکث است. */
+.mediaRing {
+  position: absolute;
+  inset: 0;
+}
+
 .mediaImage {
   position: absolute;
   inset: 0;
   width: 100%;
-  max-width: 440px;
-  height: auto;
-  margin: auto;
-  opacity: 0;
-  transform: scale(0.97) translateY(6px);
-  filter: drop-shadow(0 28px 56px rgba(0, 0, 0, 0.45));
+  height: 100%;
+  object-fit: contain;
+  z-index: var(--layer);
+
+  transform: translate(var(--x), var(--y)) scale(var(--scale));
+  opacity: var(--dim);
+  filter: blur(var(--blur)) brightness(0.62);
   transition:
-    opacity 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-    transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+    transform 0.9s cubic-bezier(0.33, 1, 0.68, 1),
+    opacity 0.9s ease,
+    filter 0.9s ease;
   pointer-events: none;
 }
 
+/* نقش جلو — پرنور، تیز و با سایه */
 .mediaImageActive {
+  z-index: 10;
   opacity: 1;
-  transform: scale(1) translateY(0);
+  filter: drop-shadow(0 28px 56px rgba(0, 0, 0, 0.45));
+  transform: translate(0, 0) scale(1);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .mediaImage {
-    transition: opacity 0.3s ease;
-    transform: none;
-  }
-  .mediaImageActive {
-    transform: none;
+    transition:
+      opacity 0.3s ease,
+      filter 0.3s ease;
   }
 }

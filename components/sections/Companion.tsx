@@ -140,25 +140,52 @@ export function Companion() {
           {/* تصویر — چپ */}
           <div className={styles.media}>
             <span className={styles.mediaGlow} aria-hidden="true" />
-            <div className={styles.mediaFrame}>
-              {/* هر چهار تصویر رندر می‌شوند و فقط تصویر فعال دیده
-                  می‌شود. این‌طور همه از قبل بارگذاری شده‌اند و هیچ
-                  تعویضی خالی نمی‌ماند. */}
-              {roles.map((role, index) => (
-                <Image
-                  key={role.name}
-                  src={assetPath(role.image)}
-                  alt={index === active ? role.alt : ""}
-                  width={role.width}
-                  height={role.height}
-                  sizes="440px"
-                  aria-hidden={index !== active}
-                  priority
-                  className={`${styles.mediaImage} ${
-                    index === active ? styles.mediaImageActive : ""
-                  }`}
-                />
-              ))}
+            <div className={styles.mediaStage}>
+              <div className={styles.mediaRing}>
+                {/* هر چهار لئو روی یک دایره می‌نشستند و با هم می‌چرخند.
+                    نقش فعال همیشه جلو و وسط است؛ بقیه در عمق عقب‌تر،
+                    کوچک‌تر و کم‌نورتر. موقعیت هر کدام از زاویه‌اش روی
+                    دایره حساب می‌شود — نه با rotateY، چون آن تصویر
+                    پشتی را آینه می‌کند. */}
+                {roles.map((role, index) => {
+                  const offset =
+                    (((index - active) % roles.length) + roles.length) %
+                    roles.length;
+
+                  // θ: زاویه روی دایره. ۰ = جلو، ۱۸۰ = ته.
+                  const theta = (offset / roles.length) * Math.PI * 2;
+                  const depth = (1 - Math.cos(theta)) / 2; // ۰ جلو، ۱ عقب
+
+                  // اعداد رُند می‌شوند تا استایل خوانا بماند
+                  const r = (n: number) => Math.round(n * 100) / 100;
+
+                  const style = {
+                    "--x": `${r(Math.sin(theta) * 120)}px`,
+                    "--y": `${r(depth * -46)}px`,
+                    "--scale": `${r(1 - depth * 0.45)}`,
+                    "--dim": `${r(1 - depth * 0.7)}`,
+                    "--blur": `${r(depth * 2.6)}px`,
+                    "--layer": `${roles.length - offset}`,
+                  } as React.CSSProperties;
+
+                  return (
+                    <Image
+                      key={role.name}
+                      src={assetPath(role.image)}
+                      alt={offset === 0 ? role.alt : ""}
+                      width={role.width}
+                      height={role.height}
+                      sizes="360px"
+                      aria-hidden={offset !== 0}
+                      priority
+                      className={`${styles.mediaImage} ${
+                        offset === 0 ? styles.mediaImageActive : ""
+                      }`}
+                      style={style}
+                    />
+                  );
+                })}
+              </div>
             </div>
           </div>
         </Reveal>
