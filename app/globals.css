@@ -1,132 +1,141 @@
-@import "tailwindcss";
+/* ============================================================
+   Leo Learn — globals.css
+   فقط دو چيز اينجا زندگي مي‌کند:
+     1) تعريف فونت‌ها
+     2) متغيرهای رنگ و فاصله (design tokens)
+   استايل هر کامپوننت در فايل خودش است.
+   ============================================================ */
+
+/* ---------- 1. فونت‌ها ---------- */
+
+/* مسیر پایهٔ فایل‌های public.
+   روی GitHub Pages سایت زیر /Leo-Learn/ سرو می‌شود، پس مسیرها
+   باید همان پیشوند را داشته باشند. این متغیر در layout.tsx از
+   NEXT_PUBLIC_BASE_PATH پر می‌شود. */
+/* دانا — برای تیترها */
+/* ایران‌یکان — برای متن‌ها */
+/* ---------- 2. توکن‌های رنگ ---------- */
 
 :root {
-  --color-primary-navy: #00256f;
-  --color-dark-navy: #001a4d;
-  --color-gold: #f4bd0d;
-  --color-olive: #536333;
-  --color-background: #f8fafc;
-  --color-white: #ffffff;
-  --color-text-primary: #111827;
-  --color-text-secondary: #667085;
-  --color-text-muted: #98a2b3;
-  --color-border: #e4e7ec;
-  --color-success: #2e7d5b;
-  --color-error: #d64545;
-  --color-warning: #d99000;
+  /* رنگ اصلی برند */
+  --navy: #00256f;
+  --dark-navy: #001a4d;
+  --gold: #f4bd0d;
+  --olive: #536333;
 
-  --color-navy-tint: #eef3ff;
-  --color-card: var(--color-white);
+  /* سطوح تیره */
+  --charcoal: #0b1220;
+  --surface: #111827;
+  --surface-raised: #161f31; /* کارت‌هایی که کمی از سطح جدا می‌شوند */
+  --hairline: rgba(255, 255, 255, 0.08); /* خطوط جداکنندهٔ محو */
+  --hairline-strong: rgba(255, 255, 255, 0.14);
 
-  --font-family-sans: var(--font-sora), Arial, Helvetica, sans-serif;
+  /* متن */
+  --text: #f5f7fb;
+  --text-secondary: #9aa8bf;
+  --text-muted: #6b7a92;
 
-  --text-display-size: 32px;
-  --text-display-line-height: 40px;
-  --text-display-weight: 700;
+  /* فونت */
+  --font-heading: var(--font-dana), system-ui, sans-serif;
+  --font-body: var(--font-iran-yekan), system-ui, sans-serif;
 
-  --text-h1-size: 26px;
-  --text-h1-line-height: 34px;
-  --text-h1-weight: 700;
+  /* اندازه‌های پیمانه‌ای */
+  /* عرض محتوا. ۱۳۶۰px با گاتر ۴۰px یعنی روی نمایشگرهای ۱۴۴۰ تا ۱۶۸۰
+     صفحه تقریباً پر می‌شود و کناره‌ها خالی نمی‌مانند. */
+  --page-width: 1360px;
+  --gutter: 40px;
+  --header-height: 76px;
 
-  --text-h2-size: 22px;
-  --text-h2-line-height: 28px;
-  --text-h2-weight: 700;
-
-  --text-h3-size: 18px;
-  --text-h3-line-height: 24px;
-  --text-h3-weight: 600;
-
-  --text-body-large-size: 16px;
-  --text-body-large-line-height: 24px;
-  --text-body-large-weight: 400;
-
-  --text-body-size: 14px;
-  --text-body-line-height: 21px;
-  --text-body-weight: 400;
-
-  --text-caption-size: 12px;
-  --text-caption-line-height: 18px;
-  --text-caption-weight: 500;
-
-  --text-button-size: 14px;
-  --text-button-line-height: 20px;
-  --text-button-weight: 600;
-
-  --text-label-size: 12px;
-  --text-label-line-height: 16px;
-  --text-label-weight: 600;
-
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
-
-  --radius-sm: 8px;
+  --radius-sm: 10px;
   --radius-md: 14px;
   --radius-lg: 20px;
   --radius-pill: 999px;
-
-  --button-height: 52px;
-  --button-radius: var(--radius-md);
-  --button-primary-background: var(--color-primary-navy);
-  --button-primary-text: var(--color-white);
-  --button-secondary-background: var(--color-navy-tint);
-  --button-secondary-text: var(--color-primary-navy);
-  --button-outline-background: transparent;
-  --button-outline-border: var(--color-border);
-  --button-outline-text: var(--color-primary-navy);
-  --button-ghost-background: transparent;
-  --button-ghost-text: var(--color-primary-navy);
-
-  --card-standard-background: var(--color-white);
-  --card-standard-radius: var(--radius-md);
-  --card-standard-padding: var(--space-4);
-  --card-standard-border: 1px solid var(--color-border);
-
-  --card-hero-background: var(--color-white);
-  --card-hero-radius: var(--radius-lg);
-  --card-hero-padding: var(--space-5);
-  --card-hero-border: 1px solid var(--color-border);
-
-  --background: var(--color-background);
-  --foreground: var(--color-text-primary);
 }
 
-@theme inline {
-  --color-leo-background: var(--color-background);
-  --color-leo-foreground: var(--color-text-primary);
-  --color-leo-primary: var(--color-primary-navy);
-  --color-leo-primary-dark: var(--color-dark-navy);
-  --color-leo-gold: var(--color-gold);
-  --color-leo-olive: var(--color-olive);
-  --color-leo-border: var(--color-border);
-  --font-sans: var(--font-family-sans);
+/* ---------- 3. پاک‌سازی پایه ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-body {
-  min-height: 100vh;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-family-sans);
-  font-size: var(--text-body-size);
-  font-weight: var(--text-body-weight);
-  line-height: var(--text-body-line-height);
-  text-rendering: optimizeLegibility;
+/* هر بخشی که شناسه دارد، هنگام پرش با لینک، زیر هدرِ چسبیده پنهان نشود */
+section[id] {
+  scroll-margin-top: calc(var(--header-height) + 28px);
 }
 
-button,
-input,
-textarea,
-select {
+body {
+  background-color: var(--charcoal);
+
+  /* پس‌زمینهٔ یکپارچهٔ کل صفحه.
+     به جای اینکه هر بخش هالهٔ خودش را داشته باشد، این هاله‌ها روی
+     viewport ثابت‌اند و محتوا روی آن‌ها اسکرول می‌شود — نتیجه: یک
+     بافت پیوسته از بالای صفحه تا پایین، بدون درز بین بخش‌ها. */
+  background-image:
+    /* هالهٔ آبی اصلی، سمت چپ صحنه */
+    radial-gradient(
+      58% 62% at 20% 42%,
+      rgba(30, 64, 175, 0.22) 0%,
+      rgba(30, 64, 175, 0) 72%
+    ),
+    /* عمق آبی تیره، گوشهٔ بالا-راست */
+    radial-gradient(
+      52% 50% at 82% 6%,
+      rgba(0, 37, 111, 0.5) 0%,
+      rgba(0, 37, 111, 0) 74%
+    ),
+    /* گرمای محو طلایی، پایین-چپ */
+    radial-gradient(
+      44% 40% at 10% 92%,
+      rgba(244, 189, 13, 0.07) 0%,
+      rgba(244, 189, 13, 0) 70%
+    ),
+    /* روشنایی خیلی کم، وسط-چپ */
+    radial-gradient(
+      36% 34% at 34% 20%,
+      rgba(148, 176, 255, 0.07) 0%,
+      rgba(148, 176, 255, 0) 68%
+    );
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  margin: 0;
+  line-height: 1.35;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
   font: inherit;
+  cursor: pointer;
 }

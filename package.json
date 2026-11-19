@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@tailwindcss/postcss": "latest",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest"
@@ -21,7 +20,6 @@
     "@types/react-dom": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest",
-    "tailwindcss": "latest",
     "typescript": "latest"
   }
 }
