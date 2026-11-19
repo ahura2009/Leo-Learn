@@ -251,24 +251,24 @@
   z-index: var(--layer);
 
   transform: translate(var(--x), var(--y)) scale(var(--scale));
-  opacity: var(--dim);
-  filter: blur(var(--blur)) brightness(0.6) saturate(var(--saturate));
+  filter: blur(var(--blur));
 
-  /* منحنی نرم و کشیده — نه پرش، نه توقف ناگهانی */
-  transition:
-    transform 1.15s cubic-bezier(0.25, 0.8, 0.35, 1),
-    opacity 1.15s cubic-bezier(0.25, 0.8, 0.35, 1),
-    filter 1.15s cubic-bezier(0.25, 0.8, 0.35, 1);
+  /* هیچ محوی‌ای در کار نیست — تصویرها همیشه کامل‌اند.
+     حرکت با یک منحنی S شکل انجام می‌شود:
+       شروع آرام → شتاب گرفتن → اوج سرعت در میانه → نشستن آرام.
+     این همان چیزی است که حرکت را «طبیعی» و گرافیکی می‌کند،
+     نه پرش خطی. */  transition:
+    transform 1.25s cubic-bezier(0.65, 0, 0.35, 1),
+    filter 1.25s cubic-bezier(0.65, 0, 0.35, 1);
 
   pointer-events: none;
-  will-change: transform, opacity, filter;
+  will-change: transform;
 }
 
-/* نقش جلو — پرنور، تیز و بزرگ‌تر از همه */
+/* نقش جلو — بزرگ‌تر و تیزترین */
 .mediaImageActive {
   z-index: 10;
-  opacity: 1;
-  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5)) brightness(1.03);
+  filter: blur(0) drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
   transform: translate(0, 0) scale(1);
 }
 
