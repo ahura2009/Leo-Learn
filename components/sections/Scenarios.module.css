@@ -202,6 +202,12 @@
   border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
+/* عکس واقعی سناریو — تمام کارت را می‌پوشاند */
+.photo {
+  object-fit: cover;
+  z-index: 0;
+}
+
 /* جای عکس — تمام کارت را می‌پوشاند */
 .thumb {
   position: absolute;

@@ -1,4 +1,5 @@
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import Image from "next/image";
+import { assetPath } from "@/lib/asset-path";
 import { Reveal } from "@/components/ui/Reveal";
 import styles from "./Companion.module.css";
 
@@ -73,9 +74,13 @@ export function Companion() {
           <div className={styles.media}>
             <span className={styles.mediaGlow} aria-hidden="true" />
             <div className={styles.mediaFrame}>
-              <ImagePlaceholder
-                label="تصویر لئو با ظاهر گارسون کافه"
-                detail="پس‌زمینهٔ شفاف، همان شخصیت لئو با پیش‌بند کافه. حدود ۷۰۰×۹۰۰، PNG با آلفا"
+              <Image
+                src={assetPath("/images/leo-barista.png")}
+                alt="لئو با پیش‌بند گارسون کافه"
+                width={1230}
+                height={1278}
+                sizes="440px"
+                className={styles.mediaImage}
               />
             </div>
           </div>

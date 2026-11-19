@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import { assetPath } from "@/lib/asset-path";
 import { Reveal } from "@/components/ui/Reveal";
 import styles from "./Scenarios.module.css";
 
@@ -10,13 +12,18 @@ const levelLabel: Record<Level, string> = {
   hard: "پیشرفته",
 };
 
-const scenarios: { title: string; level: Level; image: string }[] = [
-  { title: "سفارش در کافه", level: "easy", image: "کافه با میز و فنجان" },
+const scenarios: {
+  title: string;
+  level: Level;
+  image: string;
+  photo?: string;
+}[] = [
+  { title: "سفارش در کافه", level: "easy", image: "کافه با میز و فنجان", photo: "/images/scenarios/cafe.jpg" },
   { title: "خرید در سوپرمارکت", level: "easy", image: "قفسه‌های سوپرمارکت" },
-  { title: "آشنایی با یک نفر تازه", level: "easy", image: "دست دادن دو نفر" },
+  { title: "آشنایی با یک نفر تازه", level: "easy", image: "دست دادن دو نفر", photo: "/images/scenarios/meeting.jpg" },
   { title: "گرفتن آدرس", level: "easy", image: "خیابان با تابلو" },
-  { title: "رزرو هتل", level: "medium", image: "لابی هتل" },
-  { title: "تماس تلفنی", level: "medium", image: "گوشی در دست" },
+  { title: "رزرو هتل", level: "medium", image: "لابی هتل", photo: "/images/scenarios/hotel.jpg" },
+  { title: "تماس تلفنی", level: "medium", image: "گوشی در دست", photo: "/images/scenarios/phone.jpg" },
   { title: "خرید لباس", level: "medium", image: "اتاق پرو" },
   { title: "سفارش تاکسی", level: "easy", image: "تاکسی در خیابان" },
   { title: "صحبت دربارهٔ خانواده", level: "easy", image: "خانواده دور میز" },
@@ -25,7 +32,7 @@ const scenarios: { title: string; level: Level; image: string }[] = [
   { title: "جلسهٔ کاری", level: "hard", image: "اتاق جلسه" },
   { title: "مراجعه به پزشک", level: "medium", image: "اتاق معاینه" },
   { title: "گشتن برای خانه", level: "medium", image: "نمای آپارتمان" },
-  { title: "باز کردن حساب بانکی", level: "hard", image: "باجهٔ بانک" },
+  { title: "باز کردن حساب بانکی", level: "hard", image: "باجهٔ بانک", photo: "/images/scenarios/bank.jpg" },
   { title: "گفت‌وگو با همکار", level: "medium", image: "آشپزخانهٔ اداره" },
   { title: "سفر به فرودگاه", level: "medium", image: "سالن فرودگاه" },
   { title: "اعتراض به یک مشکل", level: "hard", image: "گفت‌وگوی جدی" },
@@ -90,10 +97,20 @@ export function Scenarios() {
                   levelLabel[item.level]
                 }`}
               >
-                <div className={styles.thumb}>
-                  <ThumbIcon />
-                  <span className={styles.thumbText}>{item.image}</span>
-                </div>
+                {item.photo ? (
+                  <Image
+                    src={assetPath(item.photo)}
+                    alt={item.title}
+                    fill
+                    sizes="176px"
+                    className={styles.photo}
+                  />
+                ) : (
+                  <div className={styles.thumb}>
+                    <ThumbIcon />
+                    <span className={styles.thumbText}>{item.image}</span>
+                  </div>
+                )}
 
                 <span className={`${styles.level} ${styles[item.level]}`}>
                   {levelLabel[item.level]}

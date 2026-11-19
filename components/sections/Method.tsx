@@ -56,7 +56,6 @@ export function Method() {
                     label={step.image}
                     detail={step.imageDetail}
                   />
-                  <span className={styles.marker}>{step.letter}</span>
                 </div>
 
                 <div className={styles.cardBody}>

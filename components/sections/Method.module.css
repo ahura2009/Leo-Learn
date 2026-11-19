@@ -86,25 +86,6 @@
   border-radius: 22px;
 }
 
-/* نشانهٔ حرف — گوشهٔ بالا-راست قاب */
-.marker {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: var(--gold);
-  color: #241a00;
-  font-family: var(--font-heading);
-  font-size: 20px;
-  font-weight: 900;
-  line-height: 1;
-  box-shadow: 0 8px 22px rgba(244, 189, 13, 0.28);
-}
-
 .cardBody {
   padding: 22px 8px 0;
   text-align: center;
