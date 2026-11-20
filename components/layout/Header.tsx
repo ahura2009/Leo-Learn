@@ -6,8 +6,7 @@ const navItems = [
   { label: "روش آموزشی", href: "#how" },
   { label: "لئو", href: "#leo" },
   { label: "سناریوها", href: "#scenarios" },
-  { label: "نظرات", href: "#testimonials" },
-  { label: "سؤالات", href: "#faq" },
+  { label: "سؤالات متداول", href: "#faq" },
 ];
 
 export function Header() {

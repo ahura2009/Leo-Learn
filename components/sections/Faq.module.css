@@ -1,0 +1,239 @@
+/* ============================================================
+   Faq — سؤالات متداول
+   آکاردئون بسته‌به‌طور‌پیش‌فرض؛ کاربر خودش هر جواب را باز می‌کند.
+   ============================================================ */
+
+.faq {
+  padding: 120px 0 140px;
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---------- سرِ بخش ---------- */
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 15px;
+  border: 1px solid rgba(244, 189, 13, 0.26);
+  border-radius: var(--radius-pill);
+  background: rgba(244, 189, 13, 0.1);
+  color: #ffcc3d;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.title {
+  max-width: 760px;
+  margin-top: 20px;
+  font-family: var(--font-heading);
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.55;
+  letter-spacing: -0.3px;
+  color: var(--text);
+}
+
+.subtitle {
+  max-width: 620px;
+  margin-top: 14px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 2;
+  color: var(--text-secondary);
+}
+
+/* ---------- فهرست ---------- */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 880px;
+  margin: 52px auto 0;
+}
+
+.item {
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  background: linear-gradient(165deg, #161f31 0%, #101828 100%);
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.item:hover {
+  border-color: var(--hairline-strong);
+}
+
+.itemOpen {
+  border-color: rgba(244, 189, 13, 0.32);
+  background: linear-gradient(165deg, #1a2438 0%, #121b2c 100%);
+}
+
+/* عنوان سؤال — h3 فقط برای ساختار؛ ظاهرِ دکمه را خودش دارد */
+.questionHeading {
+  margin: 0;
+  font: inherit;
+}
+
+.question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  padding: 22px 24px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: none;
+  color: var(--text);
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.9;
+  text-align: right;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.question:hover {
+  color: #ffcc3d;
+}
+
+.question:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
+
+.questionText {
+  flex: 1 1 auto;
+}
+
+/* دایرهٔ + / − */
+.icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 50%;
+  color: var(--text-secondary);
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.itemOpen .icon {
+  color: var(--dark-navy);
+  border-color: var(--gold);
+  background: var(--gold);
+  transform: rotate(180deg);
+}
+
+/* میلهٔ عمودی علامت + با باز شدن جمع می‌شود و به − تبدیل می‌شود */
+.iconBar {
+  transform-origin: center;
+  transition:
+    transform 0.3s ease,
+    opacity 0.2s ease;
+}
+
+.itemOpen .iconBar {
+  transform: scaleY(0);
+  opacity: 0;
+}
+
+/* ---------- جواب ---------- */
+
+/* ارتفاع با 0fr → 1fr باز می‌شود؛ نیازی به اندازه‌گیری در جاوااسکریپت نیست.
+   visibility هم عوض می‌شود تا جوابِ بسته از صفحه‌خوان پنهان بماند. */
+.answerWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.34s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s linear 0.34s;
+}
+
+.itemOpen .answerWrap {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows 0.34s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s linear 0s;
+}
+
+.answerInner {
+  overflow: hidden;
+}
+
+.answer {
+  margin: 0;
+  padding: 0 24px 24px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 2.1;
+  color: var(--text-secondary);
+}
+
+/* ---------- موبایل ---------- */
+
+@media (max-width: 900px) {
+  .faq {
+    padding: 88px 0 100px;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .list {
+    margin-top: 36px;
+  }
+
+  .question {
+    padding: 18px 18px;
+    font-size: 15px;
+  }
+
+  .answer {
+    padding: 0 18px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 560px) {
+  .inner {
+    padding: 0 16px;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+}
