@@ -1,0 +1,225 @@
+/* ============================================================
+   Footer
+   دو ستون اصلی (برند + لینک‌ها) و یک نوار پایانی جدا با خط مویی.
+   ============================================================ */
+
+.footer {
+  margin-top: 40px;
+  border-top: 1px solid var(--hairline);
+  background: rgba(6, 10, 18, 0.5);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 64px;
+  width: 100%;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 64px var(--gutter) 52px;
+}
+
+/* ---------- برند ---------- */
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 420px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoMark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: linear-gradient(145deg, var(--gold), #d9a300);
+  color: var(--dark-navy);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.logoBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.logoText {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1.35;
+  letter-spacing: 0.2px;
+  color: var(--text);
+}
+
+.logoTagline {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.about {
+  margin-top: 18px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.1;
+  color: var(--text-secondary);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  margin-top: 24px;
+  padding: 0 22px;
+  border-radius: var(--radius-pill);
+  background: var(--gold);
+  color: #241a00;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    background 0.16s ease;
+}
+
+.cta:hover {
+  background: #ffd23f;
+  box-shadow: 0 6px 20px rgba(244, 189, 13, 0.28);
+  transform: translateY(-1px);
+}
+
+.cta:active {
+  transform: translateY(0);
+}
+
+/* ---------- ستون‌های لینک ---------- */
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px;
+}
+
+.columnTitle {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.9;
+  color: var(--text-secondary);
+  transition: color 0.18s ease;
+}
+
+.link:hover {
+  color: var(--gold);
+}
+
+.link:focus-visible,
+.cta:focus-visible,
+.toTop:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- نوار پایانی ---------- */
+
+.bottom {
+  border-top: 1px solid var(--hairline);
+}
+
+.bottomInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 20px var(--gutter);
+}
+
+.copyright {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.9;
+  color: var(--text-muted);
+}
+
+.toTop {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color 0.18s ease;
+}
+
+.toTop:hover {
+  color: var(--gold);
+}
+
+/* ---------- موبایل ---------- */
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 44px;
+    padding: 48px var(--gutter) 40px;
+  }
+
+  .brand {
+    max-width: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .inner {
+    padding: 40px 16px 32px;
+  }
+
+  .bottomInner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 18px 16px;
+  }
+}

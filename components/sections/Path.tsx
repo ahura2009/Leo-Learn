@@ -10,7 +10,7 @@ const stats = [
 
 export function Path() {
   return (
-    <section className={styles.path} aria-labelledby="path-title">
+    <section id="path" className={styles.path} aria-labelledby="path-title">
       <div className={styles.inner}>
         {/* تریلر — چپ */}
         <Reveal className={styles.media}>

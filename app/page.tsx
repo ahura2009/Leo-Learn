@@ -1,4 +1,5 @@
 import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { Why } from "@/components/sections/Why";
 import { Method } from "@/components/sections/Method";
@@ -10,6 +11,9 @@ import { Faq } from "@/components/sections/Faq";
 export default function Home() {
   return (
     <>
+      {/* لنگر ابتدای صفحه برای دکمهٔ «بازگشت به بالا» در فوتر */}
+      <div id="top" />
+
       <Header />
       <main>
         <Hero />
@@ -20,6 +24,7 @@ export default function Home() {
         <Scenarios />
         <Faq />
       </main>
+      <Footer />
     </>
   );
 }
