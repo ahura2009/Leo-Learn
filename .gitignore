@@ -40,3 +40,6 @@ next-env.d.ts
 
 # local reference material (screenshots, font archives)
 /Files/
+
+# source images (kept locally; the site ships the compressed WebP)
+/work/image-sources/

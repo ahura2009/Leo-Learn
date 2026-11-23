@@ -1,0 +1,85 @@
+{
+  "slug": "cafe-order",
+  "level": "A1",
+  "title": "سفارش در کافه",
+  "minutes": 11,
+  "setting": "یک کافهٔ کوچک در لندن",
+  "story": "باران گرفته و تو به یک کافهٔ کوچک پناه آورده‌ای. پشت پیشخوان، لئو با پیش‌بند تیره ایستاده و منتظر سفارشت است. باید چیزی سفارش بدهی، اندازه را بگویی و قیمتش را بپرسی.",
+  "goal": "I can order a drink and ask how much it costs.",
+  "goalFa": "می‌توانم سفارش بدهم و قیمت را بپرسم.",
+  "phras": [
+    { "en": "Can I get a latte, please?", "fa": "می‌شه یک لاته بدید؟" },
+    { "en": "A medium one, please.", "fa": "یک متوسط، لطفاً." },
+    { "en": "How much is it?", "fa": "چقدر می‌شه؟" }
+  ],
+  "words": [
+    { "en": "medium", "fa": "متوسط" },
+    { "en": "please", "fa": "لطفاً" },
+    { "en": "to take away", "fa": "بیرون‌بر" }
+  ],
+  "steps": [
+    {
+      "type": "listen",
+      "lines": [
+        { "who": "leo", "en": "Hi there! What can I get for you?", "fa": "سلام! چی براتون بیارم؟" },
+        { "who": "you", "en": "Can I get a latte, please?", "fa": "می‌شه یک لاته بدید؟" },
+        { "who": "leo", "en": "Sure. Small, medium or large?", "fa": "حتماً. کوچیک، متوسط یا بزرگ؟" },
+        { "who": "you", "en": "A medium one, please.", "fa": "یک متوسط، لطفاً." },
+        { "who": "leo", "en": "That's three pounds fifty. Anything else?", "fa": "می‌شه سه پوند و پنجاه. چیز دیگه‌ای هم می‌خواید؟" }
+      ]
+    },
+    {
+      "type": "choose",
+      "promptFa": "برای سفارش مؤدبانه در کافه کدام جمله درست‌تر است؟",
+      "options": [
+        "I want latte.",
+        "Can I get a latte, please?",
+        "Give me a latte."
+      ],
+      "answer": 1,
+      "noteFa": "«Can I get…?» به‌همراه «please» همان چیزی است که در کافه‌های واقعی می‌شنوی — نه فرمان، نه جملهٔ کتابی."
+    },
+    {
+      "type": "build",
+      "promptFa": "اندازه و درخواست مؤدبانه را کنار هم بگذار: «یک متوسط، لطفاً.»",
+      "tiles": ["please", "one", "A", "medium", "large"],
+      "answer": "A medium one please",
+      "noteFa": "در انگلیسی، «please» بیشتر وقت‌ها آخر جمله می‌آید."
+    },
+    {
+      "type": "roleplay",
+      "turns": [
+        {
+          "leo": "Hi! What can I get for you?",
+          "leoFa": "سلام! چی براتون بیارم؟",
+          "target": "Can I get a latte please",
+          "accept": ["latte", "coffee", "can i get", "how much"],
+          "nudges": [
+            "لئو منتظر سفارش است. با «Can I get…» شروع کن.",
+            "بگو: Can I get a latte, please?"
+          ]
+        },
+        {
+          "leo": "Sure. Small, medium or large?",
+          "leoFa": "حتماً. کوچیک، متوسط یا بزرگ؟",
+          "target": "A medium one please",
+          "accept": ["medium", "small", "large", "a medium"],
+          "nudges": [
+            "اندازه را انتخاب کن و مؤدب باش.",
+            "بگو: A medium one, please."
+          ]
+        },
+        {
+          "leo": "That's three pounds fifty. Anything else?",
+          "leoFa": "می‌شه سه پوند و پنجاه. چیز دیگه‌ای هم می‌خواید؟",
+          "target": "No that's all how much is it",
+          "accept": ["how much", "that's all", "no thanks", "three"],
+          "nudges": [
+            "می‌خواهی قیمت را بپرسی؟ با «How much…» شروع کن.",
+            "بگو: No, that's all. How much is it?"
+          ]
+        }
+      ]
+    }
+  ]
+}

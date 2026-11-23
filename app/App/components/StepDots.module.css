@@ -1,0 +1,25 @@
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  transition:
+    background 0.25s ease,
+    width 0.25s ease;
+}
+
+.active {
+  width: 20px;
+  border-radius: 999px;
+  background: var(--gold);
+}
+
+.done {
+  background: rgba(244, 189, 13, 0.45);
+}

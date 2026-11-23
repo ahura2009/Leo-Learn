@@ -1,0 +1,87 @@
+/* پیش‌نمایش سناریو */
+
+.back {
+  align-self: flex-start;
+  font-size: 13px;
+  color: var(--text-secondary);
+  transition: color 0.16s ease;
+}
+
+.back:hover {
+  color: var(--gold);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 26px;
+  align-items: start;
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.goal {
+  padding: 18px 20px;
+  border: 1px solid rgba(244, 189, 13, 0.26);
+  border-radius: var(--radius-md);
+  background: rgba(244, 189, 13, 0.08);
+}
+
+.goalLabel {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.goalText {
+  margin: 6px 0 4px;
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.goalEn {
+  margin: 0;
+  direction: ltr;
+  text-align: left;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+}
+
+.heroImage {
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  aspect-ratio: 16 / 11;
+}
+
+.heroImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 420px;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

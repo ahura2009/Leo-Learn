@@ -1,0 +1,256 @@
+/* اجزای مشترک اپ — زبان بصری لندینگ با اندازه‌های جمع‌تر */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  max-width: 980px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 6px 14px;
+  border: 1px solid rgba(244, 189, 13, 0.22);
+  border-radius: var(--radius-pill);
+  background: rgba(244, 189, 13, 0.09);
+  color: #ffcc3d;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.45;
+  letter-spacing: -0.3px;
+  color: var(--text);
+}
+
+.lead {
+  max-width: 620px;
+  font-size: 15px;
+  line-height: 2;
+  color: var(--text-secondary);
+}
+
+.card {
+  padding: var(--app-card-padding);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.cardRaised {
+  padding: var(--app-card-padding);
+  border: 1px solid rgba(244, 189, 13, 0.28);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    160deg,
+    rgba(244, 189, 13, 0.14) 0%,
+    rgba(22, 31, 49, 0.9) 62%
+  );
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.muted {
+  font-size: 13.5px;
+  line-height: 1.9;
+  color: var(--text-secondary);
+}
+
+.meta {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+/* --- دکمه‌ها --- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 50px;
+  padding: 0 26px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--gold);
+  color: #241a00;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    background 0.16s ease,
+    opacity 0.16s ease;
+}
+
+.button:hover {
+  background: #ffd23f;
+  box-shadow: 0 10px 26px rgba(244, 189, 13, 0.26);
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+  transform: none;
+  box-shadow: none;
+}
+
+.ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 50px;
+  padding: 0 22px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    background 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.ghost:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.ghost:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.block {
+  width: 100%;
+}
+
+/* --- چیپ و برچسب --- */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.levelChip {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(244, 189, 13, 0.14);
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* --- انگلیسی: همیشه چپ‌به‌راست --- */
+
+.en {
+  direction: ltr;
+  text-align: left;
+  font-family: var(--font-body);
+  color: var(--text);
+}
+
+/* --- نوار پیشرفت --- */
+
+.bar {
+  position: relative;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.barFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--gold), #ffd65a);
+  transition: width 0.4s ease;
+}
+
+/* --- حالت خالی --- */
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 30px;
+  border: 1px dashed var(--hairline-strong);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+@media (max-width: 760px) {
+  .title {
+    font-size: 27px;
+  }
+
+  .grid2,
+  .grid3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

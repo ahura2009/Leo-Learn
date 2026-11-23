@@ -1,0 +1,99 @@
+/* شل اپ — دسکتاپ‌فرست، RTL */
+
+.shell {
+  min-height: 100vh;
+  width: 100%;
+  max-width: var(--app-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter) 48px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: var(--header-height);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: linear-gradient(150deg, var(--gold), #d99f04);
+  color: #211700;
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.brandName {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.brandTag {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.greeting {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr);
+  gap: 40px;
+  padding-top: 36px;
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  min-width: 0;
+}
+
+/* صفحه‌های بدون شل (onboarding و درس) */
+.bare {
+  min-height: 100vh;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .shell {
+    padding: 0 16px 96px;
+  }
+
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding-top: 22px;
+  }
+
+  .side {
+    display: contents;
+  }
+}

@@ -1,0 +1,115 @@
+/* صفحهٔ پروفایل */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input {
+  height: 48px;
+  padding: 0 15px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(244, 189, 13, 0.55);
+  box-shadow: 0 0 0 3px rgba(244, 189, 13, 0.12);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  padding: 9px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  transition:
+    border-color 0.16s ease,
+    color 0.16s ease,
+    background 0.16s ease;
+}
+
+.pill:hover {
+  border-color: var(--hairline-strong);
+  color: var(--text);
+}
+
+.active {
+  border-color: rgba(244, 189, 13, 0.55);
+  background: rgba(244, 189, 13, 0.12);
+  color: var(--gold);
+}
+
+.lessons {
+  margin: 4px 0 0;
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.danger {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-color: rgba(220, 120, 120, 0.26);
+}
+
+.dangerGhost {
+  align-self: flex-start;
+  height: 44px;
+  padding: 0 20px;
+  border: 1px solid rgba(220, 120, 120, 0.4);
+  border-radius: var(--radius-md);
+  background: rgba(220, 120, 120, 0.06);
+  color: #f0a3a3;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.dangerGhost:hover {
+  background: rgba(220, 120, 120, 0.12);
+}
+
+.confirm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.dangerButton {
+  height: 44px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: #c95353;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.dangerButton:hover {
+  background: #da5f5f;
+}

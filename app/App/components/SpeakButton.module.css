@@ -1,0 +1,31 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 38px;
+  padding: 0 15px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  transition:
+    color 0.16s ease,
+    border-color 0.16s ease,
+    background 0.16s ease;
+}
+
+.button:hover {
+  border-color: rgba(244, 189, 13, 0.4);
+  background: rgba(244, 189, 13, 0.1);
+  color: var(--gold);
+}
+
+.compact {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  justify-content: center;
+}

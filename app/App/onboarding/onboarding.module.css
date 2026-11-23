@@ -1,0 +1,151 @@
+/* onboarding — سه گام در یک صفحه، وسط‌چین */
+
+.shell {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.panel {
+  width: 100%;
+  max-width: 560px;
+  padding: 34px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.progress {
+  position: relative;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.progressFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--gold), #ffd65a);
+  transition: width 0.35s ease;
+}
+
+.kicker {
+  margin: 24px 0 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+  min-height: 280px;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.hint {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--text-secondary);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.input {
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(244, 189, 13, 0.55);
+  box-shadow: 0 0 0 3px rgba(244, 189, 13, 0.12);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px 17px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--text);
+  text-align: right;
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease;
+}
+
+.option:hover {
+  border-color: var(--hairline-strong);
+}
+
+.selected {
+  border-color: rgba(244, 189, 13, 0.55);
+  background: rgba(244, 189, 13, 0.1);
+}
+
+.optionTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.optionHint {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+
+.summary {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.next {
+  min-width: 150px;
+}
