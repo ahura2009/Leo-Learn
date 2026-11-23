@@ -67,7 +67,7 @@ export function Hero() {
         <div className={styles.media}>
           <div className={styles.leoWrap}>
             <Image
-              src={assetPath("/images/leo-hero.png")}
+              src={assetPath("/images/leo-hero.webp")}
               alt="لئو، همراه یادگیری زبان انگلیسی"
               width={1254}
               height={1254}

@@ -18,26 +18,26 @@ const scenarios: {
   image: string;
   photo?: string;
 }[] = [
-  { title: "سفارش در کافه", level: "easy", image: "کافه با میز و فنجان", photo: "/images/scenarios/cafe.jpg" },
-  { title: "خرید در سوپرمارکت", level: "easy", image: "قفسه‌های سوپرمارکت", photo: "/images/scenarios/supermarket.jpg" },
-  { title: "آشنایی با یک نفر تازه", level: "easy", image: "دست دادن دو نفر", photo: "/images/scenarios/meeting.jpg" },
-  { title: "گرفتن آدرس", level: "easy", image: "خیابان با تابلو", photo: "/images/scenarios/address.jpg" },
-  { title: "رزرو هتل", level: "medium", image: "لابی هتل", photo: "/images/scenarios/hotel.jpg" },
-  { title: "تماس تلفنی", level: "medium", image: "گوشی در دست", photo: "/images/scenarios/phone.jpg" },
-  { title: "خرید لباس", level: "medium", image: "اتاق پرو", photo: "/images/scenarios/clothing.jpg" },
+  { title: "سفارش در کافه", level: "easy", image: "کافه با میز و فنجان", photo: "/images/scenarios/cafe.webp" },
+  { title: "خرید در سوپرمارکت", level: "easy", image: "قفسه‌های سوپرمارکت", photo: "/images/scenarios/supermarket.webp" },
+  { title: "آشنایی با یک نفر تازه", level: "easy", image: "دست دادن دو نفر", photo: "/images/scenarios/meeting.webp" },
+  { title: "گرفتن آدرس", level: "easy", image: "خیابان با تابلو", photo: "/images/scenarios/address.webp" },
+  { title: "رزرو هتل", level: "medium", image: "لابی هتل", photo: "/images/scenarios/hotel.webp" },
+  { title: "تماس تلفنی", level: "medium", image: "گوشی در دست", photo: "/images/scenarios/phone.webp" },
+  { title: "خرید لباس", level: "medium", image: "اتاق پرو", photo: "/images/scenarios/clothing.webp" },
   { title: "سفارش تاکسی", level: "easy", image: "تاکسی در خیابان" },
   { title: "صحبت دربارهٔ خانواده", level: "easy", image: "خانواده دور میز" },
   { title: "رفتن به داروخانه", level: "medium", image: "قفسهٔ داروخانه" },
   { title: "مصاحبهٔ کاری", level: "hard", image: "میز مصاحبه" },
-  { title: "جلسهٔ کاری", level: "hard", image: "اتاق جلسه", photo: "/images/scenarios/meeting-room.jpg" },
+  { title: "جلسهٔ کاری", level: "hard", image: "اتاق جلسه", photo: "/images/scenarios/meeting-room.webp" },
   { title: "مراجعه به پزشک", level: "medium", image: "اتاق معاینه" },
   { title: "گشتن برای خانه", level: "medium", image: "نمای آپارتمان" },
-  { title: "باز کردن حساب بانکی", level: "hard", image: "باجهٔ بانک", photo: "/images/scenarios/bank.jpg" },
+  { title: "باز کردن حساب بانکی", level: "hard", image: "باجهٔ بانک", photo: "/images/scenarios/bank.webp" },
   { title: "گفت‌وگو با همکار", level: "medium", image: "آشپزخانهٔ اداره" },
   { title: "سفر به فرودگاه", level: "medium", image: "سالن فرودگاه" },
   { title: "اعتراض به یک مشکل", level: "hard", image: "گفت‌وگوی جدی" },
-  { title: "تشخیص خدمات و تعمیر", level: "medium", image: "کارگاه تعمیر", photo: "/images/scenarios/repair.jpg" },
-  { title: "توضیح یک سوءتفاهم", level: "hard", image: "دو نفر در حال توضیح", photo: "/images/scenarios/misunderstanding.jpg" },
+  { title: "تشخیص خدمات و تعمیر", level: "medium", image: "کارگاه تعمیر", photo: "/images/scenarios/repair.webp" },
+  { title: "توضیح یک سوءتفاهم", level: "hard", image: "دو نفر در حال توضیح", photo: "/images/scenarios/misunderstanding.webp" },
 ];
 
 function ThumbIcon() {
