@@ -91,7 +91,10 @@ export function patchScenario(
     };
     return {
       ...current,
-      scenarios: { ...current.scenarios, [slug]: updater(previous) },
+      scenarios: {
+        ...current.scenarios,
+        [slug]: { ...updater(previous), updatedAt: new Date().toISOString() },
+      },
     };
   });
 }

@@ -60,6 +60,8 @@ export type ScenarioProgress = {
   buildAnswer: Record<number, string>;
   turns: { turnIndex: number; attempts: number; done: boolean }[];
   startedAt: string;
+  /** آخرین فعالیت در این سناریو — مبنای «آخرین درس» در داشبورد */
+  updatedAt?: string;
   completedAt?: string;
 };
 

@@ -1,99 +1,425 @@
-/* صفحهٔ امروز — کارت اصلی + ستون کناری */
+/* داشبورد «امروز» — موبایل‌فرست، تک‌ستونی؛ دسکتاپ فقط فاصله‌ها را باز می‌کند */
 
-.layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  gap: 22px;
-  align-items: start;
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 620px;
 }
 
-.cardTop {
+/* ---------- ۱. لئو ---------- */
+
+.greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.leoRow {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
+  gap: 12px;
 }
 
-.cardKicker {
-  margin: 0 0 6px;
-  font-size: 12px;
+.leoAvatar {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  overflow: hidden;
+  border: 1px solid rgba(244, 189, 13, 0.32);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 30%,
+    rgba(244, 189, 13, 0.2),
+    rgba(22, 31, 49, 0.9)
+  );
+}
+
+.leoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.08) translateY(2px);
+}
+
+.leoBubble {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: 13px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  border-top-right-radius: 6px;
+  background: var(--surface-raised);
+}
+
+/* دُم حباب رو به آواتار */
+.leoBubble::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  right: -5px;
+  width: 9px;
+  height: 9px;
+  border-top: 1px solid var(--hairline);
+  border-right: 1px solid var(--hairline);
+  background: var(--surface-raised);
+  transform: rotate(45deg);
+}
+
+.leoName {
+  margin: 0 0 2px;
+  font-size: 11.5px;
   font-weight: 600;
   color: var(--gold);
 }
 
-.thumb {
-  flex: 0 0 auto;
-  width: 96px;
-  height: 96px;
-  overflow: hidden;
-  border: 1px solid rgba(244, 189, 13, 0.3);
-  border-radius: 16px;
+.leoText {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.9;
+  color: var(--text);
 }
 
-.thumbImage {
+.dayStrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dayPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text-secondary);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.dayDone {
+  border-color: rgba(244, 189, 13, 0.34);
+  background: rgba(244, 189, 13, 0.1);
+  color: var(--gold);
+}
+
+/* ---------- ۲. آخرین درس ---------- */
+
+.lessonCard {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: 20px;
+  background: var(--surface);
+}
+
+.lessonMedia {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 8.5;
+  background: var(--surface-raised);
+}
+
+.lessonImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.progressRow {
+/* محو شدن لبهٔ پایین عکس تا عنوان نرم بنشیند */
+.lessonMedia::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 45%;
+  background: linear-gradient(
+    to top,
+    rgba(17, 24, 39, 0.85),
+    rgba(17, 24, 39, 0)
+  );
+  pointer-events: none;
+}
+
+.lessonLevel {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  padding: 4px 12px;
+  border: 1px solid rgba(244, 189, 13, 0.35);
+  border-radius: var(--radius-pill);
+  background: rgba(11, 18, 32, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--gold);
+  font-size: 11.5px;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+}
+
+.lessonBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 18px 18px;
+}
+
+.kicker {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.lessonTitle {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.lessonMeta {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+
+.lessonProgress {
+  position: relative;
+  height: 5px;
+  margin-top: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lessonProgressFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--gold), #ffd65a);
+  transition: width 0.4s ease;
+}
+
+.lessonActions {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-top: 22px;
+  gap: 12px;
+  margin-top: 8px;
 }
 
-.progressRow > div {
+.lessonCta {
   flex: 1;
+  height: 48px;
 }
 
-.actions {
+.lessonLink {
+  flex: 0 0 auto;
+  padding: 0 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  transition: color 0.16s ease;
+}
+
+.lessonLink:hover {
+  color: var(--gold);
+}
+
+/* ---------- ۳. تمرین پیشنهادی ---------- */
+
+.suggestion {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px;
+  border: 1px solid rgba(148, 176, 255, 0.22);
+  border-radius: 18px;
+  background: linear-gradient(
+    160deg,
+    rgba(60, 92, 180, 0.16),
+    rgba(22, 31, 49, 0.85)
+  );
+}
+
+.suggestionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.suggestionLabel {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #a9bcff;
+}
+
+.suggestionMinutes {
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.suggestionTitle {
+  margin: 2px 0 0;
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.suggestionBody {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--text-secondary);
+}
+
+.suggestionCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 9px 16px;
+  border: 1px solid rgba(148, 176, 255, 0.35);
+  border-radius: var(--radius-pill);
+  background: rgba(148, 176, 255, 0.1);
+  color: #c8d4ff;
+  font-size: 13px;
+  font-weight: 600;
+  transition:
+    background 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.suggestionCta:hover {
+  border-color: rgba(148, 176, 255, 0.6);
+  background: rgba(148, 176, 255, 0.18);
+}
+
+/* ---------- ۴. دسترسی سریع ---------- */
+
+.quick {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 22px;
 }
 
-.nextTitle {
-  margin: 6px 0 4px;
+.quickTitle {
+  margin: 0;
   font-family: var(--font-heading);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text);
 }
 
-.soon {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 3px 10px;
-  border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-muted);
-  font-size: 11.5px;
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 
-.stats {
-  display: flex;
-  gap: 22px;
-  margin-top: 12px;
-}
-
-.stats > div {
+.quickCard {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
+  padding: 15px;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background: var(--surface);
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease,
+    transform 0.16s ease;
 }
 
-.statValue {
-  font-family: var(--font-heading);
-  font-size: 24px;
-  font-weight: 800;
+.quickCard:hover {
+  border-color: rgba(244, 189, 13, 0.32);
+  background: var(--surface-raised);
+  transform: translateY(-1px);
+}
+
+.quickWide {
+  grid-column: 1 / -1;
+}
+
+.quickIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 4px;
+  border-radius: 10px;
+  background: rgba(244, 189, 13, 0.12);
   color: var(--gold);
-  line-height: 1.2;
 }
 
-@media (max-width: 980px) {
-  .layout {
+.quickName {
+  font-family: var(--font-heading);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.quickHint {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+/* ---------- دسکتاپ ---------- */
+
+@media (min-width: 900px) {
+  .dashboard {
+    max-width: 1024px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    grid-template-areas:
+      "lesson greeting"
+      "lesson suggestion"
+      "quick  suggestion";
+    gap: 20px;
+    align-content: start;
+  }
+
+  .greeting {
+    grid-area: greeting;
+  }
+
+  .lessonCard {
+    grid-area: lesson;
+    align-self: start;
+  }
+
+  .lessonMedia {
+    aspect-ratio: 16 / 9;
+  }
+
+  .suggestion {
+    grid-area: suggestion;
+  }
+
+  .quick {
+    grid-area: quick;
+  }
+}
+
+@media (max-width: 380px) {
+  .quickGrid {
     grid-template-columns: minmax(0, 1fr);
   }
 }
