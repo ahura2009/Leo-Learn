@@ -182,6 +182,11 @@
   font-weight: 500;
   line-height: 1.8;
   white-space: nowrap;
+
+  /* سایهٔ تیرهٔ نرم زیر برچسب تا روی عکس روشن هم خوانا بماند */
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.28),
+    0 1px 3px rgba(0, 0, 0, 0.22);
 }
 
 .easy {

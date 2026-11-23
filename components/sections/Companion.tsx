@@ -12,7 +12,7 @@ const roles = [
   {
     name: "گارسون کافه",
     desc: "سفارش غذا و نوشیدنی",
-    image: "/images/leo-barista.webp",
+    image: "/images/Leo/leo-barista.webp",
     alt: "لئو با پیش‌بند گارسون کافه",
     width: 1235,
     height: 1274,
@@ -20,7 +20,7 @@ const roles = [
   {
     name: "مصاحبه‌گر",
     desc: "مصاحبهٔ شغلی و معرفی خود",
-    image: "/images/leo-interview.webp",
+    image: "/images/Leo/leo-interview.webp",
     alt: "لئو در نقش مصاحبه‌گر شغلی",
     width: 1254,
     height: 1254,
@@ -28,7 +28,7 @@ const roles = [
   {
     name: "همکار جدید",
     desc: "گفت‌وگوی روزمرهٔ محیط کار",
-    image: "/images/leo-colleague.webp",
+    image: "/images/Leo/leo-colleague.webp",
     alt: "لئو در نقش همکار جدید",
     width: 1235,
     height: 1274,
@@ -36,7 +36,7 @@ const roles = [
   {
     name: "پزشک",
     desc: "توضیح علائم و شکایت",
-    image: "/images/leo-doctor.webp",
+    image: "/images/Leo/leo-doctor.webp",
     alt: "لئو در نقش پزشک",
     width: 1235,
     height: 1274,
