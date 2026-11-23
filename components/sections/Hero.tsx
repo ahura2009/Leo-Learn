@@ -72,7 +72,7 @@ export function Hero() {
               width={1254}
               height={1254}
               priority
-              sizes="(max-width: 1440px) 640px, 640px"
+              sizes="(max-width: 1100px) 90vw, 750px"
               className={styles.mediaImage}
             />
 
