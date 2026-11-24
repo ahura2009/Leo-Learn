@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./Footer.module.css";
 
 const columns = [
@@ -38,7 +39,7 @@ export function Footer() {
             مصاحبهٔ کاری — و از همان روز اول انگلیسی حرف بزن.
           </p>
 
-          <a href="#scenarios" className={styles.cta}>
+          <Link href="/App/sign-up" className={styles.cta}>
             شروع رایگان
             <svg
               width="16"
@@ -54,7 +55,7 @@ export function Footer() {
               <path d="M19 12H5" />
               <path d="m12 19-7-7 7-7" />
             </svg>
-          </a>
+          </Link>
         </div>
 
         {/* ستون‌های لینک */}

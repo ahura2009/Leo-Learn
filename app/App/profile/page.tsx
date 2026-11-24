@@ -4,6 +4,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useRequireProfile } from "../hooks/useRequireProfile";
 import { useApp } from "../components/AppProvider";
+import { useAuth } from "../components/AuthProvider";
+import { AuthBanner } from "../components/auth/AuthBanner";
+import { displayPhone } from "../lib/auth/phone";
+import { messageFor } from "../lib/auth/types";
 import { goalLabel, levelLabel, type Goal, type Level } from "../lib/types";
 import ui from "../components/Ui.module.css";
 import styles from "./profile.module.css";
@@ -13,13 +17,16 @@ const goals: Goal[] = ["travel", "work", "daily"];
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { ready, profile } = useRequireProfile();
+  const { ready, profile, user } = useRequireProfile();
   const { progress, saveProfile, resetAll } = useApp();
+  const { signOut } = useAuth();
 
   const [name, setName] = useState<string | null>(null);
   const [confirming, setConfirming] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!ready || !profile) {
+  if (!ready || !profile || !user) {
     return <div className={ui.empty}>در حال آماده‌سازی…</div>;
   }
 
@@ -28,18 +35,42 @@ export default function ProfilePage() {
     (item) => item.completedAt,
   ).length;
 
-  const update = (patch: Partial<{ level: Level; goal: Goal }>) => {
-    saveProfile({ ...profile, ...patch });
+  const update = async (patch: Parameters<typeof saveProfile>[0]) => {
+    setBusy(true);
+    setError(null);
+    try {
+      await saveProfile(patch);
+    } catch (caught) {
+      setError(messageFor(caught));
+    } finally {
+      setBusy(false);
+    }
   };
 
-  const commitName = () => {
+  const commitName = async () => {
     const clean = displayName.trim();
+    if (clean === profile.name) {
+      setName(null);
+      return;
+    }
     if (clean.length < 2) {
       setName(profile.name);
       return;
     }
-    saveProfile({ ...profile, name: clean });
-    setName(clean);
+    await update({ name: clean });
+    setName(null);
+  };
+
+  const handleSignOut = async () => {
+    setBusy(true);
+    setError(null);
+    try {
+      await signOut();
+      router.replace("/App/sign-in");
+    } catch (caught) {
+      setError(messageFor(caught));
+      setBusy(false);
+    }
   };
 
   return (
@@ -49,6 +80,8 @@ export default function ProfilePage() {
         <h1 className={ui.title}>تنظیمات تمرین</h1>
       </header>
 
+      {error ? <AuthBanner variant="error">{error}</AuthBanner> : null}
+
       <section className={ui.card}>
         <div className={ui.stack}>
           <label className={styles.field}>
@@ -57,8 +90,9 @@ export default function ProfilePage() {
               className={styles.input}
               value={displayName}
               maxLength={24}
+              disabled={busy}
               onChange={(event) => setName(event.target.value)}
-              onBlur={commitName}
+              onBlur={() => void commitName()}
               onKeyDown={(event) => {
                 if (event.key === "Enter") event.currentTarget.blur();
               }}
@@ -75,7 +109,9 @@ export default function ProfilePage() {
                   className={`${styles.pill} ${
                     profile.level === level ? styles.active : ""
                   }`}
-                  onClick={() => update({ level })}
+                  onClick={() => void update({ level })}
+                  disabled={busy}
+                  aria-pressed={profile.level === level}
                 >
                   {level} · {levelLabel[level]}
                 </button>
@@ -93,7 +129,9 @@ export default function ProfilePage() {
                   className={`${styles.pill} ${
                     profile.goal === goal ? styles.active : ""
                   }`}
-                  onClick={() => update({ goal })}
+                  onClick={() => void update({ goal })}
+                  disabled={busy}
+                  aria-pressed={profile.goal === goal}
                 >
                   {goalLabel[goal]}
                 </button>
@@ -104,10 +142,12 @@ export default function ProfilePage() {
       </section>
 
       <section className={ui.card}>
-        <div className={ui.row}>
+        <div className={styles.accountRow}>
           <div>
-            <p className={ui.meta}>درس‌های انجام‌شده</p>
-            <p className={styles.lessons}>{lessons}</p>
+            <p className={ui.meta}>شمارهٔ موبایل</p>
+            <p className={styles.phone} dir="ltr">
+              {displayPhone(user.phone)}
+            </p>
           </div>
           <div>
             <p className={ui.meta}>عضو از</p>
@@ -116,13 +156,28 @@ export default function ProfilePage() {
             </p>
           </div>
         </div>
+
+        <div className={styles.accountRow}>
+          <div>
+            <p className={ui.meta}>درس‌های انجام‌شده</p>
+            <p className={styles.lessons}>{lessons}</p>
+          </div>
+          <button
+            type="button"
+            className={ui.ghost}
+            onClick={() => void handleSignOut()}
+            disabled={busy}
+          >
+            خروج از حساب
+          </button>
+        </div>
       </section>
 
       <section className={`${ui.card} ${styles.danger}`}>
         <p className={ui.cardTitle}>پاک کردن پیشرفت</p>
         <p className={ui.muted}>
-          همهٔ درس‌ها، واژه‌ها و زنجیرهٔ روزهای پیوسته حذف می‌شود و به onboarding
-          برمی‌گردی. این کار برگشت‌پذیر نیست.
+          همهٔ درس‌ها، واژه‌ها و زنجیرهٔ روزهای پیوستهٔ این حساب پاک می‌شود، ولی
+          حساب و شمارهٔ موبایل سر جایشان می‌مانند. این کار برگشت‌پذیر نیست.
         </p>
 
         {confirming ? (
@@ -132,10 +187,10 @@ export default function ProfilePage() {
               className={styles.dangerButton}
               onClick={() => {
                 resetAll();
-                router.replace("/App/onboarding");
+                setConfirming(false);
               }}
             >
-              بله، همه را پاک کن
+              بله، پیشرفت را پاک کن
             </button>
             <button
               type="button"

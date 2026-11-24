@@ -53,7 +53,7 @@ export function Hero() {
 
           <Reveal delay={260}>
             <div className={styles.actions}>
-              <Link href="/App/onboarding" className={styles.primary}>
+              <Link href="/App/sign-up" className={styles.primary}>
                 رایگان شروع کن!
               </Link>
               <Link href="#how" className={styles.secondary}>

@@ -1,62 +1,47 @@
 "use client";
 
-import type { Phrase, Profile, Progress, ScenarioProgress } from "./types";
+import type { Phrase, Progress, ScenarioProgress } from "./types";
 import {
-  clearStorage,
+  clearLegacyStorage,
+  clearProgress,
   emptyProgress,
   markPracticed,
-  readProfile,
   readProgress,
-  writeProfile,
   writeProgress,
 } from "./storage";
 
 /* یک store بیرونی کوچک روی localStorage.
    کامپوننت‌ها با useSyncExternalStore به آن وصل می‌شوند تا خواندن
-   localStorage خارج از رندر و بدون setState داخل effect انجام شود. */
+   localStorage خارج از رندر و بدون setState داخل effect انجام شود.
+   پیشرفت با شناسهٔ کاربر جاری فعال می‌شود؛ AuthProvider بالاتر از
+   AppProvider نشسته و این فعال‌سازی را با تغییر نشست هماهنگ می‌کند. */
 
 export type Snapshot = {
   ready: boolean;
-  profile: Profile | null;
   progress: Progress;
 };
 
 const SERVER_SNAPSHOT: Snapshot = {
   ready: false,
-  profile: null,
   progress: { version: 2, scenarios: {}, words: {}, days: [], streak: 0 },
 };
 
 let snapshot: Snapshot = SERVER_SNAPSHOT;
-let started = false;
+let activeUserId: string | null = null;
 const listeners = new Set<() => void>();
 
 function emit() {
   for (const listener of listeners) listener();
 }
 
-function ensureStarted() {
-  if (started || typeof window === "undefined") return;
-  started = true;
-  /* اینجا emit نمی‌کنیم: getSnapshot ممکن است وسط رندر صدا زده شود و
-     emit در آن لحظه یعنی به‌روزرسانی کامپوننت در حال رندر. */
-  snapshot = {
-    ready: true,
-    profile: readProfile(),
-    progress: readProgress(),
-  };
-}
-
 export function subscribe(listener: () => void) {
   listeners.add(listener);
-  ensureStarted();
   return () => {
     listeners.delete(listener);
   };
 }
 
 export function getSnapshot(): Snapshot {
-  ensureStarted();
   return snapshot;
 }
 
@@ -64,15 +49,23 @@ export function getServerSnapshot(): Snapshot {
   return SERVER_SNAPSHOT;
 }
 
-export function saveProfile(profile: Profile) {
-  writeProfile(profile);
-  snapshot = { ...snapshot, profile };
+/** از طرف AppProvider بعد از روشن‌شدن وضعیت نشست صدا زده می‌شود. */
+export function activateUser(userId: string | null) {
+  if (activeUserId === userId && snapshot.ready) return;
+
+  activeUserId = userId;
+  snapshot = {
+    ready: true,
+    progress: userId ? readProgress(userId) : emptyProgress(),
+  };
   emit();
 }
 
 export function updateProgress(updater: (current: Progress) => Progress) {
+  if (!activeUserId) return;
+
   const next = updater(snapshot.progress);
-  writeProgress(next);
+  writeProgress(activeUserId, next);
   snapshot = { ...snapshot, progress: next };
   emit();
 }
@@ -136,12 +129,11 @@ export function completeScenario(slug: string, words: Phrase[]) {
   });
 }
 
-export function resetAll() {
-  clearStorage();
-  snapshot = {
-    ready: true,
-    profile: null,
-    progress: emptyProgress(),
-  };
+/** پاک‌کردن پیشرفت همین حساب — نه حذف حساب. */
+export function resetProgress() {
+  if (!activeUserId) return;
+  clearProgress(activeUserId);
+  clearLegacyStorage();
+  snapshot = { ready: true, progress: emptyProgress() };
   emit();
 }

@@ -1,12 +1,18 @@
 "use client";
 
-import type { Profile, Progress } from "./types";
+import type { Progress } from "./types";
 
 /* ذخیره‌سازی محلی — بدون سرور. هر خواندن/نوشتن داخل try/catch است،
-   چون حالت خصوصی مرورگر می‌تواند دسترسی را با خطا رد کند. */
+   چون حالت خصوصی مرورگر می‌تواند دسترسی را با خطا رد کند.
+   پیشرفت هر حساب با شناسهٔ کاربر جدا می‌شود تا حساب‌های یک مرورگر
+   پیشرفت همدیگر را نبینند. */
 
-export const PROFILE_KEY = "leo-learn:profile";
-export const PROGRESS_KEY = "leo-learn:progress";
+const LEGACY_PROGRESS_KEY = "leo-learn:progress";
+const LEGACY_PROFILE_KEY = "leo-learn:profile";
+
+function progressKey(userId: string): string {
+  return `leo-learn:progress:${userId}`;
+}
 
 export function emptyProgress(): Progress {
   return { version: 2, scenarios: {}, words: {}, days: [], streak: 0 };
@@ -29,18 +35,8 @@ function writeJSON(key: string, value: unknown) {
   }
 }
 
-export function readProfile(): Profile | null {
-  const value = readJSON<Profile>(PROFILE_KEY);
-  if (!value || typeof value.name !== "string" || !value.name.trim()) return null;
-  return value;
-}
-
-export function writeProfile(profile: Profile) {
-  writeJSON(PROFILE_KEY, profile);
-}
-
-export function readProgress(): Progress {
-  const raw = readJSON<Progress & { version?: number }>(PROGRESS_KEY);
+export function readProgress(userId: string): Progress {
+  const raw = readJSON<Progress & { version?: number }>(progressKey(userId));
   /* نسخهٔ قدیمی دموی لندینگ نسخه نداشت؛ مهاجرت نمی‌کنیم و از صفر می‌شود. */
   if (!raw || raw.version !== 2) return emptyProgress();
 
@@ -53,14 +49,24 @@ export function readProgress(): Progress {
   };
 }
 
-export function writeProgress(progress: Progress) {
-  writeJSON(PROGRESS_KEY, progress);
+export function writeProgress(userId: string, progress: Progress) {
+  writeJSON(progressKey(userId), progress);
 }
 
-export function clearStorage() {
+export function clearProgress(userId: string) {
   try {
-    window.localStorage.removeItem(PROFILE_KEY);
-    window.localStorage.removeItem(PROGRESS_KEY);
+    window.localStorage.removeItem(progressKey(userId));
+  } catch {
+    /* بی‌صدا */
+  }
+}
+
+/* بعد از انتقال به حساب، دادهٔ محلی نسخهٔ بدون حساب دیگر خوانده نمی‌شود.
+   فقط در لحظهٔ خروج از حساب اولیه پاک می‌شود تا مرورگر تمیز بماند. */
+export function clearLegacyStorage() {
+  try {
+    window.localStorage.removeItem(LEGACY_PROGRESS_KEY);
+    window.localStorage.removeItem(LEGACY_PROFILE_KEY);
   } catch {
     /* بی‌صدا */
   }

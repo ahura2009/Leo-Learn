@@ -1,13 +1,17 @@
 "use client";
 
-import { useSyncExternalStore, type ReactNode } from "react";
+import { useSyncExternalStore, useEffect, type ReactNode } from "react";
+import { authApi } from "../lib/auth/client";
+import { updateAuthUser } from "../lib/auth/session";
+import { profileFromUser } from "../lib/auth/user";
+import { useAuth } from "./AuthProvider";
 import {
+  activateUser,
   completeScenario,
   getServerSnapshot,
   getSnapshot,
   patchScenario,
-  resetAll,
-  saveProfile,
+  resetProgress,
   subscribe,
   updateProgress,
 } from "../lib/store";
@@ -19,13 +23,31 @@ export function AppProvider({ children }: { children: ReactNode }) {
     getSnapshot,
     getServerSnapshot,
   );
+  const { status, user } = useAuth();
+  const userId = status === "authenticated" && user ? user.id : null;
+
+  /* پیشرفت هر حساب جدا است؛ با تغییر نشست، storage همان کاربر فعال می‌شود. */
+  useEffect(() => {
+    if (status === "loading") return;
+    activateUser(userId);
+  }, [status, userId]);
+
+  const profile = profileFromUser(
+    status === "authenticated" ? user : null,
+  );
+
+  const saveProfile: AppContextValue["saveProfile"] = async (patch) => {
+    if (status !== "authenticated" || !user) throw new Error("not signed in");
+    const next = await authApi.updateProfile(patch);
+    updateAuthUser(next);
+  };
 
   const value: AppContextValue = {
     ready: snapshot.ready,
-    profile: snapshot.profile,
+    profile,
     progress: snapshot.progress,
     saveProfile,
-    resetAll,
+    resetAll: resetProgress,
     updateProgress,
     patchScenario,
     completeScenario,

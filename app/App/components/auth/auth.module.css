@@ -1,0 +1,882 @@
+/* صفحه‌های احراز هویت — همان زبان بصری لندینگ و اپ:
+   سرمه‌ای تیره، طلایی، فونت دانا برای تیتر و ایران‌یکان برای متن. */
+
+.screen {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.frame {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 400px;
+  gap: 28px;
+  width: 100%;
+  max-width: 1000px;
+  align-items: stretch;
+}
+
+.frameSingle {
+  grid-template-columns: minmax(0, 440px);
+  max-width: 440px;
+}
+
+/* ستون فرم (سمت راست در RTL) */
+.formPanel {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.card {
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+  padding: 36px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+}
+
+.compactBrand {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
+.logoMark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(150deg, var(--gold), #d99f04);
+  color: #211700;
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 900;
+}
+
+.logoWord {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.kicker {
+  margin: 0 0 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 29px;
+  font-weight: 800;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.subtitle {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.95;
+  color: var(--text-secondary);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.inputWrap {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  outline: none;
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.input[dir="ltr"] {
+  text-align: left;
+  font-family: var(--font-body);
+  letter-spacing: 0.3px;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+  letter-spacing: 0;
+}
+
+.input:focus {
+  border-color: rgba(244, 189, 13, 0.55);
+  box-shadow: 0 0 0 3px rgba(244, 189, 13, 0.12);
+}
+
+.input:disabled {
+  opacity: 0.6;
+}
+
+.invalid {
+  border-color: rgba(226, 118, 118, 0.65);
+}
+
+.invalid:focus {
+  border-color: rgba(226, 118, 118, 0.7);
+  box-shadow: 0 0 0 3px rgba(226, 118, 118, 0.12);
+}
+
+.eyeButton {
+  position: absolute;
+  inset-inline-end: 8px;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-muted);
+  transform: translateY(-50%);
+  transition:
+    color 0.16s ease,
+    background 0.16s ease;
+}
+
+.eyeButton:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+.eyeButton:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+
+.hint {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: #f0a3a3;
+}
+
+/* ---------- شمارهٔ موبایل ---------- */
+
+.phoneRow {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  gap: 8px;
+  direction: ltr;
+}
+
+.countryButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+  height: 52px;
+  padding: 0 12px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease;
+}
+
+.countryAnchor {
+  position: relative;
+}
+
+.countryButton:hover {
+  border-color: rgba(255, 255, 255, 0.26);
+}
+
+.countryButton:focus-visible {
+  outline: none;
+  border-color: rgba(244, 189, 13, 0.55);
+  box-shadow: 0 0 0 3px rgba(244, 189, 13, 0.12);
+}
+
+.countryButton[aria-expanded="true"] {
+  border-color: rgba(244, 189, 13, 0.55);
+}
+
+.countryDial {
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+.chevron {
+  color: var(--text-muted);
+  flex: none;
+}
+
+.countryPanel {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  left: 0;
+  width: min(300px, calc(100vw - 72px));
+  padding: 10px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  direction: rtl;
+}
+
+.countrySearch {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  outline: none;
+}
+
+.countrySearch:focus {
+  border-color: rgba(244, 189, 13, 0.5);
+}
+
+.countryList {
+  max-height: 264px;
+  margin: 8px 0 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.countryOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  text-align: right;
+}
+
+.countryOption:hover,
+.countryActive {
+  background: rgba(244, 189, 13, 0.1);
+  color: var(--text);
+}
+
+.countryEmpty {
+  padding: 16px 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ---------- رمز عبور ---------- */
+
+.passwordInput {
+  padding-inline-end: 52px;
+  direction: ltr;
+  text-align: left;
+}
+
+.strength {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.strengthBars {
+  display: flex;
+  gap: 5px;
+}
+
+.strengthSeg {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  transition: background 0.2s ease;
+}
+
+.strengthSegOn {
+  background: var(--gold);
+}
+
+.strengthLabel {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  text-align: left;
+  direction: rtl;
+}
+
+.rules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rule {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.ruleDone {
+  color: #9ccf9c;
+}
+
+.ruleDot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ---------- شرایط و لینک‌ها ---------- */
+
+.checkRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.checkbox {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  accent-color: var(--gold);
+}
+
+.linkButton {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.linkButton:hover {
+  color: #ffd23f;
+}
+
+.termsLink {
+  align-self: flex-start;
+  font-size: 12.5px;
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  height: 52px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--gold);
+  color: #241a00;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  transition:
+    background 0.16s ease,
+    transform 0.16s ease,
+    opacity 0.16s ease;
+}
+
+.submit:hover:not(:disabled) {
+  background: #ffd23f;
+  transform: translateY(-1px);
+}
+
+.submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(36, 26, 0, 0.3);
+  border-top-color: #241a00;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.linksRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.linkInline {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.linkInline:hover {
+  color: #ffd23f;
+}
+
+.footerText {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--hairline);
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* ---------- پیام‌ها ---------- */
+
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.bannerIcon {
+  flex: none;
+  margin-top: 2px;
+}
+
+.bannerError {
+  border: 1px solid rgba(226, 118, 118, 0.35);
+  background: rgba(200, 80, 80, 0.1);
+  color: #f3b4b4;
+}
+
+.bannerWarning {
+  border: 1px solid rgba(244, 189, 13, 0.3);
+  background: rgba(244, 189, 13, 0.08);
+  color: #f3d488;
+}
+
+.bannerSuccess {
+  border: 1px solid rgba(150, 205, 150, 0.32);
+  background: rgba(120, 190, 120, 0.1);
+  color: #b7dfb7;
+}
+
+.bannerRetry {
+  margin-inline-start: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+/* ---------- کد یک‌بارمصرف ---------- */
+
+.otpRow {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  direction: ltr;
+}
+
+.otpCell {
+  width: 46px;
+  height: 56px;
+  padding: 0;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 14px;
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: var(--font-heading);
+  font-size: 25px;
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    background 0.16s ease;
+}
+
+.otpCell:focus {
+  border-color: rgba(244, 189, 13, 0.65);
+  box-shadow: 0 0 0 3px rgba(244, 189, 13, 0.14);
+}
+
+.otpFilled {
+  border-color: rgba(244, 189, 13, 0.45);
+  background: rgba(244, 189, 13, 0.06);
+}
+
+.otpInvalid {
+  border-color: rgba(226, 118, 118, 0.6);
+}
+
+.otpInvalid:focus {
+  box-shadow: 0 0 0 3px rgba(226, 118, 118, 0.12);
+}
+
+.resendRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.resendButton {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.resendButton:disabled {
+  color: var(--text-muted);
+  font-weight: 500;
+  cursor: default;
+}
+
+.timer {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+/* ---------- ستون برند ---------- */
+
+.brandPanel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 34px;
+  overflow: hidden;
+  border: 1px solid rgba(244, 189, 13, 0.22);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(90% 70% at 80% 0%, rgba(244, 189, 13, 0.2), transparent 62%),
+    radial-gradient(80% 70% at 10% 100%, rgba(30, 64, 175, 0.32), transparent 70%),
+    var(--surface-raised);
+}
+
+.brandPanel::after {
+  position: absolute;
+  inset: auto -70px -110px auto;
+  width: 240px;
+  height: 240px;
+  border: 1px solid rgba(244, 189, 13, 0.16);
+  border-radius: 50%;
+  content: "";
+}
+
+.brandTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brandTitle {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.brandLead {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 2;
+  color: var(--text-secondary);
+}
+
+.brandList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.brandItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: var(--text-secondary);
+}
+
+.brandBullet {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: rgba(244, 189, 13, 0.14);
+  color: var(--gold);
+}
+
+.leoWrap {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.leo {
+  position: relative;
+  flex: none;
+  width: 76px;
+  height: 76px;
+  overflow: hidden;
+  border: 2px solid rgba(244, 189, 13, 0.5);
+  border-radius: 24px;
+  background: #0e1626;
+}
+
+.leoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.leoBubble {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid var(--hairline);
+  border-radius: 14px 14px 14px 4px;
+  background: rgba(11, 18, 32, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.leoName {
+  font-family: var(--font-heading);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.leoText {
+  margin-top: 2px;
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: var(--text-secondary);
+}
+
+/* ---------- مودال قوانین ---------- */
+
+.modalBackdrop {
+  position: fixed;
+  z-index: 60;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(3, 7, 15, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  width: min(480px, 100%);
+  max-height: min(72vh, 620px);
+  padding: 26px;
+  overflow: auto;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.modalHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.modalTitle {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.modalClose {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.modalClose:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+.modalList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding-inline-start: 18px;
+  font-size: 13px;
+  line-height: 1.95;
+  color: var(--text-secondary);
+}
+
+.modalList li::marker {
+  color: var(--gold);
+}
+
+/* ---------- واکنش‌گرا ---------- */
+
+@media (max-width: 860px) {
+  .screen {
+    padding: 22px 16px 40px;
+    align-items: flex-start;
+  }
+
+  .frame {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 520px;
+  }
+
+  .formPanel {
+    order: 1;
+  }
+
+  .brandPanel {
+    display: none;
+  }
+
+  .compactBrand {
+    display: flex;
+  }
+
+  .card {
+    padding: 26px 22px;
+  }
+
+  .title {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 420px) {
+  .phoneRow {
+    grid-template-columns: 104px minmax(0, 1fr);
+  }
+
+  .otpRow {
+    gap: 6px;
+  }
+
+  .otpCell {
+    width: 100%;
+    max-width: 48px;
+    height: 56px;
+    font-size: 22px;
+  }
+}

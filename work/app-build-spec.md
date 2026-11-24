@@ -15,8 +15,8 @@
 | ضبط صدا و مقایسهٔ تلفظ | نسخهٔ ۲ — در v1 نیست |
 | چت آزاد با لئو | نسخهٔ ۲ — در v1 نیست |
 | منبع محتوا | فایل JSON داخل ریپو؛ کد از محتوا جدا |
-| پیشرفت | `localStorage`؛ بدون سرور، بدون حساب واقعی |
-| ثبت‌نام | محلی (نام + هدف + سطح)؛ بدون رمز و بدون ایمیل |
+| پیشرفت | `localStorage` به‌ازای هر حساب: `leo-learn:progress:<userId>` |
+| ثبت‌نام | موبایل + رمز + OTP پیامکی روی سرور auth واقعی؛ بدون ایمیل |
 | تم | تیرهٔ لندینگ (سرمه‌ای/طلایی)، موبایل‌فرست، RTL |
 | زبان UI | فارسی؛ محتوای انگلیسی با `dir="ltr"` |
 
@@ -31,7 +31,12 @@
 |---|---|---|
 | `app/page.tsx` (موجود) | `https://ahura2009.github.io/Leo-Learn/` | لندینگ |
 | `app/App/page.tsx` | `/Leo-Learn/App/` | صفحهٔ **امروز** |
-| `app/App/onboarding/page.tsx` | `/Leo-Learn/App/onboarding/` | خوش‌آمد، نام، سطح، هدف |
+| `app/App/sign-in/page.tsx` | `/Leo-Learn/App/sign-in/` | ورود با موبایل و رمز |
+| `app/App/sign-up/page.tsx` | `/Leo-Learn/App/sign-up/` | ثبت‌نام و دریافت OTP |
+| `app/App/verify/page.tsx` | `/Leo-Learn/App/verify/` | تأیید کد پیامکی |
+| `app/App/forgot-password/page.tsx` | `/Leo-Learn/App/forgot-password/` | درخواست کد بازیابی |
+| `app/App/reset-password/page.tsx` | `/Leo-Learn/App/reset-password/` | کد + رمز تازه |
+| `app/App/onboarding/page.tsx` | `/Leo-Learn/App/onboarding/` | سطح و هدف (نام در ثبت‌نام) |
 | `app/App/path/page.tsx` | `/Leo-Learn/App/path/` | مسیر و فهرست سناریوها |
 | `app/App/scenario/[slug]/page.tsx` | `/Leo-Learn/App/scenario/cafe-order/` | پیش‌نمایش سناریو |
 | `app/App/scenario/[slug]/lesson/page.tsx` | `/Leo-Learn/App/scenario/cafe-order/lesson/` | بازیکن درس |
@@ -53,23 +58,26 @@
 
 ### ورود از لندینگ
 
-- `components/layout/Header.tsx` → دکمهٔ «ثبت‌نام / ورود» به `/App/onboarding`
-  لینک شود (الان `#scenarios` است).
-- `components/sections/Hero.tsx` → دکمهٔ «رایگان شروع کن!» به `/App/onboarding`.
+- `components/layout/Header.tsx` → دکمهٔ «ثبت‌نام / ورود» به `/App/sign-in`.
+- `components/sections/Hero.tsx` → دکمهٔ «رایگان شروع کن!» به `/App/sign-up`.
 - کارت‌های `Scenarios.tsx` → هر کارتی که `slug` دارد به
   `/App/scenario/<slug>/` برود. کارت‌های بدون سناریوی نوشته‌شده فعلاً به
   `/App/path` بروند.
-- بخش FAQ: لینک «نسخهٔ نمایشی» اگر جایی اضافه شد → `/App/onboarding`.
+- بخش FAQ: لینک «نسخهٔ نمایشی» اگر جایی اضافه شد → `/App/sign-up`.
 
-### جریان ثبت‌نام → اپ
+### جریان ورود → اپ
 
-1. هر ورودی اپ (`/App/...`) اول `leo-learn:profile` را می‌خواند.
-2. اگر پروفایل نبود → `router.replace("/App/onboarding")`.
-3. اگر بود → همان صفحه رندر می‌شود.
-4. پایان onboarding → `router.replace("/App")` و کارت کافه با دکمهٔ شروع.
-5. onboarding شامل ۳ مرحله در **یک صفحه** است (نه سه روت): نام → سطح →
-   هدف؛ یک نوار پیشرفت بالای صفحه. دکمهٔ «بعدی» فقط وقتی فعال است که همان
+1. هر ورودی اپ (`/App/...`) اول نشست را از `GET /auth/session` می‌خواند.
+2. اگر نشست نبود → `router.replace("/App/sign-in")`.
+3. اگر نشست بود ولی `onboardedAt` خالی → `router.replace("/App/onboarding")`.
+4. اگر onboarding تمام شده → همان صفحه رندر می‌شود.
+5. پایان onboarding → ذخیرهٔ سطح/هدف در حساب، `router.replace("/App")` و
+   کارت کافه با دکمهٔ شروع.
+6. onboarding شامل ۲ مرحله در **یک صفحه** است (نه دو روت): سطح → هدف؛
+   یک نوار پیشرفت بالای صفحه. دکمهٔ «بعدی» فقط وقتی فعال است که همان
    مرحله پر شده.
+
+قرارداد کامل API و الزامات استقرار در `docs/auth.md` است.
 
 ---
 
@@ -132,10 +140,11 @@ type Turn = {
 ## ۳) داده: پیشرفت
 
 کلیدها در `localStorage` با try/catch (private mode ممکن است خطا بدهد).
+پروفایل دیگر در مرورگر ذخیره نمی‌شود؛ منبع حقیقت رکورد کاربر در سرور auth
+است (`name/level/goal/onboardedAt`). پیشرفت به‌ازای هر حساب جدا می‌شود.
 
 ```ts
-const PROFILE_KEY = "leo-learn:profile";
-const PROGRESS_KEY = "leo-learn:progress";
+const progressKey = (userId: string) => `leo-learn:progress:${userId}`;
 
 type Profile = {
   name: string;
@@ -163,8 +172,8 @@ type Progress = {
 
 قواعد:
 
-- نسخهٔ قبلی `leo-learn:progress` (دموی قدیمی) را اگر `version` نداشت، به
-  نسخهٔ ۲ نادیده بگیر (پاک کن). مهاجرت لازم نیست.
+- نسخهٔ قبلی `leo-learn:progress` (دموی قدیمی) و `leo-learn:profile` دیگر
+  خوانده نمی‌شوند؛ دادهٔ بدون حساب به حساب جدید نسبت داده نمی‌شود.
 - `days` و `streak` هر بار که یک Step با موفقیت تمام می‌شود به‌روز می‌شوند،
   ولی یک بار در روز؛ تکرار همان روز `streak` را بالا نمی‌برد.
 - هر تغییر بلافاصله ذخیره می‌شود، نه در پایان درس — کاربر ممکن است وسط کار
@@ -313,9 +322,9 @@ app/App/
 انجام‌شده، دکمهٔ «پاک کردن پیشرفت» با تأیید درون‌صفحه (نه `confirm()`
 مرورگر).
 
-**onboarding** — سه گام در یک صفحه: نام → سطح (A1/A2/B1 با توضیح یک‌خطی) →
-هدف (سفر / کار / روزمره). نوار پیشرفت بالا. ذخیره در `PROFILE_KEY` و انتقال
-به `/App`.
+**onboarding** — دو گام در یک صفحه: سطح (A1/A2/B1 با توضیح یک‌خطی) →
+هدف (سفر / کار / روزمره). نوار پیشرفت بالا. ذخیره در حساب با
+`PATCH /auth/profile` و انتقال به `/App`. نام در ثبت‌نام گرفته شده است.
 
 ---
 
@@ -329,9 +338,10 @@ app/App/
    `/Leo-Learn/App/path/`، `/Leo-Learn/App/progress/`،
    `/Leo-Learn/App/scenario/cafe-order/`،
    `/Leo-Learn/App/scenario/cafe-order/lesson/`.
-3. از لندینگ، «ثبت‌نام / ورود» → onboarding → نام/سطح/هدف → `/App` بدون
-   خطای ۴۰۴.
-4. کاربر بدون پروفایل که مستقیم `/App` را باز می‌کند، به onboarding می‌رود.
+3. از لندینگ، «ثبت‌نام / ورود» → ثبت‌نام با موبایل → OTP → سطح/هدف →
+   `/App` بدون خطای ۴۰۴ (با سرور auth بالا).
+4. کاربر بدون نشست که مستقیم `/App` را باز می‌کند، به sign-in می‌رود؛
+   کاربر واردشدهٔ بدون onboarding به onboarding می‌رود.
 5. کافه تا مرحلهٔ ۳ می‌رود، صفحه بسته می‌شود، باز شدن دوباره → مرحلهٔ ۳.
 6. جواب غلط در build → یک نکتهٔ فارسی، «دوباره» کار می‌کند، و بعد از درست
    شدن مرحله جلو می‌رود.

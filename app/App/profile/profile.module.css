@@ -68,6 +68,30 @@
   color: var(--text);
 }
 
+.accountRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.accountRow + .accountRow {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+}
+
+.phone {
+  margin: 4px 0 0;
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  direction: ltr;
+  text-align: left;
+}
+
 .danger {
   display: flex;
   flex-direction: column;

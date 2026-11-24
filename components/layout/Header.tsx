@@ -59,7 +59,7 @@ export function Header() {
             </svg>
           </button>
 
-          <Link href="/App/onboarding" className={styles.cta}>
+          <Link href="/App/sign-in" className={styles.cta}>
             ثبت‌نام / ورود
           </Link>
         </div>

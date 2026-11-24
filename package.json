@@ -7,9 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test --experimental-strip-types \"app/App/lib/**/*.test.ts\""
+    "test": "node --test --experimental-strip-types \"app/App/lib/**/*.test.ts\"",
+    "auth:server": "node --env-file-if-exists=.env.local server/auth/index.mjs",
+    "test:server": "node --test \"server/auth/**/*.test.mjs\""
   },
   "dependencies": {
+    "libphonenumber-js": "^1.13.17",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest"
@@ -22,5 +25,8 @@
     "eslint": "latest",
     "eslint-config-next": "latest",
     "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

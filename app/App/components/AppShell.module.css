@@ -76,10 +76,103 @@
   min-width: 0;
 }
 
-/* صفحه‌های بدون شل (onboarding و درس) */
+/* صفحه‌های بدون شل (onboarding، درس و احراز هویت) */
 .bare {
   min-height: 100vh;
   width: 100%;
+}
+
+/* وضعیت نشست — تا تصمیم نهایی، محتوای حساب‌دار پنهان است */
+.status {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.statusCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 430px;
+  padding: 34px 28px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  text-align: center;
+}
+
+.statusIcon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 4px;
+  border-radius: 14px;
+  background: rgba(244, 189, 13, 0.12);
+  color: var(--gold);
+}
+
+.statusSpinner {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 8px;
+  border: 2.5px solid rgba(244, 189, 13, 0.2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: statusSpin 0.8s linear infinite;
+}
+
+@keyframes statusSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.statusTitle {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.statusText {
+  font-size: 13.5px;
+  line-height: 1.95;
+  color: var(--text-secondary);
+}
+
+.statusActions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.retry {
+  height: 44px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--gold);
+  color: #241a00;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.retry:hover {
+  background: #ffd23f;
+}
+
+.statusLink {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 @media (max-width: 900px) {

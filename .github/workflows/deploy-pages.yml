@@ -31,6 +31,9 @@ jobs:
       - run: npm run build
         env:
           NEXT_PUBLIC_BASE_PATH: /Leo-Learn
+          # اختیاری: پس از استقرار بک‌اند auth، این مقدار را در
+          # Settings → Secrets and variables → Actions → Variables بسازید.
+          NEXT_PUBLIC_AUTH_API_URL: ${{ vars.NEXT_PUBLIC_AUTH_API_URL }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

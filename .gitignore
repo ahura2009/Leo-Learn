@@ -30,6 +30,7 @@ pnpm-debug.log*
 
 # env files
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -43,3 +44,6 @@ next-env.d.ts
 
 # source images (kept locally; the site ships the compressed WebP)
 /work/image-sources/
+
+# local auth database
+/server/auth/data/

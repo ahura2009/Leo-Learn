@@ -1,8 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRequireAuth } from "../hooks/useRequireProfile";
 import { useApp } from "../components/AppProvider";
+import { AuthBanner } from "../components/auth/AuthBanner";
+import { messageFor } from "../lib/auth/types";
 import { levelLabel, goalLabel, type Goal, type Level } from "../lib/types";
 import ui from "../components/Ui.module.css";
 import styles from "./onboarding.module.css";
@@ -21,39 +24,46 @@ const goals: { value: Goal; title: string; hint: string }[] = [
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const { ready, profile, saveProfile } = useApp();
+  const { ready, user } = useRequireAuth();
+  const { saveProfile } = useApp();
 
   const [step, setStep] = useState(0);
-  const [name, setName] = useState("");
   const [level, setLevel] = useState<Level | null>(null);
   const [goal, setGoal] = useState<Goal | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  /* کاربر واردشده و آمادهٔ onboarding نباید دوباره این صفحه را ببیند */
+  useEffect(() => {
+    if (ready && user?.onboardedAt) router.replace("/App");
+  }, [ready, user, router]);
 
   const canContinue =
-    (step === 0 && name.trim().length >= 2) ||
-    (step === 1 && level !== null) ||
-    (step === 2 && goal !== null);
+    (step === 0 && level !== null) || (step === 1 && goal !== null);
 
-  const finish = (finalGoal: Goal) => {
-    const now = new Date().toISOString();
-    saveProfile({
-      name: name.trim(),
-      level: level ?? "A1",
-      goal: finalGoal,
-      createdAt: profile?.createdAt ?? now,
-      onboardedAt: now,
-    });
-    router.replace("/App");
+  const finish = async (finalGoal: Goal) => {
+    if (!level || saving) return;
+    setSaving(true);
+    setError(null);
+
+    try {
+      await saveProfile({ level, goal: finalGoal });
+      router.replace("/App");
+    } catch (caught) {
+      setError(messageFor(caught));
+      setSaving(false);
+    }
   };
 
   const next = () => {
-    if (step < 2) {
+    if (step < 1) {
       setStep(step + 1);
       return;
     }
-    if (goal) finish(goal);
+    if (goal) void finish(goal);
   };
 
-  if (!ready) {
+  if (!ready || !user) {
     return <div className={styles.shell}>در حال آماده‌سازی…</div>;
   }
 
@@ -63,39 +73,18 @@ export default function OnboardingPage() {
         <div className={styles.progress} aria-hidden="true">
           <span
             className={styles.progressFill}
-            style={{ width: `${((step + 1) / 3) * 100}%` }}
+            style={{ width: `${((step + 1) / 2) * 100}%` }}
           />
         </div>
 
-        <p className={styles.kicker}>خوش آمدی</p>
+        <p className={styles.kicker}>سلام {user.name ?? "رفیق"}</p>
 
         {step === 0 && (
           <section className={styles.stage}>
-            <h1 className={styles.title}>اسمت را چه صدا کنیم؟</h1>
-            <p className={styles.hint}>
-              لئو در طول تمرین با همین اسم صدایت می‌زند. بدون رمز و ایمیل.
-            </p>
-            <label className={styles.field}>
-              <span>نام</span>
-              <input
-                className={styles.input}
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" && canContinue) next();
-                }}
-                placeholder="مثلاً سارا"
-                autoFocus
-                maxLength={24}
-              />
-            </label>
-          </section>
-        )}
-
-        {step === 1 && (
-          <section className={styles.stage}>
             <h1 className={styles.title}>الان کجای مسیری؟</h1>
-            <p className={styles.hint}>یک انتخاب کافی است؛ بعداً قابل تغییر است.</p>
+            <p className={styles.hint}>
+              یک انتخاب کافی است؛ بعداً از پروفایل قابل تغییر است.
+            </p>
             <div className={styles.options}>
               {levels.map((item) => (
                 <button
@@ -118,7 +107,7 @@ export default function OnboardingPage() {
           </section>
         )}
 
-        {step === 2 && (
+        {step === 1 && (
           <section className={styles.stage}>
             <h1 className={styles.title}>برای چه تمرین می‌کنی؟</h1>
             <p className={styles.hint}>سناریوها را براساس همین هدف می‌چینیم.</p>
@@ -139,11 +128,13 @@ export default function OnboardingPage() {
               ))}
             </div>
             <p className={styles.summary}>
-              {name.trim()} · {level ? levelLabel[level] : ""} ·{" "}
+              {user.name ?? ""} · {level ? levelLabel[level] : ""} ·{" "}
               {goal ? goalLabel[goal] : ""}
             </p>
           </section>
         )}
+
+        {error ? <AuthBanner variant="error">{error}</AuthBanner> : null}
 
         <div className={styles.actions}>
           {step > 0 ? (
@@ -151,6 +142,7 @@ export default function OnboardingPage() {
               type="button"
               className={ui.ghost}
               onClick={() => setStep(step - 1)}
+              disabled={saving}
             >
               قبلی
             </button>
@@ -158,10 +150,10 @@ export default function OnboardingPage() {
           <button
             type="button"
             className={`${ui.button} ${styles.next}`}
-            disabled={!canContinue}
+            disabled={!canContinue || saving}
             onClick={next}
           >
-            {step === 2 ? "شروع کن" : "بعدی"}
+            {saving ? "در حال ذخیره…" : step === 1 ? "شروع کن" : "بعدی"}
           </button>
         </div>
       </div>

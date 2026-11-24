@@ -3,12 +3,16 @@
 import { createContext, useContext } from "react";
 import type { Phrase, Profile, Progress, ScenarioProgress } from "../lib/types";
 
+export type ProfilePatch = Partial<Pick<Profile, "name" | "level" | "goal">>;
+
 export type AppContextValue = {
-  /** تا وقتی localStorage خوانده نشده، هیچ صفحه‌ای تصمیم نگیرد */
+  /** تا وقتی پیشرفت کاربر جاری خوانده نشده، هیچ صفحه‌ای تصمیم نگیرد */
   ready: boolean;
+  /** فقط بعد از اتمام onboarding مقدار دارد */
   profile: Profile | null;
   progress: Progress;
-  saveProfile: (profile: Profile) => void;
+  /** نام/سطح/هدف را در حساب ذخیره می‌کند (سرور منبع حقیقت است) */
+  saveProfile: (patch: ProfilePatch) => Promise<void>;
   resetAll: () => void;
   updateProgress: (updater: (current: Progress) => Progress) => void;
   patchScenario: (
