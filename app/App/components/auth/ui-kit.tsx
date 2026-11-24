@@ -14,9 +14,10 @@ export function ServiceNotice() {
   if (!authServiceConfigured) {
     return (
       <AuthBanner variant="warning">
-        سرور احراز هویت برای این نسخه تنظیم نشده است. تا اتصال بک‌اند Leo Learn
-        و تنظیم <span dir="ltr">NEXT_PUBLIC_AUTH_API_URL</span>، ورود و ثبت‌نام
-        فعال نمی‌شود. کد نمایشی هم ارائه نمی‌کنیم.
+        سرور احراز هویت برای این نسخه تنظیم نشده است؛ ثبت‌نام و ورود با
+        حساب‌های واقعی فعلاً فعال نیست. تا تنظیم{" "}
+        <span dir="ltr">NEXT_PUBLIC_AUTH_API_URL</span> فقط حساب نمایشی کار
+        می‌کند.
       </AuthBanner>
     );
   }

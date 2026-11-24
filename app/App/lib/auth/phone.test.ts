@@ -46,6 +46,7 @@ test("شمارهٔ بین‌المللی با + کد کشور خودش را حف
 });
 
 test("نمایش و ماسک شماره", () => {
-  assert.equal(formatNational("9123456789", "IR"), "0912 345 6789");
+  assert.equal(formatNational("9123456789", "IR"), "912 345 6789");
+  assert.equal(formatNational("09123456789", "IR"), "912 345 6789");
   assert.equal(maskPhone("+989123456789"), "+98 912 ••• 89");
 });

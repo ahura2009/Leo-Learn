@@ -152,15 +152,22 @@ export function splitInternational(input: string): {
   return { country: parsed.country, national: parsed.nationalNumber };
 }
 
-/** نمایش حین تایپ — فاصله‌گذاری ملی همان کشور. */
+/** نمایش حین تایپ — فاصله‌گذاری ملی همان کشور.
+   برای ایران صفر ابتدای شمارهٔ ملی نمایش داده نمی‌شود (۰۹۱۲ → 912). */
 export function formatNational(national: string, country: CountryCode): string {
   const digits = digitsOnly(national);
   if (!digits) return "";
 
   const parsed = parsePhoneNumberFromString(digits, country);
-  if (parsed?.isValid()) return parsed.formatNational();
+  const formatted = parsed?.isValid()
+    ? parsed.formatNational()
+    : new AsYouType(country).input(digits);
 
-  return new AsYouType(country).input(digits);
+  if (country === "IR" && formatted.startsWith("0")) {
+    return formatted.slice(1).trimStart();
+  }
+
+  return formatted;
 }
 
 /** نمایش عمومی: +98 912 ••• 67 */
@@ -184,7 +191,7 @@ export function displayPhone(e164: string): string {
 }
 
 export function phoneExample(country: CountryCode): string {
-  if (country === "IR") return "0912 123 4567";
+  if (country === "IR") return "912 123 4567";
   if (country === "US" || country === "CA") return "(202) 555-0123";
   if (country === "DE") return "0151 23456789";
   if (country === "GB") return "07400 123456";

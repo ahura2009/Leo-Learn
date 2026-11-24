@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore, useEffect, type ReactNode } from "react";
 import { authApi } from "../lib/auth/client";
+import { DEMO_USER, saveDemoProfile } from "../lib/auth/demo";
 import { updateAuthUser } from "../lib/auth/session";
 import { profileFromUser } from "../lib/auth/user";
 import { useAuth } from "./AuthProvider";
@@ -38,6 +39,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const saveProfile: AppContextValue["saveProfile"] = async (patch) => {
     if (status !== "authenticated" || !user) throw new Error("not signed in");
+
+    /* حساب نمایشی سرور ندارد؛ ویرایش در همین مرورگر می‌ماند. */
+    if (user.id === DEMO_USER.id) {
+      saveDemoProfile(patch);
+      updateAuthUser({
+        ...user,
+        name: patch.name ?? user.name,
+        level: patch.level ?? user.level,
+        goal: patch.goal ?? user.goal,
+      });
+      return;
+    }
+
     const next = await authApi.updateProfile(patch);
     updateAuthUser(next);
   };

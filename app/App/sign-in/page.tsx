@@ -12,6 +12,11 @@ import {
   SubmitButton,
 } from "../components/auth/ui-kit";
 import { authApi } from "../lib/auth/client";
+import {
+  getDemoUser,
+  isDemoLogin,
+  startDemoSession,
+} from "../lib/auth/demo";
 import { setAuthUser } from "../lib/auth/session";
 import { messageFor, AuthApiError } from "../lib/auth/types";
 import { destinationFor } from "../lib/auth/user";
@@ -46,6 +51,14 @@ export default function SignInPage() {
     setErrors(nextErrors);
     setFormError(null);
     if (Object.keys(nextErrors).length > 0 || !phone.result.ok) return;
+
+    /* حساب نمایشی — بدون بک‌اند و فقط همین یک ورود. */
+    if (isDemoLogin(phone.result.e164, password)) {
+      startDemoSession();
+      setAuthUser(getDemoUser());
+      router.replace("/App");
+      return;
+    }
 
     setSubmitting(true);
     try {

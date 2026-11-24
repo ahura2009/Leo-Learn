@@ -1,6 +1,11 @@
 "use client";
 
 import { authApi } from "./client";
+import {
+  endDemoSession,
+  getDemoUser,
+  hasDemoSession,
+} from "./demo";
 import { AuthApiError, type AuthUser } from "./types";
 
 /* وضعیت نشست در یک store کوچک بیرونی.
@@ -73,13 +78,20 @@ export async function refreshSession(): Promise<void> {
       const user = await authApi.session();
       if (user) {
         setSnapshot({ status: "authenticated", user, error: null });
+      } else if (hasDemoSession()) {
+        setSnapshot({ status: "authenticated", user: getDemoUser(), error: null });
       } else {
         setSnapshot({ status: "anonymous", user: null, error: null });
       }
     } catch (error) {
       const authError =
         error instanceof AuthApiError ? error : new AuthApiError("UNKNOWN");
-      setSnapshot({ status: "unavailable", user: null, error: authError });
+
+      if (hasDemoSession()) {
+        setSnapshot({ status: "authenticated", user: getDemoUser(), error: null });
+      } else {
+        setSnapshot({ status: "unavailable", user: null, error: authError });
+      }
     } finally {
       inflight = null;
     }
@@ -104,6 +116,9 @@ export function clearAuthUser() {
 }
 
 export async function signOut(): Promise<void> {
-  await authApi.signOut();
+  const demo = hasDemoSession();
+  endDemoSession();
+
+  if (!demo) await authApi.signOut();
   clearAuthUser();
 }
