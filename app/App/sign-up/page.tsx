@@ -8,7 +8,6 @@ import { AuthBanner } from "../components/auth/AuthBanner";
 import { PhoneField } from "../components/auth/PhoneField";
 import { PasswordField } from "../components/auth/PasswordField";
 import {
-  ServiceNotice,
   SubmitButton,
   TermsModal,
 } from "../components/auth/ui-kit";
@@ -101,16 +100,9 @@ export default function SignUpPage() {
   };
 
   return (
-    <AuthScreen>
-      <p className={styles.kicker}>ثبت‌نام</p>
-      <h1 className={styles.title}>حساب بساز</h1>
-      <p className={styles.subtitle}>
-        با موبایل ثبت‌نام کن؛ یک کد پیامکی شماره‌ات را تأیید می‌کند. بدون ایمیل.
-      </p>
-
-      <form className={styles.form} onSubmit={submit} noValidate>
-        <ServiceNotice />
-
+    <AuthScreen aside={false}>
+      <h1 className={styles.srOnly}>ثبت‌نام در Leo Learn</h1>
+      <form className={`${styles.form} ${styles.formFlush}`} onSubmit={submit} noValidate>
         <div className={styles.field}>
           <label className={styles.label} htmlFor="signup-name">
             نام
