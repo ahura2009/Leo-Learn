@@ -11,8 +11,10 @@ export function loadConfig(env = process.env) {
 
   const config = {
     production,
-    host: env.AUTH_HOST ?? "127.0.0.1",
-    port: Number(env.AUTH_PORT ?? 8787),
+    /* لیارا و بیشتر PaaSها پورت را در PORT می‌گذارند؛ AUTH_PORT اولویت دارد
+       تا اجرای محلی دست‌نخورده بماند. */
+    host: env.AUTH_HOST ?? (production ? "0.0.0.0" : "127.0.0.1"),
+    port: Number(env.AUTH_PORT ?? env.PORT ?? 8787),
     dbPath: env.AUTH_DB_PATH ?? join(here, "data", "auth.sqlite"),
     sessionSecret,
     allowedOrigins: (env.AUTH_ALLOWED_ORIGINS ??

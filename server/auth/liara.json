@@ -1,0 +1,12 @@
+{
+  "platform": "node",
+  "node": {
+    "nodeVersion": "24"
+  },
+  "disks": [
+    {
+      "name": "authdata",
+      "mountTo": "data"
+    }
+  ]
+}

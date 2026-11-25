@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+.git
+.github
+work
+Files
+*.tsbuildinfo
+.env*
+!/.env.example
+/server/auth/data

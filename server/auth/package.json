@@ -1,0 +1,13 @@
+{
+  "name": "leo-learn-auth",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Leo Learn auth API (phone + password + SMS OTP)",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node index.mjs",
+    "test": "node --test"
+  }
+}
