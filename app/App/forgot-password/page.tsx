@@ -6,7 +6,7 @@ import { useState, type FormEvent } from "react";
 import { AuthScreen } from "../components/auth/AuthScreen";
 import { AuthBanner } from "../components/auth/AuthBanner";
 import { PhoneField } from "../components/auth/PhoneField";
-import { ServiceNotice, SubmitButton } from "../components/auth/ui-kit";
+import { SubmitButton } from "../components/auth/ui-kit";
 import { authApi } from "../lib/auth/client";
 import { savePending } from "../lib/auth/pending";
 import { AuthApiError, messageFor } from "../lib/auth/types";
@@ -57,17 +57,10 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <AuthScreen>
-      <p className={styles.kicker}>بازیابی رمز</p>
-      <h1 className={styles.title}>رمزت را فراموش کردی؟</h1>
-      <p className={styles.subtitle}>
-        شمارهٔ موبایلی که با آن ثبت‌نام کرده‌ای را وارد کن؛ برایت یک کد تأیید
-        می‌فرستیم تا رمز تازه بگذاری.
-      </p>
+    <AuthScreen aside={false}>
+      <h1 className={styles.srOnly}>بازیابی رمز عبور</h1>
 
-      <form className={styles.form} onSubmit={submit} noValidate>
-        <ServiceNotice />
-
+      <form className={`${styles.form} ${styles.formFlush}`} onSubmit={submit} noValidate>
         <PhoneField
           country={phone.country}
           national={phone.national}

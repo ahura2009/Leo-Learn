@@ -12,7 +12,7 @@ import {
 import { AuthScreen } from "../components/auth/AuthScreen";
 import { AuthBanner } from "../components/auth/AuthBanner";
 import { OtpField } from "../components/auth/OtpField";
-import { ServiceNotice, SubmitButton, useCountdown } from "../components/auth/ui-kit";
+import { SubmitButton, useCountdown } from "../components/auth/ui-kit";
 import { authApi } from "../lib/auth/client";
 import {
   clearPending,
@@ -154,19 +154,14 @@ export default function VerifyPage() {
   if (pending === null) return null;
 
   return (
-    <AuthScreen>
-      <p className={styles.kicker}>تأیید شماره</p>
-      <h1 className={styles.title}>کد را وارد کن</h1>
-      <p className={styles.subtitle}>
-        کد {pending.challenge.codeLength} رقمی به{" "}
-        <span dir="ltr" className={styles.linkInline}>
-          {maskPhone(pending.challenge.phone)}
-        </span>{" "}
-        پیامک شد. کد پنج دقیقه معتبر است.
-      </p>
+    <AuthScreen aside={false}>
+      <h1 className={styles.srOnly}>تأیید شمارهٔ موبایل</h1>
 
-      <form className={styles.form} onSubmit={submit} noValidate>
-        <ServiceNotice />
+      <form className={`${styles.form} ${styles.formFlush}`} onSubmit={submit} noValidate>
+        <p className={styles.hint}>
+          کد {pending.challenge.codeLength} رقمی به{" "}
+          <span dir="ltr">{maskPhone(pending.challenge.phone)}</span> پیامک شد.
+        </p>
 
         <OtpField
           value={code}

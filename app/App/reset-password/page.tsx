@@ -14,7 +14,6 @@ import { AuthBanner } from "../components/auth/AuthBanner";
 import { OtpField } from "../components/auth/OtpField";
 import { PasswordField } from "../components/auth/PasswordField";
 import {
-  ServiceNotice,
   SubmitButton,
   useCountdown,
 } from "../components/auth/ui-kit";
@@ -175,17 +174,15 @@ export default function ResetPasswordPage() {
   if (pending === null) return null;
 
   return (
-    <AuthScreen>
-      <p className={styles.kicker}>رمز تازه</p>
-      <h1 className={styles.title}>رمز تازه بگذار</h1>
-      <p className={styles.subtitle}>
-        اگر <span dir="ltr">{maskPhone(pending.challenge.phone)}</span> در Leo
-        Learn ثبت شده باشد، کد تأیید برایش پیامک شد. کد را همراه با رمز تازه
-        وارد کن.
-      </p>
+    <AuthScreen aside={false}>
+      <h1 className={styles.srOnly}>گذاشتن رمز تازه</h1>
 
-      <form className={styles.form} onSubmit={submit} noValidate>
-        <ServiceNotice />
+      <form className={`${styles.form} ${styles.formFlush}`} onSubmit={submit} noValidate>
+        <p className={styles.hint}>
+          کد تأیید به{" "}
+          <span dir="ltr">{maskPhone(pending.challenge.phone)}</span> پیامک شد؛
+          همراه رمز تازه واردش کن.
+        </p>
 
         <div className={styles.field}>
           <span className={styles.label}>کد تأیید</span>
