@@ -45,7 +45,8 @@ AUTH_SMS_PROVIDER=console npm run auth:server
 
 The `console` SMS provider is development-only: the OTP is printed **only in the
 server log**, never returned to the browser or shown in the UI. In production,
-set `AUTH_SMS_PROVIDER=kavenegar` with real credentials.
+set `AUTH_SMS_PROVIDER=mediana` (see [`docs/mediana-sms.md`](docs/mediana-sms.md))
+or `AUTH_SMS_PROVIDER=kavenegar` with real credentials.
 
 Run the app in another terminal:
 

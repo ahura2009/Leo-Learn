@@ -25,6 +25,12 @@ export function loadConfig(env = process.env) {
       kavenegarApiKey: env.KAVENEGAR_API_KEY ?? "",
       kavenegarTemplate: env.KAVENEGAR_OTP_TEMPLATE ?? "",
       kavenegarSender: env.KAVENEGAR_SENDER ?? "",
+      medianaApiKey: env.MEDIANA_API_KEY ?? "",
+      medianaPatternCode: env.MEDIANA_PATTERN_CODE ?? "",
+      medianaBaseUrl: (env.MEDIANA_BASE_URL ?? "https://api.mediana.ir").replace(
+        /\/+$/,
+        "",
+      ),
       webhookUrl: env.AUTH_SMS_WEBHOOK_URL ?? "",
       webhookToken: env.AUTH_SMS_WEBHOOK_TOKEN ?? "",
     },
@@ -56,6 +62,12 @@ export function validateConfig(config) {
     if (!config.sms.kavenegarApiKey || !config.sms.kavenegarTemplate) {
       throw new Error(
         "KAVENEGAR_API_KEY and KAVENEGAR_OTP_TEMPLATE are required when AUTH_SMS_PROVIDER=kavenegar",
+      );
+    }
+  } else if (config.sms.provider === "mediana") {
+    if (!config.sms.medianaApiKey || !config.sms.medianaPatternCode) {
+      throw new Error(
+        "MEDIANA_API_KEY and MEDIANA_PATTERN_CODE are required when AUTH_SMS_PROVIDER=mediana",
       );
     }
   } else if (config.sms.provider === "webhook") {

@@ -31,6 +31,40 @@ export function createSmsSender(sms, { logger = console } = {}) {
     };
   }
 
+  if (sms.provider === "mediana") {
+    /* Mediana «Send OTP»: الگوی تعریف‌شده در پنل + کد به‌عنوان otpCode.
+       شماره‌ها به شکل ملی بدون + فرستاده می‌شوند (989121234567). */
+    return async ({ phone, code }) => {
+      const response = await fetch(`${sms.medianaBaseUrl}/sms/v1/send/otp`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          accept: "application/json",
+          "X-API-KEY": sms.medianaApiKey,
+        },
+        body: JSON.stringify({
+          patternCode: sms.medianaPatternCode,
+          recipient: phone.replace(/^\+/, ""),
+          otpCode: code,
+        }),
+      });
+
+      const body = await response.json().catch(() => null);
+      /* خطاها همیشه ۲۰۰ نیستند؛ هم وضعیت HTTP و هم meta.code را می‌سنجیم. */
+      if (!response.ok || (body?.meta?.code && body.meta.code !== "OK")) {
+        throw new Error(
+          `Mediana error ${body?.meta?.code ?? response.status}: ${
+            body?.meta?.errorMessage ?? ""
+          }`,
+        );
+      }
+
+      if (body?.data?.succeed === false) {
+        throw new Error(`Mediana rejected the message: ${body?.data?.message ?? ""}`);
+      }
+    };
+  }
+
   if (sms.provider === "webhook") {
     return async ({ phone, code }) => {
       const response = await fetch(sms.webhookUrl, {

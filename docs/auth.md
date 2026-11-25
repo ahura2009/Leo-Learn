@@ -157,7 +157,8 @@ npm run test:server
 |---|---|
 | `NEXT_PUBLIC_AUTH_API_URL` | آدرس API برای مرورگر (در build درج می‌شود) |
 | `AUTH_SESSION_SECRET` | امضای توکن نشست/OTP — production ≥ ۳۲ کاراکتر |
-| `AUTH_SMS_PROVIDER` | `kavenegar` \| `webhook` \| `console` (فقط توسعه) |
+| `AUTH_SMS_PROVIDER` | `mediana` \| `kavenegar` \| `webhook` \| `console` (فقط توسعه) |
+| `MEDIANA_API_KEY` / `MEDIANA_PATTERN_CODE` | ارسال OTP واقعی با مدیانا |
 | `KAVENEGAR_API_KEY` / `KAVENEGAR_OTP_TEMPLATE` | ارسال OTP واقعی |
 | `AUTH_ALLOWED_ORIGINS` | مبدأهای مجاز CORS |
 | `AUTH_DB_PATH` | مسیر SQLite برای نمونه |
