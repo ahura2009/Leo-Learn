@@ -19,7 +19,7 @@ export function AuthScreen({
     <div className={styles.screen}>
       <div className={`${styles.frame} ${aside ? "" : styles.frameSingle}`}>
         <div className={styles.formPanel}>
-          <div className={styles.card}>
+          <div className={`${styles.card} ${aside ? "" : styles.cardSolo}`}>
             <div className={styles.compactBrand}>
               <span className={styles.logoMark}>L</span>
               <span className={styles.logoWord}>Leo Learn</span>

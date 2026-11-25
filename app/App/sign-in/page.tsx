@@ -7,10 +7,7 @@ import { AuthScreen } from "../components/auth/AuthScreen";
 import { AuthBanner } from "../components/auth/AuthBanner";
 import { PhoneField } from "../components/auth/PhoneField";
 import { PasswordField } from "../components/auth/PasswordField";
-import {
-  ServiceNotice,
-  SubmitButton,
-} from "../components/auth/ui-kit";
+import { SubmitButton } from "../components/auth/ui-kit";
 import { authApi } from "../lib/auth/client";
 import {
   getDemoUser,
@@ -78,17 +75,9 @@ export default function SignInPage() {
   };
 
   return (
-    <AuthScreen>
-      <p className={styles.kicker}>ورود</p>
-      <h1 className={styles.title}>خوش برگشتی</h1>
-      <p className={styles.subtitle}>
-        با شمارهٔ موبایل و رمز عبورت وارد شو تا از همان‌جایی که ماندی ادامه
-        بدهی.
-      </p>
-
-      <form className={styles.form} onSubmit={submit} noValidate>
-        <ServiceNotice />
-
+    <AuthScreen aside={false}>
+      <h1 className={styles.srOnly}>ورود به Leo Learn</h1>
+      <form className={`${styles.form} ${styles.formFlush}`} onSubmit={submit} noValidate>
         <PhoneField
           country={phone.country}
           national={phone.national}

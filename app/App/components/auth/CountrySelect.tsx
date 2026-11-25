@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CountryCode } from "libphonenumber-js/min";
 import { countries, countryOption } from "../../lib/auth/phone";
+import { CountryFlag } from "./CountryFlag";
 import styles from "./auth.module.css";
 
 /* انتخاب پیش‌شماره — قابل جست‌وجو با نام فارسی/انگلیسی، کد دوحرفی یا +کد. */
@@ -76,8 +77,11 @@ export function CountrySelect({
           setOpen((current) => !current);
         }}
       >
-        <span className={styles.countryDial} dir="ltr">
-          {selected.dial}
+        <span className={styles.countrySelected}>
+          <CountryFlag code={selected.code} />
+          <span className={styles.countryDial} dir="ltr">
+            {selected.dial}
+          </span>
         </span>
         <Chevron />
       </button>
@@ -109,7 +113,10 @@ export function CountrySelect({
                     setQuery("");
                   }}
                 >
-                  <span>{item.nameFa}</span>
+                  <span className={styles.countryOptionName}>
+                    <CountryFlag code={item.code} />
+                    <span>{item.nameFa}</span>
+                  </span>
                   <span dir="ltr">{item.dial}</span>
                 </button>
               </li>
