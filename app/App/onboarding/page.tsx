@@ -14,12 +14,20 @@ const levels: { value: Level; title: string; hint: string }[] = [
   { value: "A1", title: "مبتدی", hint: "کم‌وبیش صفر؛ با جمله‌های کوتاه شروع می‌کنم" },
   { value: "A2", title: "پیش‌متوسط", hint: "چیزهایی می‌فهمم ولی در حرف زدن گیر می‌کنم" },
   { value: "B1", title: "متوسط", hint: "می‌توانم گفت‌وگو کنم، دنبال روانی هستم" },
+  { value: "B2", title: "متوسط بالا", hint: "راحت حرف می‌زنم، دنبال دقت و اصطلاحاتم" },
+  { value: "C1", title: "پیشرفته", hint: "تقریباً روانم؛ می‌خواهم طبیعی‌تر صحبت کنم" },
+  { value: "C2", title: "مسلط", hint: "در سطح نزدیک به زبان مادری؛ برای نگه‌داشتن تمرین" },
 ];
 
 const goals: { value: Goal; title: string; hint: string }[] = [
   { value: "travel", title: "سفر", hint: "فرودگاه، هتل، رستوران" },
   { value: "work", title: "کار", hint: "جلسه، ایمیل، مصاحبه" },
   { value: "daily", title: "روزمره", hint: "کافه، خرید، آشنایی" },
+  { value: "study", title: "تحصیل", hint: "کلاس، دانشگاه، مقاله" },
+  { value: "immigration", title: "مهاجرت", hint: "اداری، خانه، زندگی روزمره" },
+  { value: "exam", title: "آزمون", hint: "آیلتس، تافل و آزمون‌های مشابه" },
+  { value: "media", title: "فیلم و پادکست", hint: "سریال بدون زیرنویس، اخبار" },
+  { value: "family", title: "خانواده و دوستان", hint: "گفت‌وگوی گرم و صمیمی" },
 ];
 
 export default function OnboardingPage() {

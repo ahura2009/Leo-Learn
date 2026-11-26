@@ -35,8 +35,17 @@ import {
   verifyPassword,
 } from "./security.mjs";
 
-const LEVELS = new Set(["A1", "A2", "B1"]);
-const GOALS = new Set(["travel", "work", "daily"]);
+const LEVELS = new Set(["A1", "A2", "B1", "B2", "C1", "C2"]);
+const GOALS = new Set([
+  "travel",
+  "work",
+  "daily",
+  "study",
+  "immigration",
+  "exam",
+  "media",
+  "family",
+]);
 const AVATARS = new Set(["leo", "sun", "sky", "mint", "rose", "violet"]);
 const DAILY_MINUTES = new Set([5, 10, 15, 30]);
 const BIO_MAX = 60;

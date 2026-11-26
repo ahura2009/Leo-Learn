@@ -10,14 +10,28 @@ import { Avatar } from "../components/Avatar";
 import { displayPhone } from "../lib/auth/phone";
 import { messageFor } from "../lib/auth/types";
 import { AVATARS } from "../lib/avatars";
-import { goalLabel, levelLabel, type Goal, type Level } from "../lib/types";
+import {
+  GOALS,
+  LEVELS,
+  goalLabel,
+  levelLabel,
+  type Goal,
+  type Level,
+} from "../lib/types";
 import ui from "../components/Ui.module.css";
 import styles from "./profile.module.css";
 
-const levels: Level[] = ["A1", "A2", "B1"];
-const goals: Goal[] = ["travel", "work", "daily"];
 const dailyChoices = [5, 10, 15, 30];
 const BIO_MAX = 60;
+
+type Draft = {
+  name: string;
+  bio: string;
+  avatar: string;
+  level: Level;
+  goal: Goal;
+  dailyMinutes: number;
+};
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -25,8 +39,9 @@ export default function ProfilePage() {
   const { progress, saveProfile, resetAll } = useApp();
   const { signOut } = useAuth();
 
-  const [name, setName] = useState<string | null>(null);
-  const [bio, setBio] = useState<string | null>(null);
+  const [draft, setDraft] = useState<Draft | null>(null);
+  const [saved, setSaved] = useState(false);
+  const [examNotice, setExamNotice] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -35,48 +50,67 @@ export default function ProfilePage() {
     return <div className={ui.empty}>در حال آماده‌سازی…</div>;
   }
 
-  const displayName = name ?? profile.name;
-  const bioText = bio ?? profile.bio;
+  const form: Draft = draft ?? {
+    name: profile.name,
+    bio: profile.bio,
+    avatar: profile.avatar,
+    level: profile.level,
+    goal: profile.goal,
+    dailyMinutes: profile.dailyMinutes,
+  };
+
+  const edit = (patch: Partial<Draft>) => {
+    setDraft({ ...form, ...patch });
+    setSaved(false);
+    setError(null);
+  };
+
+  const changes = {
+    name: form.name.trim() !== profile.name ? form.name.trim() : undefined,
+    bio: form.bio.trim() !== profile.bio ? form.bio.trim() : undefined,
+    avatar: form.avatar !== profile.avatar ? form.avatar : undefined,
+    level: form.level !== profile.level ? form.level : undefined,
+    goal: form.goal !== profile.goal ? form.goal : undefined,
+    dailyMinutes:
+      form.dailyMinutes !== profile.dailyMinutes
+        ? form.dailyMinutes
+        : undefined,
+  };
+
+  const changed = Object.values(changes).some((value) => value !== undefined);
   const lessons = Object.values(progress.scenarios).filter(
     (item) => item.completedAt,
   ).length;
 
-  const update = async (patch: Parameters<typeof saveProfile>[0]) => {
+  const save = async () => {
+    if (!changed || busy) return;
+
+    if (changes.name !== undefined && changes.name.length < 2) {
+      setError("نام نمایشی باید حداقل ۲ حرف باشد.");
+      return;
+    }
+
+    const patch = Object.fromEntries(
+      Object.entries(changes).filter(([, value]) => value !== undefined),
+    );
+
     setBusy(true);
     setError(null);
     try {
       await saveProfile(patch);
-      return true;
+      setDraft(null);
+      setSaved(true);
     } catch (caught) {
       setError(messageFor(caught));
-      return false;
     } finally {
       setBusy(false);
     }
   };
 
-  const commitName = async () => {
-    const clean = displayName.trim();
-    if (clean === profile.name) {
-      setName(null);
-      return;
-    }
-    if (clean.length < 2) {
-      setName(profile.name);
-      return;
-    }
-    await update({ name: clean });
-    setName(null);
-  };
-
-  const commitBio = async () => {
-    const clean = bioText.trim();
-    if (clean === profile.bio) {
-      setBio(null);
-      return;
-    }
-    await update({ bio: clean });
-    setBio(null);
+  const discard = () => {
+    setDraft(null);
+    setSaved(false);
+    setError(null);
   };
 
   const handleSignOut = async () => {
@@ -102,24 +136,46 @@ export default function ProfilePage() {
 
       {/* ---------- نمای پروفایل ---------- */}
       <section className={`${ui.card} ${styles.hero}`}>
-        <Avatar id={profile.avatar} name={displayName} size={92} />
+        <Avatar id={form.avatar} name={form.name} size={92} />
 
         <div className={styles.heroBody}>
-          <p className={styles.heroName}>{displayName}</p>
-          <p className={bioText ? styles.heroBio : styles.heroBioEmpty}>
-            {bioText || "یک خط دربارهٔ خودت بنویس تا پروفایلت شخصی شود."}
+          <p className={styles.heroName}>{form.name || profile.name}</p>
+          <p className={form.bio ? styles.heroBio : styles.heroBioEmpty}>
+            {form.bio || "یک خط دربارهٔ خودت بنویس تا پروفایلت شخصی شود."}
           </p>
 
           <div className={styles.chips}>
             <span className={styles.chip}>
-              {profile.level} · {levelLabel[profile.level]}
+              {form.level} · {levelLabel[form.level]}
             </span>
-            <span className={styles.chip}>هدف: {goalLabel[profile.goal]}</span>
+            <span className={styles.chip}>هدف: {goalLabel[form.goal]}</span>
             <span className={styles.chipGold}>
-              {profile.dailyMinutes} دقیقه در روز
+              {form.dailyMinutes} دقیقه در روز
             </span>
           </div>
         </div>
+      </section>
+
+      {/* ---------- آزمون تعیین سطح ---------- */}
+      <section className={`${ui.card} ${styles.examCard}`}>
+        <div className={styles.examBody}>
+          <p className={ui.cardTitle}>مطمئن نیستی در چه سطحی هستی؟</p>
+          <p className={ui.muted}>
+            یک آزمون کوتاه مشخص می‌کند از کجا شروع کنی و سطح پروفایلت را
+            خودکار تنظیم می‌کند.
+          </p>
+          {examNotice ? (
+            <p className={styles.examSoon}>آزمون تعیین سطح به‌زودی فعال می‌شود.</p>
+          ) : null}
+        </div>
+
+        <button
+          type="button"
+          className={styles.examButton}
+          onClick={() => setExamNotice(true)}
+        >
+          شروع آزمون تعیین سطح
+        </button>
       </section>
 
       {/* ---------- شخصی‌سازی ---------- */}
@@ -135,15 +191,15 @@ export default function ProfilePage() {
                   key={item.id}
                   type="button"
                   className={`${styles.avatarPick} ${
-                    profile.avatar === item.id ? styles.avatarPickActive : ""
+                    form.avatar === item.id ? styles.avatarPickActive : ""
                   }`}
-                  onClick={() => void update({ avatar: item.id })}
+                  onClick={() => edit({ avatar: item.id })}
                   disabled={busy}
-                  aria-pressed={profile.avatar === item.id}
+                  aria-pressed={form.avatar === item.id}
                   aria-label={item.label}
                   title={item.label}
                 >
-                  <Avatar id={item.id} name={displayName} size={52} />
+                  <Avatar id={item.id} name={form.name} size={52} />
                 </button>
               ))}
             </div>
@@ -153,14 +209,10 @@ export default function ProfilePage() {
             <span className={ui.meta}>نام نمایشی</span>
             <input
               className={styles.input}
-              value={displayName}
+              value={form.name}
               maxLength={24}
               disabled={busy}
-              onChange={(event) => setName(event.target.value)}
-              onBlur={() => void commitName()}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") event.currentTarget.blur();
-              }}
+              onChange={(event) => edit({ name: event.target.value })}
             />
           </label>
 
@@ -168,54 +220,33 @@ export default function ProfilePage() {
             <span className={styles.labelRow}>
               <span className={ui.meta}>دربارهٔ من</span>
               <span className={styles.counter}>
-                {bioText.length}/{BIO_MAX}
+                {form.bio.length}/{BIO_MAX}
               </span>
             </span>
             <textarea
               className={styles.textarea}
-              value={bioText}
+              value={form.bio}
               maxLength={BIO_MAX}
               rows={2}
               disabled={busy}
               placeholder="مثلاً: دارم برای سفر به استانبول انگلیسی تمرین می‌کنم."
-              onChange={(event) => setBio(event.target.value)}
-              onBlur={() => void commitBio()}
+              onChange={(event) => edit({ bio: event.target.value })}
             />
           </label>
 
           <div className={styles.group}>
-            <span className={ui.meta}>هدف روزانه</span>
-            <div className={styles.pills}>
-              {dailyChoices.map((minutes) => (
-                <button
-                  key={minutes}
-                  type="button"
-                  className={`${styles.pill} ${
-                    profile.dailyMinutes === minutes ? styles.active : ""
-                  }`}
-                  onClick={() => void update({ dailyMinutes: minutes })}
-                  disabled={busy}
-                  aria-pressed={profile.dailyMinutes === minutes}
-                >
-                  {minutes} دقیقه
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className={styles.group}>
             <span className={ui.meta}>سطح</span>
             <div className={styles.pills}>
-              {levels.map((level) => (
+              {LEVELS.map((level) => (
                 <button
                   key={level}
                   type="button"
                   className={`${styles.pill} ${
-                    profile.level === level ? styles.active : ""
+                    form.level === level ? styles.active : ""
                   }`}
-                  onClick={() => void update({ level })}
+                  onClick={() => edit({ level })}
                   disabled={busy}
-                  aria-pressed={profile.level === level}
+                  aria-pressed={form.level === level}
                 >
                   {level} · {levelLabel[level]}
                 </button>
@@ -226,21 +257,72 @@ export default function ProfilePage() {
           <div className={styles.group}>
             <span className={ui.meta}>هدف یادگیری</span>
             <div className={styles.pills}>
-              {goals.map((goal) => (
+              {GOALS.map((goal) => (
                 <button
                   key={goal}
                   type="button"
                   className={`${styles.pill} ${
-                    profile.goal === goal ? styles.active : ""
+                    form.goal === goal ? styles.active : ""
                   }`}
-                  onClick={() => void update({ goal })}
+                  onClick={() => edit({ goal })}
                   disabled={busy}
-                  aria-pressed={profile.goal === goal}
+                  aria-pressed={form.goal === goal}
                 >
                   {goalLabel[goal]}
                 </button>
               ))}
             </div>
+          </div>
+
+          <div className={styles.group}>
+            <span className={ui.meta}>هدف روزانه</span>
+            <div className={styles.pills}>
+              {dailyChoices.map((minutes) => (
+                <button
+                  key={minutes}
+                  type="button"
+                  className={`${styles.pill} ${
+                    form.dailyMinutes === minutes ? styles.active : ""
+                  }`}
+                  onClick={() => edit({ dailyMinutes: minutes })}
+                  disabled={busy}
+                  aria-pressed={form.dailyMinutes === minutes}
+                >
+                  {minutes} دقیقه
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* نوار ذخیره */}
+          <div className={styles.saveBar}>
+            <button
+              type="button"
+              className={styles.saveButton}
+              onClick={() => void save()}
+              disabled={!changed || busy}
+            >
+              {busy ? "در حال ذخیره…" : "ذخیرهٔ تغییرات"}
+            </button>
+
+            {changed ? (
+              <button
+                type="button"
+                className={ui.ghost}
+                onClick={discard}
+                disabled={busy}
+              >
+                بازگردانی
+              </button>
+            ) : null}
+
+            <span className={styles.saveHint}>
+              {changed
+                ? "تغییرهای ذخیره‌نشده داری."
+                : saved
+                  ? "تغییرات ذخیره شد ✓"
+                  : "همه‌چیز ذخیره شده است."}
+            </span>
           </div>
         </div>
       </section>

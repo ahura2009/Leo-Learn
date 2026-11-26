@@ -1,7 +1,15 @@
 /* تایپ‌های مشترک اپ — مطابق بخش ۲ و ۳ سند ساخت */
 
-export type Level = "A1" | "A2" | "B1";
-export type Goal = "travel" | "work" | "daily";
+export type Level = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
+export type Goal =
+  | "travel"
+  | "work"
+  | "daily"
+  | "study"
+  | "immigration"
+  | "exam"
+  | "media"
+  | "family";
 
 export type Phrase = { en: string; fa: string };
 export type Line = { who: "leo" | "you"; en: string; fa: string };
@@ -76,14 +84,36 @@ export type Progress = {
   streak: number;
 };
 
+/** همهٔ سطح‌های CEFR، از مبتدی تا مسلط */
+export const LEVELS: Level[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
+
 export const levelLabel: Record<Level, string> = {
   A1: "مبتدی",
   A2: "پیش‌متوسط",
   B1: "متوسط",
+  B2: "متوسط بالا",
+  C1: "پیشرفته",
+  C2: "مسلط",
 };
+
+export const GOALS: Goal[] = [
+  "travel",
+  "work",
+  "daily",
+  "study",
+  "immigration",
+  "exam",
+  "media",
+  "family",
+];
 
 export const goalLabel: Record<Goal, string> = {
   travel: "سفر",
   work: "کار",
   daily: "روزمره",
+  study: "تحصیل",
+  immigration: "مهاجرت",
+  exam: "آزمون",
+  media: "فیلم و پادکست",
+  family: "خانواده و دوستان",
 };

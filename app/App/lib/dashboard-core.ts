@@ -1,4 +1,4 @@
-import type { Progress } from "./types";
+import type { Level, Progress } from "./types";
 
 /* هستهٔ منطق داشبورد — بدون وابستگی اجرایی، تا تنها باشد و مستقیم تست شود.
    تاریخ و زنجیره را آداپتور (dashboard.ts) از storage می‌دهد. */
@@ -9,7 +9,7 @@ const stepNames = ["گوش دادن", "انتخاب کردن", "ساختن جم�
 export type LessonMeta = {
   slug: string;
   title: string;
-  level: "A1" | "A2" | "B1";
+  level: Level;
   minutes: number;
   photo?: string;
   available: boolean;

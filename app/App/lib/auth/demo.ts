@@ -1,5 +1,6 @@
 "use client";
 
+import { GOALS, LEVELS, type Goal, type Level } from "../types";
 import type { AuthUser } from "./types";
 
 /* حساب نمایشی برای ارائه — فقط همین شماره و رمز، به‌صورت محلی.
@@ -44,14 +45,12 @@ export function getDemoUser(): AuthUser {
         ...DEMO_USER,
         name: typeof saved.name === "string" ? saved.name : DEMO_USER.name,
         level:
-          saved.level === "A1" || saved.level === "A2" || saved.level === "B1"
-            ? saved.level
+          saved.level && LEVELS.includes(saved.level as Level)
+            ? (saved.level as Level)
             : DEMO_USER.level,
         goal:
-          saved.goal === "travel" ||
-          saved.goal === "work" ||
-          saved.goal === "daily"
-            ? saved.goal
+          saved.goal && GOALS.includes(saved.goal as Goal)
+            ? (saved.goal as Goal)
             : DEMO_USER.goal,
         avatar:
           typeof saved.avatar === "string" ? saved.avatar : DEMO_USER.avatar,
