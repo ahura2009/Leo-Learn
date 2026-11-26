@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "libphonenumber-js": "^1.13.17",
-    "next": "latest",
+    "next": "^16.4.6",
     "react": "latest",
     "react-dom": "latest"
   },

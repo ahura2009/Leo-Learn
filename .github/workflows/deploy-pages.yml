@@ -28,6 +28,8 @@ jobs:
           cache: npm
       - run: npm ci
       - uses: actions/configure-pages@v5
+      # Pages سرور ندارد؛ مسیر پراکسی /v1 فقط در استقرار سروری لازم است.
+      - run: rm -rf "app/v1"
       - run: npm run build
         env:
           NEXT_PUBLIC_BASE_PATH: /Leo-Learn
