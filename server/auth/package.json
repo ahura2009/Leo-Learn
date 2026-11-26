@@ -6,6 +6,9 @@
   "engines": {
     "node": ">=22"
   },
+  "dependencies": {
+    "libphonenumber-js": "^1.13.17"
+  },
   "scripts": {
     "start": "node index.mjs",
     "test": "node --test"
