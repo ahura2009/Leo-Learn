@@ -12,7 +12,9 @@ const navItems = [
 ];
 
 /* برابر scroll-margin-top بخش‌ها در globals.css (ارتفاع هدر + ۲۸px) */
-const ACTIVE_OFFSET = 104;
+const SCROLL_MARGIN = 104;
+/* کمی پایین‌تر از خطِ شروع بخش‌ها؛ اختلاف اعشاریِ اسکرولِ نرم را هم پوشش می‌دهد */
+const ACTIVE_LINE = SCROLL_MARGIN + 16;
 /* بیشترین زمانی که بعد از کلیک، لینکِ کلیک‌شده فعال می‌ماند */
 const CLICK_LOCK_MS = 1500;
 
@@ -42,7 +44,7 @@ export function HeaderNav() {
       if (pending.current) {
         const target = sections.find((s) => s.href === pending.current?.href);
         const arrived =
-          !target || target.el.getBoundingClientRect().top <= ACTIVE_OFFSET + 8;
+          !target || target.el.getBoundingClientRect().top <= ACTIVE_LINE;
 
         if (arrived || Date.now() > pending.current.until) {
           pending.current = null;
@@ -56,15 +58,16 @@ export function HeaderNav() {
         return;
       }
 
-      let current: string | null = null;
+      /* بخشی که تازه از خطِ بالای صفحه رد شده، همان بخشی است که کاربر در آن است.
+         بالای هیرو هنوز هیچ بخشی شروع نشده؛ در این حالت اولین تب فعال می‌ماند. */
+      let current = sections[0].href;
       for (const { href, el } of sections) {
-        if (el.getBoundingClientRect().top - ACTIVE_OFFSET <= 0) {
+        if (el.getBoundingClientRect().top <= ACTIVE_LINE) {
           current = href;
         }
       }
 
-      /* بالای صفحه (هیرو) هنوز هیچ بخشی شروع نشده؛ حالت قبلی حفظ می‌شود */
-      if (current) setActiveHref(current);
+      setActiveHref(current);
     };
 
     const scheduleUpdate = () => {

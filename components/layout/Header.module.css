@@ -100,6 +100,7 @@
 /* خط طلایی محو زیر لینکِ فعال */
 .navLinkActive {
   color: var(--text);
+  font-weight: 700;
 }
 
 .navLinkActive::after {
