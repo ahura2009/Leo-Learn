@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { assetPath } from "@/lib/asset-path";
 import { Reveal } from "@/components/ui/Reveal";
@@ -43,13 +43,30 @@ const roles = [
   },
 ];
 
+const COUNT = roles.length;
+/** زاویهٔ هر کارت روی حلقه */
+const STEP_DEG = 360 / COUNT;
+
 const ROTATE_MS = 2000;
 /** مدت انتقال در CSS — باید با transition در Companion.module.css یکی باشد */
 const MOVE_MS = 1250;
 
-/** فاصلهٔ هر نقش از نقش فعال، روی حلقه (۰ = جلو) */
-function ringOffset(index: number, activeIndex: number, total: number) {
-  return ((index - activeIndex) % total + total) % total;
+/* هر کارت روی حلقه می‌چرخد و هم‌زمان در جای خودش کمی برمی‌گردد تا رو به
+   دوربین بماند. اگر پادچرخش را کامل بدهیم کارت هیچ‌وقت زاویه نمی‌گیرد
+   و سه‌بعدی دیده نمی‌شود؛ اگر ندهیم، کارت مثل وجه استوانه از ۹۰ درجه
+   می‌گذرد و پشتش ظاهر می‌شود. راه میانه: زاویهٔ هر کارت را از سینوس
+   موقعیتش بگیر — جلو و ته صفر، دو طرف در بیشترین حد. این‌طور زاویه
+   همیشه در این بازه می‌ماند، متقارن است، و با حرکت حلقه پیوسته عوض
+   می‌شود. */
+const TURN = 32;
+
+/** بلندشدن کارت پشتی — معادل کج‌بودن جزئی محور حلقه (درصدِ بلندی کارت) */
+const LIFT = 17;
+
+const REDUCED = "(prefers-reduced-motion: reduce)";
+
+function prefersReducedMotion() {
+  return window.matchMedia(REDUCED).matches;
 }
 
 /** آیکون سادهٔ آدم — هم‌اندازه برای همهٔ نقش‌ها */
@@ -74,16 +91,21 @@ function PersonIcon() {
 
 export function Companion() {
   const [active, setActive] = useState(0);
-  // نقش فعالِ قبلی — برای ترتیب لایه‌ها در طول حرکت لازم است
-  const [prevActive, setPrevActive] = useState(0);
-  // آیا حرکت تازه تمام شده؟ تا تمام نشود، لایه‌ها جابه‌جا نمی‌شوند
-  const [settled, setSettled] = useState(true);
-  // با هر انتخاب کاربر، شمارنده بالا می‌رود و تایمر از نو شروع می‌شود
-  const [tick, setTick] = useState(0);
+  /* شمارندهٔ گام‌ها. هیچ‌وقت به صفر برنمی‌گردد و فقط بالا می‌رود، تا
+     زاویهٔ حلقه پیوسته بماند و کارت‌ها دور بزنند، نه اینکه از یک لبهٔ
+     صفحه به لبهٔ دیگر بپرند. همیشه با active هم‌ارز است (mod ۴). */
+  const [phase, setPhase] = useState(0);
   /* وقتی کاربر نقشی را انتخاب می‌کند که چند خانه دورتر است، به‌جای
      پرش مستقیم، خانه‌به‌خانه دور حلقه می‌چرخیم. تا رسیدن به هدف،
      این مقدار شمارش معکوس گام‌های باقی‌مانده است. */
   const [stepsLeft, setStepsLeft] = useState(0);
+  // با هر انتخاب کاربر، شمارنده بالا می‌رود و تایمر خودکار از نو شروع می‌شود
+  const [tick, setTick] = useState(0);
+
+  const step = useCallback(() => {
+    setPhase((p) => p + 1);
+    setActive((a) => (a + 1) % COUNT);
+  }, []);
 
   /* چرخش خودکار. کلیک کاربر آن را متوقف نمی‌کند — فقط از نقش
      انتخاب‌شده ادامه می‌دهد، به همین دلیل tick در وابستگی‌هاست.
@@ -91,55 +113,42 @@ export function Companion() {
      دخالت نمی‌کند. */
   useEffect(() => {
     if (stepsLeft > 0) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
 
-    const id = setInterval(() => {
-      setPrevActive(active);
-      setActive((prev) => (prev + 1) % roles.length);
-      setSettled(false);
-    }, ROTATE_MS);
-
+    const id = setInterval(step, ROTATE_MS);
     return () => clearInterval(id);
-  }, [active, tick, stepsLeft]);
+  }, [phase, tick, stepsLeft, step]);
 
   /* گام‌های انتخاب کاربر — یکی‌یکی، با همان سرعت حرکت عادی */
   useEffect(() => {
     if (stepsLeft <= 0) return;
 
     const id = setTimeout(() => {
-      setPrevActive(active);
-      setActive((prev) => (prev + 1) % roles.length);
-      setSettled(false);
+      step();
       setStepsLeft((n) => n - 1);
     }, MOVE_MS);
 
     return () => clearTimeout(id);
-  }, [stepsLeft, active]);
-
-  /* بعد از پایان حرکت، لایه‌ها به ترتیب نهایی مرتب می‌شوند.
-     بین گام‌ها عجله نداریم — تا گام آخر صبر می‌کنیم. */
-  useEffect(() => {
-    if (settled || stepsLeft > 0) return;
-    const id = setTimeout(() => setSettled(true), MOVE_MS);
-    return () => clearTimeout(id);
-  }, [settled, active, stepsLeft]);
+  }, [stepsLeft, phase, step]);
 
   /* کلیک روی نقش.
      اگر نقش یکی جلوتر است، یک گام. اگر چند خانه دورتر است،
-     همان تعداد گام دور حلقه — نه پرش مستقیم. این‌طور لئوی
-     پشتی با همان حرکت دایره‌ای می‌آید جلو، نه با ظاهر شدن
-     ناگهانی. */
+     همان تعداد گام دور حلقه — نه پرش مستقیم. این‌طور لئوی پشتی با
+     همان چرخش حلقه می‌آید جلو، نه با ظاهر شدن ناگهانی. */
   const select = (index: number) => {
     if (index === active) return;
 
     // چند گام رو به جلو لازم است تا به این نقش برسیم
-    const distance =
-      ((index - active) % roles.length + roles.length) % roles.length;
+    const distance = ((index - active) % COUNT + COUNT) % COUNT;
 
-    setPrevActive(active);
-    setStepsLeft(distance - 1);
-    setActive((prev) => (prev + 1) % roles.length);
-    setSettled(false);
+    if (prefersReducedMotion()) {
+      setPhase((p) => p + distance);
+      setActive(index);
+      setStepsLeft(0);
+    } else {
+      setStepsLeft(distance - 1);
+      step();
+    }
     setTick((t) => t + 1);
   };
 
@@ -199,55 +208,52 @@ export function Companion() {
 
               <div className={styles.mediaRing}>
                 {roles.map((role, index) => {
-                  const offset = ringOffset(index, active, roles.length);
+                  /* موقعیت کارت روی حلقه. با هر گام ۹۰ درجه کم می‌شود،
+                     پس زاویه همیشه پیوسته است و کارت مسیر کمانی را
+                     طی می‌کند، نه خط راست. */
+                  const posDeg = (index - phase) * STEP_DEG;
 
-                  // زاویه روی حلقه: ۰ = جلو، π = ته
-                  const theta = (offset / roles.length) * Math.PI * 2;
-                  const cos = Math.cos(theta);
-                  const sin = Math.sin(theta);
-                  const depth = (1 - cos) / 2; // ۰ جلو، ۱ ته
+                  // زاویهٔ نرمال‌شده در بازهٔ ‎-۱۸۰..۱۸۰‎ برای محاسبهٔ عمق
+                  const norm = (((posDeg % 360) + 540) % 360) - 180;
+                  const rad = (norm * Math.PI) / 180;
+                  const depth = (1 - Math.cos(rad)) / 2; // ۰ جلو، ۱ ته
+                  /* زاویهٔ کارت دور محور خودش. از --pos کم می‌شود تا
+                     موقعیت کارت روی حلقه عوض نشود؛ فقط سرِ جای خودش
+                     می‌گردد. */
+                  const turnDeg = TURN * Math.sin(rad);
 
-                  /* ترتیب لایه‌ها.
-                     اگر مستقیم از عمق گرفته شود، لئوی تازه انتخاب‌شده
-                     همان لحظهٔ اول روی همه می‌پرد و بعد حرکت می‌کند —
-                     همان «لایه‌ها روی هم می‌آیند» که دیده می‌شد.
-                     راه‌حل: در طول حرکت، بزرگ‌ترین لایهٔ دو حالت (قبل و
-                     بعد) را نگه می‌داریم. این‌طور هیچ لئویی روی دیگری
-                     نمی‌پرد؛ فقط بعد از رسیدن، یک عنصر — همان که از جلو
-                     می‌رود — عقب می‌نشیند. */
-                  const zNow = roles.length - offset;
-                  const zBefore =
-                    roles.length -
-                    ringOffset(index, prevActive, roles.length);
-                  const z = settled ? zNow : Math.max(zNow, zBefore);
-
-                  const r = (n: number) => Math.round(n * 100) / 100;
-
-                  /* حلقهٔ پهن و کم‌ارتفاع: فاصلهٔ افقی زیاد است تا
-                     لئوی چپ و راست روی لئوی وسط نیفتند، و فاصلهٔ
-                     عمودی کم تا لئوی پشتی بالای جلویی بماند.
-                     اندازهٔ کناری‌ها هم کوچک‌تر است تا کنار هم جا
-                     شوند بدون هم‌پوشانی. */
+                  const r = (n: number) => Math.round(n * 1000) / 1000;
                   const style = {
-                    "--x": `${r(sin * 170)}px`,
-                    "--y": `${r(depth * -72)}px`,
-                    "--scale": `${r(1 - depth * 0.5)}`,
-                    "--blur": `${r(depth * 1.6)}px`,
-                    "--layer": `${z}`,
+                    "--pos": `${r(posDeg)}deg`,
+                    "--psi": `${r(turnDeg - posDeg)}deg`,
+                    "--lift": `${r(-depth * LIFT)}%`,
+                    "--scale": `${r(1 - depth * 0.4)}`,
+                    "--blur": `${r(depth * 3.2)}px`,
+                    /* عمق با تیره‌شدن نشان داده می‌شود، نه شفافیت. با
+                       شفافیت، کارت‌های لایه‌های پشتی از روی هم دیده
+                       می‌شدند و وسط حرکت تصویر گِل می‌شد. */
+                    "--alpha": `${r(1 - depth * 0.18)}`,
+                    "--dim": `${r(1 - depth * 0.42)}`,
+                    /* ترتیب لایه‌ها از عمق می‌آید، نه از ترتیب DOM. بدون
+                       این، لئوی پشتی روی لئوی جلو نقاشی می‌شود. مقدار
+                       اعشاری نیست (z-index صحیح می‌خواهد) و با همان مدت
+                       حرکت میان‌یابی می‌شود تا وسط راه نپرد. */
+                    "--z": `${Math.round(160 - depth * 120)}`,
                   } as React.CSSProperties;
 
                   return (
                     <Image
                       key={role.name}
                       src={assetPath(role.image)}
-                      alt={offset === 0 ? role.alt : ""}
+                      alt={index === active ? role.alt : ""}
                       width={role.width}
                       height={role.height}
-                      sizes="360px"
-                      aria-hidden={offset !== 0}
-                      priority
+                      sizes="min(62vw, 400px)"
+                      aria-hidden={index !== active}
+                      loading="eager"
+                      preload={index === 0}
                       className={`${styles.mediaImage} ${
-                        offset === 0 ? styles.mediaImageActive : ""
+                        index === active ? styles.mediaImageActive : ""
                       }`}
                       style={style}
                     />
