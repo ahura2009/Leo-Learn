@@ -1,13 +1,6 @@
 import Link from "next/link";
+import { HeaderNav } from "./HeaderNav";
 import styles from "./Header.module.css";
-
-const navItems = [
-  { label: "قابلیت‌ها", href: "#features" },
-  { label: "روش آموزشی", href: "#how" },
-  { label: "لئو", href: "#leo" },
-  { label: "سناریوها", href: "#scenarios" },
-  { label: "سؤالات متداول", href: "#faq" },
-];
 
 export function Header() {
   return (
@@ -23,19 +16,7 @@ export function Header() {
         </Link>
 
         {/* منو — وسط */}
-        <nav className={styles.nav} aria-label="منوی اصلی">
-          {navItems.map((item, index) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className={`${styles.navLink} ${
-                index === 0 ? styles.navLinkActive : ""
-              }`}
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+        <HeaderNav />
 
         {/* دکمه‌ها — سمت چپ */}
         <div className={styles.actions}>
