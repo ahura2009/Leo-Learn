@@ -37,6 +37,9 @@ import {
 
 const LEVELS = new Set(["A1", "A2", "B1"]);
 const GOALS = new Set(["travel", "work", "daily"]);
+const AVATARS = new Set(["leo", "sun", "sky", "mint", "rose", "violet"]);
+const DAILY_MINUTES = new Set([5, 10, 15, 30]);
+const BIO_MAX = 60;
 const LOCK_WINDOW_MS = 15 * 60 * 1000;
 const MAX_FAILED_LOGINS = 6;
 const MAX_RESENDS_PER_CHALLENGE = 5;
@@ -54,6 +57,9 @@ function publicUser(row) {
     name: row.name,
     level: row.level,
     goal: row.goal,
+    avatar: row.avatar ?? null,
+    bio: row.bio ?? null,
+    dailyMinutes: row.daily_minutes ?? null,
     createdAt: row.created_at,
     onboardedAt: row.onboarded_at ?? null,
   };
@@ -480,6 +486,25 @@ export function createAuthService({ db, config, sms, now = () => Date.now(), log
       if (body?.goal !== undefined) {
         if (!GOALS.has(body.goal)) throw errors.badRequest("goal_invalid");
         patch.goal = body.goal;
+      }
+
+      if (body?.avatar !== undefined) {
+        if (!AVATARS.has(body.avatar)) throw errors.badRequest("avatar_invalid");
+        patch.avatar = body.avatar;
+      }
+
+      if (body?.bio !== undefined) {
+        const bio = typeof body.bio === "string" ? body.bio.trim() : "";
+        if (bio.length > BIO_MAX) throw errors.badRequest("bio_too_long");
+        patch.bio = bio || null;
+      }
+
+      if (body?.dailyMinutes !== undefined) {
+        const minutes = Number(body.dailyMinutes);
+        if (!DAILY_MINUTES.has(minutes)) {
+          throw errors.badRequest("daily_minutes_invalid");
+        }
+        patch.daily_minutes = minutes;
       }
 
       const nextLevel = patch.level ?? user.level;

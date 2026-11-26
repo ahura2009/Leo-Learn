@@ -6,14 +6,18 @@ import { useRequireProfile } from "../hooks/useRequireProfile";
 import { useApp } from "../components/AppProvider";
 import { useAuth } from "../components/AuthProvider";
 import { AuthBanner } from "../components/auth/AuthBanner";
+import { Avatar } from "../components/Avatar";
 import { displayPhone } from "../lib/auth/phone";
 import { messageFor } from "../lib/auth/types";
+import { AVATARS } from "../lib/avatars";
 import { goalLabel, levelLabel, type Goal, type Level } from "../lib/types";
 import ui from "../components/Ui.module.css";
 import styles from "./profile.module.css";
 
 const levels: Level[] = ["A1", "A2", "B1"];
 const goals: Goal[] = ["travel", "work", "daily"];
+const dailyChoices = [5, 10, 15, 30];
+const BIO_MAX = 60;
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -22,6 +26,7 @@ export default function ProfilePage() {
   const { signOut } = useAuth();
 
   const [name, setName] = useState<string | null>(null);
+  const [bio, setBio] = useState<string | null>(null);
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -31,6 +36,7 @@ export default function ProfilePage() {
   }
 
   const displayName = name ?? profile.name;
+  const bioText = bio ?? profile.bio;
   const lessons = Object.values(progress.scenarios).filter(
     (item) => item.completedAt,
   ).length;
@@ -40,8 +46,10 @@ export default function ProfilePage() {
     setError(null);
     try {
       await saveProfile(patch);
+      return true;
     } catch (caught) {
       setError(messageFor(caught));
+      return false;
     } finally {
       setBusy(false);
     }
@@ -61,6 +69,16 @@ export default function ProfilePage() {
     setName(null);
   };
 
+  const commitBio = async () => {
+    const clean = bioText.trim();
+    if (clean === profile.bio) {
+      setBio(null);
+      return;
+    }
+    await update({ bio: clean });
+    setBio(null);
+  };
+
   const handleSignOut = async () => {
     setBusy(true);
     setError(null);
@@ -77,15 +95,62 @@ export default function ProfilePage() {
     <div className={ui.page}>
       <header className={ui.head}>
         <span className={ui.eyebrow}>پروفایل</span>
-        <h1 className={ui.title}>تنظیمات تمرین</h1>
+        <h1 className={ui.title}>پروفایل من</h1>
       </header>
 
       {error ? <AuthBanner variant="error">{error}</AuthBanner> : null}
 
+      {/* ---------- نمای پروفایل ---------- */}
+      <section className={`${ui.card} ${styles.hero}`}>
+        <Avatar id={profile.avatar} name={displayName} size={92} />
+
+        <div className={styles.heroBody}>
+          <p className={styles.heroName}>{displayName}</p>
+          <p className={bioText ? styles.heroBio : styles.heroBioEmpty}>
+            {bioText || "یک خط دربارهٔ خودت بنویس تا پروفایلت شخصی شود."}
+          </p>
+
+          <div className={styles.chips}>
+            <span className={styles.chip}>
+              {profile.level} · {levelLabel[profile.level]}
+            </span>
+            <span className={styles.chip}>هدف: {goalLabel[profile.goal]}</span>
+            <span className={styles.chipGold}>
+              {profile.dailyMinutes} دقیقه در روز
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- شخصی‌سازی ---------- */}
       <section className={ui.card}>
+        <p className={ui.cardTitle}>شخصی‌سازی</p>
+
         <div className={ui.stack}>
+          <div className={styles.group}>
+            <span className={ui.meta}>آواتار</span>
+            <div className={styles.avatarRow}>
+              {AVATARS.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`${styles.avatarPick} ${
+                    profile.avatar === item.id ? styles.avatarPickActive : ""
+                  }`}
+                  onClick={() => void update({ avatar: item.id })}
+                  disabled={busy}
+                  aria-pressed={profile.avatar === item.id}
+                  aria-label={item.label}
+                  title={item.label}
+                >
+                  <Avatar id={item.id} name={displayName} size={52} />
+                </button>
+              ))}
+            </div>
+          </div>
+
           <label className={styles.field}>
-            <span className={ui.meta}>نام</span>
+            <span className={ui.meta}>نام نمایشی</span>
             <input
               className={styles.input}
               value={displayName}
@@ -98,6 +163,45 @@ export default function ProfilePage() {
               }}
             />
           </label>
+
+          <label className={styles.field}>
+            <span className={styles.labelRow}>
+              <span className={ui.meta}>دربارهٔ من</span>
+              <span className={styles.counter}>
+                {bioText.length}/{BIO_MAX}
+              </span>
+            </span>
+            <textarea
+              className={styles.textarea}
+              value={bioText}
+              maxLength={BIO_MAX}
+              rows={2}
+              disabled={busy}
+              placeholder="مثلاً: دارم برای سفر به استانبول انگلیسی تمرین می‌کنم."
+              onChange={(event) => setBio(event.target.value)}
+              onBlur={() => void commitBio()}
+            />
+          </label>
+
+          <div className={styles.group}>
+            <span className={ui.meta}>هدف روزانه</span>
+            <div className={styles.pills}>
+              {dailyChoices.map((minutes) => (
+                <button
+                  key={minutes}
+                  type="button"
+                  className={`${styles.pill} ${
+                    profile.dailyMinutes === minutes ? styles.active : ""
+                  }`}
+                  onClick={() => void update({ dailyMinutes: minutes })}
+                  disabled={busy}
+                  aria-pressed={profile.dailyMinutes === minutes}
+                >
+                  {minutes} دقیقه
+                </button>
+              ))}
+            </div>
+          </div>
 
           <div className={styles.group}>
             <span className={ui.meta}>سطح</span>
@@ -120,7 +224,7 @@ export default function ProfilePage() {
           </div>
 
           <div className={styles.group}>
-            <span className={ui.meta}>هدف</span>
+            <span className={ui.meta}>هدف یادگیری</span>
             <div className={styles.pills}>
               {goals.map((goal) => (
                 <button
@@ -141,6 +245,7 @@ export default function ProfilePage() {
         </div>
       </section>
 
+      {/* ---------- حساب ---------- */}
       <section className={ui.card}>
         <div className={styles.accountRow}>
           <div>
@@ -173,6 +278,7 @@ export default function ProfilePage() {
         </div>
       </section>
 
+      {/* ---------- خطر ---------- */}
       <section className={`${ui.card} ${styles.danger}`}>
         <p className={ui.cardTitle}>پاک کردن پیشرفت</p>
         <p className={ui.muted}>

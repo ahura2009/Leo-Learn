@@ -11,6 +11,12 @@ export type AuthUser = {
   name: string | null;
   level: Level | null;
   goal: Goal | null;
+  /** شناسهٔ آواتار انتخابی کاربر */
+  avatar: string | null;
+  /** یک خط دربارهٔ خودم */
+  bio: string | null;
+  /** هدف روزانه به دقیقه */
+  dailyMinutes: number | null;
   createdAt: string;
   /** تا وقتی onboarding تمام نشده، null است */
   onboardedAt: string | null;

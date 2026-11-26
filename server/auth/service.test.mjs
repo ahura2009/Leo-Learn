@@ -190,6 +190,42 @@ test("onboarding با سطح و هدف کامل می‌شود", async () => {
   assert.ok(complete.onboardedAt);
 });
 
+test("شخصی‌سازی پروفایل: آواتار، بیو و هدف روزانه", async () => {
+  const { service, codes } = makeService();
+
+  const challenge = await service.signUpStart({ name: "سارا", phone, password });
+  const { user } = await service.signUpVerify({
+    challengeId: challenge.challengeId,
+    code: codes[0],
+  });
+
+  const updated = await service.updateProfile(user.id, {
+    avatar: "violet",
+    bio: "دارم برای سفر تمرین می‌کنم.",
+    dailyMinutes: 15,
+  });
+  assert.equal(updated.avatar, "violet");
+  assert.equal(updated.bio, "دارم برای سفر تمرین می‌کنم.");
+  assert.equal(updated.dailyMinutes, 15);
+
+  /* بیوی خالی پاک می‌شود، نه رشتهٔ خالی. */
+  const cleared = await service.updateProfile(user.id, { bio: "   " });
+  assert.equal(cleared.bio, null);
+
+  await assert.rejects(
+    () => service.updateProfile(user.id, { avatar: "neon" }),
+    /avatar_invalid|BAD_REQUEST/i,
+  );
+  await assert.rejects(
+    () => service.updateProfile(user.id, { dailyMinutes: 999 }),
+    /daily_minutes_invalid|BAD_REQUEST/i,
+  );
+  await assert.rejects(
+    () => service.updateProfile(user.id, { bio: "x".repeat(61) }),
+    /bio_too_long|BAD_REQUEST/i,
+  );
+});
+
 test("ورودی نامعتبر رد می‌شود", async () => {
   const { service } = makeService();
 

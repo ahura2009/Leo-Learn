@@ -50,6 +50,9 @@ export type Profile = {
   name: string;
   level: Level;
   goal: Goal;
+  avatar: string;
+  bio: string;
+  dailyMinutes: number;
   createdAt: string;
   onboardedAt: string;
 };

@@ -3,7 +3,9 @@
 import { createContext, useContext } from "react";
 import type { Phrase, Profile, Progress, ScenarioProgress } from "../lib/types";
 
-export type ProfilePatch = Partial<Pick<Profile, "name" | "level" | "goal">>;
+export type ProfilePatch = Partial<
+  Pick<Profile, "name" | "level" | "goal" | "avatar" | "bio" | "dailyMinutes">
+>;
 
 export type AppContextValue = {
   /** تا وقتی پیشرفت کاربر جاری خوانده نشده، هیچ صفحه‌ای تصمیم نگیرد */

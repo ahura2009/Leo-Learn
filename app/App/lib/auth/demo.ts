@@ -18,6 +18,9 @@ export const DEMO_USER: AuthUser = {
   name: DEMO_ACCOUNT.name,
   level: "A2",
   goal: "travel",
+  avatar: "leo",
+  bio: "",
+  dailyMinutes: 10,
   createdAt: "2026-01-01T00:00:00.000Z",
   onboardedAt: "2026-01-01T00:00:00.000Z",
 };
@@ -50,6 +53,13 @@ export function getDemoUser(): AuthUser {
           saved.goal === "daily"
             ? saved.goal
             : DEMO_USER.goal,
+        avatar:
+          typeof saved.avatar === "string" ? saved.avatar : DEMO_USER.avatar,
+        bio: typeof saved.bio === "string" ? saved.bio : DEMO_USER.bio,
+        dailyMinutes:
+          typeof saved.dailyMinutes === "number"
+            ? saved.dailyMinutes
+            : DEMO_USER.dailyMinutes,
       };
     }
   } catch {
@@ -63,12 +73,22 @@ export function saveDemoProfile(patch: {
   name?: string;
   level?: string;
   goal?: string;
+  avatar?: string;
+  bio?: string;
+  dailyMinutes?: number;
 }) {
   const next = { ...getDemoUser(), ...patch };
   try {
     window.localStorage.setItem(
       DEMO_PROFILE_KEY,
-      JSON.stringify({ name: next.name, level: next.level, goal: next.goal }),
+      JSON.stringify({
+        name: next.name,
+        level: next.level,
+        goal: next.goal,
+        avatar: next.avatar,
+        bio: next.bio,
+        dailyMinutes: next.dailyMinutes,
+      }),
     );
   } catch {
     /* بی‌صدا */

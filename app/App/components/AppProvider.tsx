@@ -48,6 +48,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
         name: patch.name ?? user.name,
         level: patch.level ?? user.level,
         goal: patch.goal ?? user.goal,
+        avatar: patch.avatar ?? user.avatar,
+        bio: patch.bio ?? user.bio,
+        dailyMinutes: patch.dailyMinutes ?? user.dailyMinutes,
       });
       return;
     }

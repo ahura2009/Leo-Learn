@@ -19,6 +19,9 @@ export function openDatabase(path) {
       name          TEXT,
       level         TEXT,
       goal          TEXT,
+      avatar        TEXT,
+      bio           TEXT,
+      daily_minutes INTEGER,
       password_hash TEXT NOT NULL,
       verified_at   TEXT,
       onboarded_at  TEXT,
@@ -61,6 +64,20 @@ export function openDatabase(path) {
     CREATE INDEX IF NOT EXISTS idx_login_attempts_phone ON login_attempts(phone, failed_at);
   `);
 
+  /* دیتابیس‌های قدیمی ستون‌های شخصی‌سازی را ندارند؛ بی‌درنگ اضافه می‌شوند. */
+  const columns = new Set(
+    db.prepare("PRAGMA table_info(users)").all().map((row) => row.name),
+  );
+  for (const [name, type] of [
+    ["avatar", "TEXT"],
+    ["bio", "TEXT"],
+    ["daily_minutes", "INTEGER"],
+  ]) {
+    if (!columns.has(name)) {
+      db.exec(`ALTER TABLE users ADD COLUMN ${name} ${type}`);
+    }
+  }
+
   return db;
 }
 
@@ -98,13 +115,17 @@ export function updateUser(db, id, patch) {
   const next = { ...current, ...patch, updated_at: new Date().toISOString() };
   db.prepare(
     `UPDATE users
-        SET name = ?, level = ?, goal = ?, password_hash = ?,
-            verified_at = ?, onboarded_at = ?, updated_at = ?
+        SET name = ?, level = ?, goal = ?, avatar = ?, bio = ?,
+            daily_minutes = ?, password_hash = ?, verified_at = ?,
+            onboarded_at = ?, updated_at = ?
       WHERE id = ?`,
   ).run(
     next.name,
     next.level,
     next.goal,
+    next.avatar ?? null,
+    next.bio ?? null,
+    next.daily_minutes ?? null,
     next.password_hash,
     next.verified_at,
     next.onboarded_at,

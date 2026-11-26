@@ -193,6 +193,9 @@ export const authApi = {
     name?: string;
     level?: Level;
     goal?: Goal;
+    avatar?: string;
+    bio?: string;
+    dailyMinutes?: number;
   }): Promise<AuthUser> {
     const result = await request<UserResponse>("/auth/profile", {
       method: "PATCH",

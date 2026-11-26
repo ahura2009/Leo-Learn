@@ -7,6 +7,7 @@ import { messageFor } from "../lib/auth/types";
 import { useAuth } from "./AuthProvider";
 import { useApp } from "./AppProvider";
 import { AppNav } from "./AppNav";
+import { Avatar } from "./Avatar";
 import styles from "./AppShell.module.css";
 
 /* شل اپ: هدر بالا، ستون ناوبری راست، محتوا وسط.
@@ -74,9 +75,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </Link>
 
           {profile ? (
-            <p className={styles.greeting}>
-              سلام، <strong>{profile.name}</strong>
-            </p>
+            <div className={styles.who}>
+              <Avatar
+                id={profile.avatar}
+                name={profile.name}
+                size={26}
+              />
+              <p className={styles.greeting}>
+                سلام، <strong>{profile.name}</strong>
+              </p>
+            </div>
           ) : null}
         </div>
 

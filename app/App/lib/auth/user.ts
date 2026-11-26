@@ -9,6 +9,9 @@ export function profileFromUser(user: AuthUser | null): Profile | null {
     name: user.name,
     level: user.level ?? "A1",
     goal: user.goal ?? "daily",
+    avatar: user.avatar ?? "leo",
+    bio: user.bio ?? "",
+    dailyMinutes: user.dailyMinutes ?? 10,
     createdAt: user.createdAt,
     onboardedAt: user.onboardedAt,
   };
