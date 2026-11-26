@@ -63,27 +63,94 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className={styles.shell}>
-      <header className={styles.topbar}>
-        <Link href="/" className={styles.brand} aria-label="Leo Learn">
-          <span className={styles.mark}>L</span>
-          <span className={styles.brandText}>
-            <span className={styles.brandName}>Leo Learn</span>
-            <span className={styles.brandTag}>اپ تمرین</span>
-          </span>
-        </Link>
+      <aside className={styles.side}>
+        <div className={styles.sideTop}>
+          <Link href="/" className={styles.brand} aria-label="Leo Learn">
+            <span className={styles.mark}>L</span>
+            <span className={styles.brandText}>
+              <span className={styles.brandName}>Leo Learn</span>
+              <span className={styles.brandTag}>اپ تمرین</span>
+            </span>
+          </Link>
 
-        {profile ? (
-          <span className={styles.greeting}>سلام، {profile.name}</span>
-        ) : null}
-      </header>
+          {profile ? (
+            <p className={styles.greeting}>
+              سلام، <strong>{profile.name}</strong>
+            </p>
+          ) : null}
+        </div>
 
-      <div className={styles.body}>
-        <aside className={styles.side}>
-          <AppNav />
-        </aside>
-        <main className={styles.main}>{children}</main>
-      </div>
+        <AppNav />
+
+        <SideStats />
+      </aside>
+
+      <main className={styles.main}>{children}</main>
     </div>
+  );
+}
+
+/* آمار کوتاه پایین ستون — فضای خالی ستون را با چیزی مفید پر می‌کند. */
+function SideStats() {
+  const { progress } = useApp();
+  const words = Object.keys(progress.words).length;
+  const finished = Object.values(progress.scenarios).filter(
+    (item) => item.completedAt,
+  ).length;
+
+  const rows = [
+    { label: "روز پیوسته", value: progress.streak, icon: "flame" },
+    { label: "درس تمام‌شده", value: finished, icon: "check" },
+    { label: "واژه در دفتر", value: words, icon: "book" },
+  ];
+
+  return (
+    <dl className={styles.stats}>
+      {rows.map((row) => (
+        <div key={row.label} className={styles.statRow}>
+          <dt className={styles.statLabel}>
+            <StatIcon name={row.icon} />
+            {row.label}
+          </dt>
+          <dd className={styles.statValue}>{row.value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+function StatIcon({ name }: { name: string }) {
+  const common = {
+    width: 15,
+    height: 15,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+
+  if (name === "flame") {
+    return (
+      <svg {...common}>
+        <path d="M12 3s5 4.2 5 9a5 5 0 0 1-10 0c0-1.6.7-2.9 1.5-3.9C9 9.8 10 11 10 12c0-3 2-5.5 2-9z" />
+      </svg>
+    );
+  }
+  if (name === "check") {
+    return (
+      <svg {...common}>
+        <path d="m4 12.5 5 5L20 6.5" />
+      </svg>
+    );
+  }
+  return (
+    <svg {...common}>
+      <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z" />
+      <path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20" />
+    </svg>
   );
 }
 

@@ -1,38 +1,53 @@
-/* شل اپ — دسکتاپ‌فرست، RTL */
+/* شل اپ — بدون هدر بالا؛ ستون ناوبری چسبیده به لبهٔ راست، محتوا در بقیهٔ صفحه. */
 
 .shell {
-  min-height: 100vh;
+  --side-width: 252px;
+  display: grid;
+  grid-template-columns: var(--side-width) minmax(0, 1fr);
   width: 100%;
-  max-width: var(--app-width);
-  margin: 0 auto;
-  padding: 0 var(--gutter) 48px;
+  min-height: 100vh;
 }
 
-.topbar {
+/* ---------- ستون راست ---------- */
+
+.side {
+  position: sticky;
+  top: 0;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  height: var(--header-height);
-  border-bottom: 1px solid var(--hairline);
+  flex-direction: column;
+  gap: 20px;
+  height: 100vh;
+  padding: 22px 16px 20px;
+  overflow-y: auto;
+  border-inline-end: 1px solid var(--hairline);
+  background:
+    radial-gradient(120% 60% at 100% 0%, rgba(244, 189, 13, 0.08), transparent 70%),
+    rgba(13, 19, 32, 0.6);
+}
+
+.sideTop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 8px;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 11px;
+  gap: 10px;
 }
 
 .mark {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 11px;
   background: linear-gradient(150deg, var(--gold), #d99f04);
   color: #211700;
   font-family: var(--font-heading);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 900;
 }
 
@@ -44,36 +59,74 @@
 
 .brandName {
   font-family: var(--font-heading);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
   color: var(--text);
 }
 
 .brandTag {
-  font-size: 11.5px;
+  font-size: 11px;
   color: var(--text-muted);
 }
 
 .greeting {
-  font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 12.5px;
   color: var(--text-secondary);
 }
 
-.body {
-  display: grid;
-  grid-template-columns: 236px minmax(0, 1fr);
-  gap: 40px;
-  padding-top: 36px;
+.greeting strong {
+  font-weight: 700;
+  color: var(--text);
 }
 
-.side {
+/* ---------- آمار پایین ستون ---------- */
+
+.stats {
   display: flex;
   flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 10px 8px 0;
+  border-top: 1px solid var(--hairline);
 }
+
+.statRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 4px;
+}
+
+.statLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.statLabel svg {
+  color: rgba(244, 189, 13, 0.75);
+}
+
+.statValue {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+/* ---------- محتوا ---------- */
 
 .main {
   min-width: 0;
+  width: 100%;
+  max-width: var(--app-width);
+  margin-inline: auto;
+  padding: 28px var(--gutter) 56px;
 }
 
 /* صفحه‌های بدون شل (onboarding، درس و احراز هویت) */
@@ -177,16 +230,20 @@
 
 @media (max-width: 900px) {
   .shell {
-    padding: 0 16px 96px;
-  }
-
-  .body {
     grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-    padding-top: 22px;
   }
 
+  /* فقط نوار پایین می‌ماند؛ برند و آمار پنهان می‌شوند. */
   .side {
     display: contents;
+  }
+
+  .sideTop,
+  .stats {
+    display: none;
+  }
+
+  .main {
+    padding: 18px 16px 104px;
   }
 }
