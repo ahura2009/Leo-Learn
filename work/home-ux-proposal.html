@@ -1,0 +1,1441 @@
+<title>صفحهٔ امروز، بازطراحی‌شده</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Markazi+Text:wght@400;500;600;700&display=swap">
+
+<style>
+/* ============================================================
+   پلن: رنگ‌ها از توکن‌های خود اپ (نوی تیره + طلایی) گرفته شده‌اند،
+   چون هدف این صفحه پیشنهاد برای همان محصول است. صفحه دو تم دارد،
+   ماکت‌ها عمداً همیشه تیره‌اند چون تصویر یک صفحهٔ اپ‌اند.
+   تایپ: Markazi Text برای بیانیهٔ آغاز (لحن مجله‌ای)، Vazirmatn برای همه‌چیز.
+   چیدمان: یک ستون متن + باندهای پهن برای ماکت.
+   ============================================================ */
+
+:root {
+  --bg: #eff2f7;
+  --band: #ffffff;
+  --ink: #0b1424;
+  --ink-2: #46536a;
+  --ink-3: #6f7c92;
+  --line: rgba(11, 20, 36, 0.10);
+  --line-strong: rgba(11, 20, 36, 0.18);
+  --accent: #9c6f00;
+  --accent-ink: #7d5900;
+  --accent-soft: rgba(156, 111, 0, 0.10);
+  --card: #ffffff;
+  --shadow: 0 1px 2px rgba(11, 20, 36, 0.06), 0 12px 32px -18px rgba(11, 20, 36, 0.35);
+  --font-display: "Markazi Text", "Vazirmatn", "Segoe UI", serif;
+  --font-body: "Vazirmatn", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #080d16;
+    --band: #0b1220;
+    --ink: #f5f7fb;
+    --ink-2: #9aa8bf;
+    --ink-3: #6b7a92;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.18);
+    --accent: #f4bd0d;
+    --accent-ink: #ffcf3a;
+    --accent-soft: rgba(244, 189, 13, 0.12);
+    --card: #111827;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 18px 44px -24px rgba(0, 0, 0, 0.9);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #080d16;
+  --band: #0b1220;
+  --ink: #f5f7fb;
+  --ink-2: #9aa8bf;
+  --ink-3: #6b7a92;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --accent: #f4bd0d;
+  --accent-ink: #ffcf3a;
+  --accent-soft: rgba(244, 189, 13, 0.12);
+  --card: #111827;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 18px 44px -24px rgba(0, 0, 0, 0.9);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  direction: rtl;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.95;
+  -webkit-font-smoothing: antialiased;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+  padding-block: 0 80px;
+}
+
+.prose { max-width: 66ch; }
+
+a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+/* ---------- سربرگ ---------- */
+
+.opening {
+  padding-block: 56px 40px;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 22px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.eyebrow span.dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex: 0 0 auto; }
+
+.statement {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6.4vw, 62px);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.5px;
+  text-wrap: balance;
+  max-width: 22ch;
+}
+
+.statement em {
+  font-style: normal;
+  color: var(--accent-ink);
+  position: relative;
+  white-space: nowrap;
+}
+
+.lead {
+  margin: 24px 0 0;
+  font-size: 16.5px;
+  line-height: 1.95;
+  color: var(--ink-2);
+  max-width: 60ch;
+}
+
+/* ---------- بخش‌ها ---------- */
+
+section { padding-block: 52px; border-bottom: 1px solid var(--line); }
+section:last-of-type { border-bottom: 0; }
+
+.kicker {
+  display: inline-block;
+  margin: 0 0 14px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+
+h2 {
+  margin: 0 0 18px;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.6vw, 36px);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.3px;
+  text-wrap: balance;
+}
+
+h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 700; line-height: 1.6; }
+
+p { margin: 0 0 14px; }
+
+.sec-lead { color: var(--ink-2); max-width: 64ch; margin-bottom: 30px; }
+
+/* ---------- اسکرین‌شات‌های فعلی ---------- */
+
+.figure { margin: 0 0 34px; }
+
+.shots {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 268px;
+  gap: 16px;
+  align-items: start;
+}
+
+.shot-desk { margin-bottom: 18px; }
+
+.figure-row {
+  display: grid;
+  grid-template-columns: 208px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.figure-note { max-width: 44ch; color: var(--ink-2); font-size: 14.5px; }
+.figure-note p { margin: 0 0 8px; }
+.figure-note-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-3);
+  letter-spacing: 0.02em;
+}
+
+.shot {
+  margin: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--band);
+  box-shadow: var(--shadow);
+  min-width: 0;
+}
+
+.shot img { display: block; width: 100%; height: auto; }
+
+.shot figcaption {
+  padding: 9px 13px;
+  border-top: 1px solid var(--line);
+  font-size: 11.5px;
+  color: var(--ink-3);
+  line-height: 1.7;
+}
+
+/* ---------- فهرست ایرادها ---------- */
+
+.faults { list-style: none; margin: 0; padding: 0; }
+
+.faults li {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 4px 14px;
+  align-items: baseline;
+  padding-block: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.faults li:last-child { border-bottom: 1px solid var(--line); }
+
+.fault-no {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.fault-title { font-weight: 700; font-size: 15px; }
+
+.fault-body {
+  grid-column: 2 / -1;
+  color: var(--ink-2);
+  font-size: 14.5px;
+  line-height: 1.85;
+  margin: 0;
+}
+
+.severity {
+  align-self: start;
+  justify-self: end;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.severity.hot { border-color: var(--accent); color: var(--accent-ink); background: var(--accent-soft); }
+
+/* ---------- اصول ---------- */
+
+.principles { list-style: none; margin: 0; padding: 0; }
+
+.principles > li {
+  padding-block: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.principles > li:last-child { border-bottom: 1px solid var(--line); }
+
+.principle-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 14px;
+  margin-bottom: 8px;
+}
+
+.principle-head h3 { margin: 0; }
+
+.principle-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-ink);
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+}
+
+.principle-body { color: var(--ink-2); margin: 0 0 8px; max-width: 66ch; }
+
+.principle-do {
+  margin: 0 0 8px;
+  padding-right: 14px;
+  border-right: 2px solid var(--accent);
+  color: var(--ink);
+  font-size: 14.5px;
+  max-width: 66ch;
+  margin-left: auto;
+}
+
+.principle-do b { font-weight: 700; }
+
+.source { font-size: 12.5px; color: var(--ink-3); }
+
+/* ---------- ماکت‌ها ---------- */
+
+/* رنگ‌های اپ — ثابت، چون این تصویر یک صفحهٔ همیشه‌تیره است */
+.mk {
+  --a-bg: #0b1220;
+  --a-surface: #111827;
+  --a-raised: #161f31;
+  --a-hair: rgba(255, 255, 255, 0.08);
+  --a-hair-2: rgba(255, 255, 255, 0.16);
+  --a-text: #f5f7fb;
+  --a-text-2: #9aa8bf;
+  --a-text-3: #6b7a92;
+  --a-gold: #f4bd0d;
+  --a-green: #35c48a;
+  --a-unit: #e8a33a;
+  background: var(--a-bg);
+  color: var(--a-text);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  text-align: start;
+}
+
+.mk-frame {
+  position: relative;
+  max-width: 500px;
+  margin-inline: auto;
+  padding: 20px;
+  border-radius: 22px;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(244, 189, 13, 0.10), transparent 62%),
+    #060a12;
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow);
+  overflow: visible;
+}
+
+.mk-frame.wide {
+  max-width: none;
+  padding: 18px;
+}
+
+.phone {
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1px solid var(--a-hair-2);
+  background: var(--a-bg);
+}
+
+.phone-body { display: flex; flex-direction: column; gap: 12px; padding: 14px 14px 18px; }
+
+/* ---------- ۱. نوار وضعیت ---------- */
+
+.statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--a-hair);
+}
+
+.stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--a-text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat svg { flex: 0 0 auto; }
+.stat.flame { color: var(--a-text); }
+.stat.flame svg { color: var(--a-gold); }
+.stat.goal { color: var(--a-text); }
+
+/* ---------- ۲. لئو ---------- */
+
+.leo {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.leo-face {
+  flex: 0 0 auto;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1.5px solid rgba(244, 189, 13, 0.42);
+  background: radial-gradient(circle at 50% 32%, rgba(244, 189, 13, 0.26), #121a2a);
+  box-shadow: 0 0 0 4px rgba(244, 189, 13, 0.06);
+}
+
+.leo-face img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.06); }
+
+.leo-say { flex: 1; min-width: 0; }
+
+.leo-who {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--a-gold);
+  letter-spacing: 0.02em;
+}
+
+.leo-line {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--a-text);
+  text-wrap: pretty;
+}
+
+/* ---------- ۳. کارت واحد ---------- */
+
+.unit {
+  border: 1px solid var(--a-hair);
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(232, 163, 58, 0.13), rgba(17, 24, 39, 0.92) 55%);
+  overflow: hidden;
+}
+
+.unit-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px 0;
+}
+
+.unit-name { margin: 0; font-size: 13px; font-weight: 700; color: var(--a-text); }
+.unit-name span { color: var(--a-text-3); font-weight: 500; }
+
+.unit-meta { font-size: 11px; color: var(--a-text-3); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.road {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px 10px 4px;
+  position: relative;
+}
+
+.road-line {
+  position: absolute;
+  top: 32px;
+  right: 34px;
+  left: 34px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.road-line i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--a-green);
+  width: 0%;
+}
+
+.node {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 52px;
+}
+
+.node-dot {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.13);
+  background: #141c2c;
+  color: var(--a-text-3);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.node.current .node-dot {
+  width: 38px;
+  height: 38px;
+  border-color: var(--a-gold);
+  background: rgba(244, 189, 13, 0.14);
+  color: var(--a-gold);
+  box-shadow: 0 0 0 5px rgba(244, 189, 13, 0.08);
+}
+
+.node.done .node-dot {
+  border-color: rgba(53, 196, 138, 0.6);
+  background: rgba(53, 196, 138, 0.16);
+  color: var(--a-green);
+}
+
+.node-label { font-size: 9.5px; color: var(--a-text-3); text-align: center; line-height: 1.4; }
+.node.current .node-label { color: var(--a-text); font-weight: 600; }
+.node.done .node-label { color: rgba(53, 196, 138, 0.85); }
+
+/* حباب CTA چسبیده به گرهٔ جاری */
+.cta-bubble {
+  position: relative;
+  margin: 14px 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 50px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--a-gold);
+  color: #20180a;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 800;
+  box-shadow: 0 5px 0 #b98d06, 0 14px 26px -12px rgba(244, 189, 13, 0.6);
+  cursor: pointer;
+}
+
+.cta-bubble::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  right: 24px;
+  width: 14px;
+  height: 14px;
+  background: var(--a-gold);
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+.cta-bubble small { font-size: 11.5px; font-weight: 600; opacity: 0.62; }
+
+/* ---------- ۴. کوئست‌ها ---------- */
+
+.quests {
+  border: 1px solid var(--a-hair);
+  border-radius: 18px;
+  background: var(--a-surface);
+  padding: 13px 14px 8px;
+}
+
+.quests-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.quests-title { margin: 0; font-size: 13px; font-weight: 700; }
+.quests-count { font-size: 11px; color: var(--a-text-3); font-variant-numeric: tabular-nums; }
+
+.quest {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding-block: 8px;
+  border-top: 1px solid var(--a-hair);
+}
+
+.quest-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  border: 1.5px solid var(--a-hair-2);
+  display: grid;
+  place-items: center;
+  color: transparent;
+}
+
+.quest.done .quest-check { border-color: var(--a-green); background: var(--a-green); color: #06231a; }
+.quest-name { font-size: 12.5px; color: var(--a-text); }
+.quest-xp { font-size: 10.5px; color: var(--a-text-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.quest-bar { grid-column: 2 / -1; height: 3px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); margin-top: -2px; }
+.quest-bar i { display: block; height: 100%; border-radius: inherit; background: var(--a-green); width: 0; }
+
+/* ---------- ۵. قدم بعد ---------- */
+
+.nextup {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 13px;
+  border-radius: 14px;
+  border: 1px dashed rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.nextup-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: rgba(53, 196, 138, 0.12);
+  color: rgba(53, 196, 138, 0.9);
+  flex: 0 0 auto;
+}
+
+.nextup-body { min-width: 0; flex: 1; }
+.nextup-title { margin: 0; font-size: 12.5px; font-weight: 600; color: var(--a-text); }
+.nextup-note { margin: 0; font-size: 10.5px; color: var(--a-text-3); }
+
+/* ---------- پین‌های توضیح ---------- */
+
+.pin {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--a-gold);
+  color: #1a1405;
+  font-size: 11px;
+  font-weight: 800;
+  font-family: var(--font-body);
+  font-style: normal;
+  line-height: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  z-index: 3;
+}
+
+/* ---------- لِجند ---------- */
+
+.legend { list-style: none; margin: 0; padding: 0; }
+
+.legend li {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 10px;
+  padding-block: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ink-2);
+}
+
+.legend li:first-child { border-top: 0; }
+.legend b { color: var(--ink); font-weight: 700; }
+
+.legend .num {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-size: 11px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 34px;
+  align-items: start;
+}
+
+/* ---------- دسکتاپ ماکت ---------- */
+
+.desktop-mk { width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid var(--a-hair-2); }
+.dt-body { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 14px; padding: 16px; }
+
+.dt-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dt-rail:last-child > .nextup:last-child { flex: 1; }
+
+.dt-hero {
+  border-radius: 18px;
+  border: 1px solid var(--a-hair);
+  background: linear-gradient(160deg, rgba(232, 163, 58, 0.13), rgba(17, 24, 39, 0.92) 55%);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dt-hero .road { padding-block: 4px 0; }
+
+.dt-hero .cta-bubble { margin: 0; }
+.dt-hero .cta-bubble::after { display: none; }
+
+.dt-quests { display: grid; gap: 8px; }
+
+/* ---------- استخراج / حذف ---------- */
+
+.page-ref {
+  font-family: ui-monospace, "Cascadia Code", Menlo, monospace;
+  direction: ltr;
+  unicode-bidi: embed;
+  font-size: 12px;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  white-space: nowrap;
+}
+
+.steps { list-style: none; counter-reset: step; margin: 0; padding: 0; }
+
+.steps > li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 14px;
+  padding-block: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.steps > li:last-child { border-bottom: 1px solid var(--line); }
+
+.steps > li::before {
+  content: counter(step, decimal);
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  border: 1px solid var(--line-strong);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  margin-top: 3px;
+}
+
+.steps h3 { font-size: 15px; }
+.steps p { margin: 0; color: var(--ink-2); font-size: 14.5px; }
+.steps p + p { margin-top: 6px; }
+
+.del {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0;
+}
+
+.del li {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding-block: 9px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 14.5px;
+}
+
+.del li::before {
+  content: "×";
+  color: var(--ink-3);
+  font-weight: 700;
+  line-height: 1.9;
+}
+
+.del b { color: var(--ink); font-weight: 700; }
+
+/* ---------- منابع ---------- */
+
+.sources { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.sources li { padding-block: 10px; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink-2); }
+.sources a { font-weight: 600; }
+
+/* ---------- واکنش‌گرا ---------- */
+
+@media (max-width: 860px) {
+  .split, .dt-body { grid-template-columns: minmax(0, 1fr); }
+  .figure-row { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .shot-phone { max-width: 240px; }
+  .figure-note { justify-self: start; }
+  .opening { padding-block: 40px 32px; }
+  section { padding-block: 40px; }
+}
+
+@media (max-width: 460px) {
+  .mk-frame { padding: 14px; border-radius: 18px; }
+  .pin { display: none; }
+  .faults li { grid-template-columns: 28px minmax(0, 1fr); }
+  .severity { grid-column: 2; justify-self: start; margin-top: 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+</style>
+
+<div class="wrap" dir="rtl" lang="fa">
+
+  <header class="opening">
+    <p class="eyebrow">
+      بازطراحی صفحهٔ خانه
+      <span class="dot"></span>
+      Leo Learn
+      <span class="dot"></span>
+      بر پایهٔ تحلیل وب
+    </p>
+
+    <h1 class="statement">خانه باید <em>یک</em> کار داشته باشد، نه هفت.</h1>
+
+    <p class="lead">
+      صفحهٔ «امروز» الان همه‌چیز را نشان می‌دهد و به همین دلیل هیچ‌چیز را برجسته نمی‌کند. کاری که
+      Duolingo و بقیه در این سال‌ها انجام داده‌اند ساده است: خانه یک قدم بعدی را انتخاب می‌کند،
+      آن را تبدیل به تنها دکمهٔ صفحه می‌کند، و پیشرفت را طوری نشان می‌دهد که نیمه‌کاره ماندن آزار بدهد.
+      این صفحه سه چیز دارد: نقد صفحهٔ فعلی، اصولی که در وب پیدا شد، و ماکت زندهٔ پیشنهاد.
+    </p>
+  </header>
+
+  <!-- ==================== ۱. وضعیت فعلی ==================== -->
+
+  <section id="now">
+    <span class="kicker">وضعیت فعلی</span>
+    <h2>هفت چیز با هم حرف می‌زنند</h2>
+    <p class="sec-lead">
+      این‌ها را از روی کد و اسکرین‌شات واقعی صفحه بیرون کشیدم، نه از حس کلی. هر مورد یک
+      جای مشخص در فایل دارد.
+    </p>
+
+    <figure class="figure">
+      <div class="shot shot-desk">
+        <img src="shots/today-desktop.png" alt="صفحهٔ امروز در دسکتاپ: کارت لئو، کارت درس با عکس بزرگ، تمرین پیشنهادی و دسترسی سریع">
+        <figcaption>دسکتاپ ۱۴۴۰px — سه منطقهٔ هم‌وزن و دو دکمهٔ «شروع کن»</figcaption>
+      </div>
+
+      <div class="figure-row">
+        <div class="shot shot-phone">
+          <img src="shots/today-mobile.png" alt="همان صفحه در موبایل با نوار پایین که روی کارت پیشنهادی افتاده">
+        </div>
+        <div class="figure-note">
+          <p class="figure-note-title">موبایل ۳۹۰px</p>
+          <p>
+            نوار پایین روی کارت «تمرین پیشنهادی» افتاده و دکمه‌اش را می‌پوشاند. در همین عرض،
+            عکس درس تقریباً نیمی از صفحهٔ اول را گرفته و تنها دکمهٔ واقعی صفحه به پایین‌ترین
+            قسمتی رانده شده که کاربر باید برایش اسکرول کند.
+          </p>
+        </div>
+      </div>
+    </figure>
+
+    <ol class="faults">
+      <li>
+        <span class="fault-no">۰۱</span>
+        <span class="fault-title">دو دکمهٔ «شروع کن»</span>
+        <span class="severity hot">بحرانی</span>
+        <p class="fault-body">
+          دکمهٔ طلایی روی کارت درس و دکمهٔ آبی روی «تمرین پیشنهادی» هر دو به یک درس می‌روند.
+          وقتی دو راه هم‌اندازه وجود دارد، کاربر انتخاب نمی‌کند؛ معطل می‌شود.
+        </p>
+      </li>
+      <li>
+        <span class="fault-no">۰۲</span>
+        <span class="fault-title">عکس تزئینی، ۴۰٪ صفحه</span>
+        <span class="severity">مهم</span>
+        <p class="fault-body">
+          تصویر کافه بزرگ‌ترین عنصر صفحه است و هیچ اطلاعاتی حمل نمی‌کند. این فضای گران باید
+          صرف «کجای درس هستم» و «چه چیزی منتظر من است» شود.
+        </p>
+      </li>
+      <li>
+        <span class="fault-no">۰۳</span>
+        <span class="fault-title">روز اول، دیوار صفر</span>
+        <span class="severity hot">بحرانی</span>
+        <p class="fault-body">
+          ▲۰ روز پیوسته، ۰ درس، ۰ واژه. کاربر تازه هیچ حلقه‌ای برای بستن نمی‌بیند.
+          اثر زایگارنیک وقتی کار می‌کند که چیزی <b>نیمه‌کاره</b> باشد، نه وقتی همه‌چیز صفر است.
+        </p>
+      </li>
+      <li>
+        <span class="fault-no">۰۴</span>
+        <span class="fault-title">«امروز هنوز شروع نکرده‌ای» یک برچسب است</span>
+        <span class="severity">مهم</span>
+        <p class="fault-body">
+          این جمله وضعیت را گزارش می‌کند ولی هدفی نمی‌گذارد. کاربر نمی‌داند «کافی» یعنی چه.
+          <span class="page-ref">dailyMinutes</span> در پروفایل هست و در خانه استفاده نمی‌شود؛
+          همان باید به هدف روزانه تبدیل شود.
+        </p>
+      </li>
+      <li>
+        <span class="fault-no">۰۵</span>
+        <span class="fault-title">مسیر در صفحهٔ دیگری است</span>
+        <span class="severity">مهم</span>
+        <p class="fault-body">
+          «مسیر» یک تب جداست، پس خانه عملاً یک منو است. در Duolingo خودِ خانه مسیر است؛
+          کاربر هیچ‌وقت لازم نیست بپرسد «الان کجای مسیرم؟».
+        </p>
+      </li>
+      <li>
+        <span class="fault-no">۰۶</span>
+        <span class="fault-title">آمار مثل کارنامه</span>
+        <span class="severity">جزئی</span>
+        <p class="fault-body">
+          سه ردیف عددی در ستون کنار با برچسب و آیکن. همان چیزی که تحلیل قبل/بعد صفحهٔ زبان‌آموزی
+          «کارنامه» صدایش می‌کند: عددها باید شمارندهٔ ساده باشند، نه فهرست گزارش.
+        </p>
+      </li>
+      <li>
+        <span class="fault-no">۰۷</span>
+        <span class="fault-title">نوار پایین روی محتوا می‌افتد</span>
+        <span class="severity hot">باگ</span>
+        <p class="fault-body">
+          در موبایل، نوار ناوبری وسط کارت «تمرین پیشنهادی» نشسته و دکمه‌اش را می‌پوشاند.
+          این فقط فاصلهٔ پایین محتواست، ولی همان است که صفحه را ارزان نشان می‌دهد.
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ==================== ۲. اصول ==================== -->
+
+  <section id="principles">
+    <span class="kicker">یافته‌های وب</span>
+    <h2>پنج اصلی که در اپ‌های موفق تکرار می‌شود</h2>
+    <p class="sec-lead">
+      هر اصل با یک نمونهٔ واقعی و یک قاعدهٔ قابل اجرا برای Leo. ترتیب، ترتیب اهمیت است.
+    </p>
+
+    <ul class="principles">
+
+      <li>
+        <div class="principle-head">
+          <h3>مسیر، جای فهرست</h3>
+          <span class="principle-tag">Duolingo</span>
+        </div>
+        <p class="principle-body">
+          بازطراحی ۲۰۲۲ دوا لینگو کل درخت مهارت‌ها را حذف کرد و جایش یک مسیر خطی گذاشت.
+          دلیلش این بود که کاربر نباید بین گزینه‌ها انتخاب کند؛ باید مطمئن باشد قدم بعدی
+          «بهترین قدم» است. تحلیل قبل/بعد هم همین را می‌گوید: «یک فهرست می‌گوید این تکلیف توست،
+          یک مسیر می‌گوید تو اینجایی.»
+        </p>
+        <p class="principle-do">
+          <b>برای Leo:</b> نوار گام‌های همان درس (گوش دادن ← انتخاب ← ساختن جمله ← گفت‌وگو ← نتیجه)
+          باید روی خودِ خانه باشد، نه فقط داخل درس.
+        </p>
+        <p class="source">منبع: <a href="https://blog.duolingo.com/new-duolingo-home-screen-design" target="_blank" rel="noopener">The Science Behind Duolingo's Home Screen Redesign</a></p>
+      </li>
+
+      <li>
+        <div class="principle-head">
+          <h3>یک چیز برای زدن</h3>
+          <span class="principle-tag">Duolingo · Brainy</span>
+        </div>
+        <p class="principle-body">
+          دکمهٔ «شروع» به‌شکل حبابی روی گرهٔ جاری می‌نشیند و تنها عنصر کلیک‌کردنیِ آن ناحیه است.
+          بقیهٔ صفحه سلسله‌مراتب دارد: یک مقصد فعال، یک عمل واضح، و چند مقصد همیشگی پایین صفحه.
+        </p>
+        <p class="principle-do">
+          <b>برای Leo:</b> همهٔ دکمه‌های طلایی خانه حذف شوند جز یکی. آن یکی هم برچسبش
+          «شروع کن» نباشد؛ «شروع کنیم · ۳ دقیقه» باشد تا هزینهٔ شروع معلوم شود.
+        </p>
+        <p class="source">منبع: <a href="https://brainy.ink/paper/language-learning-app-design" target="_blank" rel="noopener">Home Screen Before and After</a> · <a href="https://mascofast.com/blog/duolingo-app-experience-teardown" target="_blank" rel="noopener">Duolingo teardown</a></p>
+      </li>
+
+      <li>
+        <div class="principle-head">
+          <h3>زنجیره، و محافظتش</h3>
+          <span class="principle-tag">عادت‌سازی</span>
+        </div>
+        <p class="principle-body">
+          دادهٔ خود دوا لینگو: کاربری که به زنجیرهٔ ۷ روزه می‌رسد، ۲٫۴ برابر بیشتر احتمال دارد
+          فردا هم برگردد. زنجیره یک عدد است که کاربر مالکش می‌شود و از دست دادنش را
+          «ضرر» حساب می‌کند، نه «صرفه‌جویی وقت».
+        </p>
+        <p class="principle-do">
+          <b>برای Leo:</b> زنجیره باید از روز اول دیده شود، حتی وقتی صفر است — با یک وعدهٔ
+          مشخص («فردا ۲ روزه می‌شود») نه یک عدد خالی.
+        </p>
+        <p class="source">منبع: <a href="https://blog.duolingo.com/how-streaks-keep-duolingo-learners-committed-to-their-language-goals" target="_blank" rel="noopener">How Streaks keep learners committed</a></p>
+      </li>
+
+      <li>
+        <div class="principle-head">
+          <h3>نیمه‌کاره بگذار تا برگردد</h3>
+          <span class="principle-tag">اثر زایگارنیک</span>
+        </div>
+        <p class="principle-body">
+          کارهای نیمه‌تمام بیشتر از کارهای تمام‌شده در ذهن می‌مانند. دوا لینگو با هدف XP
+          ناتمام، زنجیرهٔ زنده و مسیر نیمه‌طی‌شده همین را هدف می‌گیرد. رینگ‌های اپل واچ
+          هم همین کار را می‌کنند و طبق بررسی‌ها ۳۰٪ ثبات بیشتری می‌سازند.
+        </p>
+        <p class="principle-do">
+          <b>برای Leo:</b> سه کوئست کوچک روزانه («یک درس را شروع کن»، «۵ واژه»، «۳ دقیقه گوش بده»)
+          که هر کدام یک نوار پیشرفت نیمه‌پر دارند. حلقه‌های باز، نه دیوار صفر.
+        </p>
+        <p class="source">منبع: <a href="https://blog.logrocket.com/ux-design/using-daily-quests-within-your-product-design-boost-retention/" target="_blank" rel="noopener">Daily quests that boost retention</a></p>
+      </li>
+
+      <li>
+        <div class="principle-head">
+          <h3>شمارنده‌های ساده، نه کارنامه</h3>
+          <span class="principle-tag">سلسله‌مراتب</span>
+        </div>
+        <p class="principle-body">
+          نسخهٔ درست همان صفحه: به‌جای یک جملهٔ ۹ پیکسلی پر از آمار، چهار شمارندهٔ ساده
+          (زنجیره، جواهر، جان) در بالا. عدد می‌ماند، ولی به‌شکل چیزی که با یک نگاه خوانده
+          می‌شود و «مال تو» به‌نظر می‌رسد.
+        </p>
+        <p class="principle-do">
+          <b>برای Leo:</b> زنجیره، هدف امروز، واژه‌ها — به‌شکل سه شمارندهٔ کوچک با آیکن،
+          در یک نوار باریک بالای صفحه.
+        </p>
+        <p class="source">منبع: <a href="https://brainy.ink/paper/language-learning-app-design" target="_blank" rel="noopener">همان تحلیل قبل/بعد</a></p>
+      </li>
+
+    </ul>
+  </section>
+
+  <!-- ==================== ۳. پیشنهاد ==================== -->
+
+  <section id="proposal">
+    <span class="kicker">پیشنهاد</span>
+    <h2>صفحهٔ امروز، نسخهٔ دوم</h2>
+    <p class="sec-lead">
+      همان اطلاعات هست؛ فقط جای هر چیز و وزنش عوض می‌شود. ترتیب از بالا:
+      وضعیت، لئو، درس جاری، کوئست‌ها، قدم بعد.
+    </p>
+
+    <div class="mk mk-frame">
+      <div class="phone">
+        <div class="phone-body">
+
+          <!-- ۱ نوار وضعیت -->
+          <div class="statusbar">
+            <span class="stat flame">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3s5 4.2 5 9a5 5 0 0 1-10 0c0-1.6.7-2.9 1.5-3.9C9 9.8 10 11 10 12c0-3 2-5.5 2-9z"/>
+              </svg>
+              ۰
+            </span>
+
+            <span class="stat goal">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" stroke="rgba(255,255,255,.16)" stroke-width="3"/>
+                <circle cx="12" cy="12" r="9" stroke="#f4bd0d" stroke-width="3" stroke-linecap="round"
+                        stroke-dasharray="56.5" stroke-dashoffset="56.5" transform="rotate(-90 12 12)"/>
+              </svg>
+              ۰ / ۱۰ دقیقه
+            </span>
+
+            <span class="stat">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/>
+                <path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20"/>
+              </svg>
+              ۰
+            </span>
+          </div>
+
+          <!-- ۲ لئو -->
+          <div class="leo">
+            <span class="leo-face">
+              <img src="assets/leo-avatar.webp" alt="">
+            </span>
+            <div class="leo-say">
+              <p class="leo-who">لئو</p>
+              <p class="leo-line">
+                آهورا، کافه آماده است. امروز فقط مرحلهٔ گوش دادن — سه دقیقه، بعدش را می‌سازیم.
+              </p>
+            </div>
+          </div>
+
+          <!-- ۳ کارت درس -->
+          <div class="unit">
+            <div class="unit-top">
+              <p class="unit-name">سفارش در کافه <span>· A1</span></p>
+              <span class="unit-meta">۱ از ۴</span>
+            </div>
+
+            <div class="road">
+              <span class="road-line"><i style="width:0%"></i></span>
+
+              <span class="node current">
+                <span class="node-dot">۱</span>
+                <span class="node-label">گوش دادن</span>
+              </span>
+              <span class="node">
+                <span class="node-dot">۲</span>
+                <span class="node-label">انتخاب</span>
+              </span>
+              <span class="node">
+                <span class="node-dot">۳</span>
+                <span class="node-label">ساختن جمله</span>
+              </span>
+              <span class="node">
+                <span class="node-dot">۴</span>
+                <span class="node-label">گفت‌وگو</span>
+              </span>
+              <span class="node">
+                <span class="node-dot">۵</span>
+                <span class="node-label">نتیجه</span>
+              </span>
+            </div>
+
+            <button type="button" class="cta-bubble">
+              شروع کنیم <small>۳ دقیقه</small>
+            </button>
+          </div>
+
+          <!-- ۴ کوئست‌ها -->
+          <div class="quests">
+            <div class="quests-head">
+              <p class="quests-title">کوئست‌های امروز</p>
+              <span class="quests-count">۰ از ۳</span>
+            </div>
+
+            <div class="quest">
+              <span class="quest-check">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg>
+              </span>
+              <span class="quest-name">یک مرحله را تمام کن</span>
+              <span class="quest-xp">۱۰ امتیاز</span>
+              <span class="quest-bar"><i style="width:0%"></i></span>
+            </div>
+
+            <div class="quest">
+              <span class="quest-check">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg>
+              </span>
+              <span class="quest-name">۵ واژهٔ تازه یاد بگیر</span>
+              <span class="quest-xp">۰ / ۵</span>
+              <span class="quest-bar"><i style="width:0%"></i></span>
+            </div>
+
+            <div class="quest">
+              <span class="quest-check">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg>
+              </span>
+              <span class="quest-name">۳ دقیقه بلند تکرار کن</span>
+              <span class="quest-xp">۰ / ۳</span>
+              <span class="quest-bar"><i style="width:0%"></i></span>
+            </div>
+          </div>
+
+          <!-- ۵ قدم بعد -->
+          <div class="nextup">
+            <span class="nextup-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="4" y="10.5" width="16" height="10" rx="2.5"/>
+                <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>
+              </svg>
+            </span>
+            <div class="nextup-body">
+              <p class="nextup-title">خرید در سوپرمارکت</p>
+              <p class="nextup-note">قدم بعد در مسیر · بعد از کافه باز می‌شود</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="split" style="margin-top:32px">
+      <div>
+        <h3 style="margin-bottom:12px">چرا هر تغییر</h3>
+        <ol class="legend">
+          <li>
+            <span class="num">۱</span>
+            <span><b>نوار وضعیت.</b> سه شمارندهٔ کوچک جای سه ردیف کارنامه. عدد صفر هم اینجا خالی به‌نظر نمی‌رسد، چون شکلش «شمارنده» است نه «نتیجه».</span>
+          </li>
+          <li>
+            <span class="num">۲</span>
+            <span><b>حلقهٔ هدف روزانه.</b> از <span class="page-ref">profile.dailyMinutes</span> ساخته می‌شود که الان هیچ‌جا نمایش داده نمی‌شود. پر شدن این حلقه، تعریف روشنی از «امروز کافی بود» می‌دهد.</span>
+          </li>
+          <li>
+            <span class="num">۳</span>
+            <span><b>لئو با یک درخواست مشخص.</b> نه «سلام، آماده‌ای؟» بلکه «امروز فقط مرحلهٔ گوش دادن، سه دقیقه». نام مرحله از همان <span class="page-ref">nextStep</span> می‌آید که حالا ساخته شده.</span>
+          </li>
+          <li>
+            <span class="num">۴</span>
+            <span><b>مسیر گام‌ها روی خانه.</b> پنج گره، گرهٔ جاری با حلقهٔ طلایی. کاربر بدون رفتن به تب «مسیر» می‌فهمد کجاست. گام‌های تمام‌شده سبز و تیک‌دار می‌شوند.</span>
+          </li>
+          <li>
+            <span class="num">۵</span>
+            <span><b>یک دکمه، چسبیده به گرهٔ جاری.</b> دُم حباب به گره اشاره می‌کند: «این یکی». عدد دقیقه روی دکمه، هزینهٔ شروع را از بین می‌برد.</span>
+          </li>
+          <li>
+            <span class="num">۶</span>
+            <span><b>کوئست‌های روزانه.</b> سه هدف کوچک که هر سه با یک درس قابل بستن‌اند. از روز دوم، نوارهای نیمه‌پر دلیل برگشتن‌اند.</span>
+          </li>
+          <li>
+            <span class="num">۷</span>
+            <span><b>قدم بعد، قفل.</b> سناریوهای قفل‌شده الان فقط یک عدد در «دسترسی سریع» بودند («۶ در مسیر»). اینجا اسم و تصویر دارند، منتظرند — کمبود، نه فهرست.</span>
+          </li>
+        </ol>
+      </div>
+
+      <div>
+        <h3 style="margin-bottom:12px">چه چیزی حذف می‌شود</h3>
+        <ul class="del">
+          <li><span><b>عکس بزرگ درس.</b> اگر لازم شد، تصویر ۵۶px کنار نام درس در کارت واحد.</span></li>
+          <li><span><b>بخش «تمرین پیشنهادی امروز».</b> با دکمهٔ اصلی یکی است؛ محتوایش به جملهٔ لئو و کوئست‌ها منتقل می‌شود.</span></li>
+          <li><span><b>«دسترسی سریع».</b> ناوبری جای دیگری دارد. «سناریوها» و «مرور لغات» همان تب‌های نوار پایین‌اند.</span></li>
+          <li><span><b>برچسب «امروز هنوز شروع نکرده‌ای».</b> جایش را حلقهٔ هدف می‌گیرد، که وضعیت را می‌گوید و هدف را هم می‌گذارد.</span></li>
+          <li><span><b>«پیش‌نمایش» کنار دکمه.</b> یک پیوند متنی کم‌کنتراست که فقط انتخاب را شلوغ می‌کند. داخل کارت درس بماند.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ۳ب. دسکتاپ ==================== -->
+
+  <section id="desktop">
+    <span class="kicker">همان صفحه، دسکتاپ</span>
+    <h2>در عرض پهن، دو ستون</h2>
+    <p class="sec-lead">
+      ساختار یکی است؛ فقط کارت واحد افقی می‌شود و کوئست‌ها زیر آن سه‌ستونی. ستون ناوبری
+      راست همان <span class="page-ref">AppShell</span> فعلی می‌ماند، بدون ردیف‌های آمار.
+    </p>
+
+    <div class="mk mk-frame wide">
+      <div class="desktop-mk">
+        <div class="dt-body">
+
+          <div class="dt-rail" style="gap:14px">
+            <div class="dt-hero">
+              <div class="leo">
+                <span class="leo-face" style="width:52px;height:52px">
+                  <img src="assets/leo-avatar.webp" alt="">
+                </span>
+                <div class="leo-say">
+                  <p class="leo-who">لئو</p>
+                  <p class="leo-line">آهورا، امروز فقط مرحلهٔ گوش دادن — سه دقیقه.</p>
+                </div>
+              </div>
+
+              <div class="unit-top" style="padding:0">
+                <p class="unit-name">سفارش در کافه <span>· A1</span></p>
+                <span class="unit-meta">۱ از ۴</span>
+              </div>
+
+              <div class="road">
+                <span class="road-line"><i style="width:0%"></i></span>
+                <span class="node current"><span class="node-dot">۱</span><span class="node-label">گوش دادن</span></span>
+                <span class="node"><span class="node-dot">۲</span><span class="node-label">انتخاب</span></span>
+                <span class="node"><span class="node-dot">۳</span><span class="node-label">ساختن جمله</span></span>
+                <span class="node"><span class="node-dot">۴</span><span class="node-label">گفت‌وگو</span></span>
+                <span class="node"><span class="node-dot">۵</span><span class="node-label">نتیجه</span></span>
+              </div>
+
+              <button type="button" class="cta-bubble">شروع کنیم <small>۳ دقیقه</small></button>
+            </div>
+
+            <div class="dt-quests" style="grid-template-columns:repeat(3,minmax(0,1fr));display:grid;gap:10px">
+              <div class="quests" style="padding:12px">
+                <p class="quests-title" style="margin-bottom:8px;font-size:12px">یک مرحله</p>
+                <div class="quest" style="border-top:0;padding-block:4px;grid-template-columns:20px minmax(0,1fr)">
+                  <span class="quest-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg></span>
+                  <span class="quest-name" style="font-size:11.5px">۰ از ۱</span>
+                </div>
+                <span class="quest-bar" style="display:block;grid-column:1/-1;margin-top:6px"><i style="width:0%"></i></span>
+              </div>
+
+              <div class="quests" style="padding:12px">
+                <p class="quests-title" style="margin-bottom:8px;font-size:12px">واژهٔ تازه</p>
+                <div class="quest" style="border-top:0;padding-block:4px;grid-template-columns:20px minmax(0,1fr)">
+                  <span class="quest-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg></span>
+                  <span class="quest-name" style="font-size:11.5px">۰ از ۵</span>
+                </div>
+                <span class="quest-bar" style="display:block;grid-column:1/-1;margin-top:6px"><i style="width:0%"></i></span>
+              </div>
+
+              <div class="quests" style="padding:12px">
+                <p class="quests-title" style="margin-bottom:8px;font-size:12px">بلند تکرار</p>
+                <div class="quest" style="border-top:0;padding-block:4px;grid-template-columns:20px minmax(0,1fr)">
+                  <span class="quest-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg></span>
+                  <span class="quest-name" style="font-size:11.5px">۰ از ۳</span>
+                </div>
+                <span class="quest-bar" style="display:block;grid-column:1/-1;margin-top:6px"><i style="width:0%"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dt-rail">
+            <div class="statusbar" style="padding:10px 12px">
+              <span class="stat flame">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s5 4.2 5 9a5 5 0 0 1-10 0c0-1.6.7-2.9 1.5-3.9C9 9.8 10 11 10 12c0-3 2-5.5 2-9z"/></svg>
+                ۰
+              </span>
+              <span class="stat goal">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" stroke="rgba(255,255,255,.16)" stroke-width="3"/>
+                  <circle cx="12" cy="12" r="9" stroke="#f4bd0d" stroke-width="3" stroke-linecap="round" stroke-dasharray="56.5" stroke-dashoffset="56.5" transform="rotate(-90 12 12)"/>
+                </svg>
+                ۰ / ۱۰
+              </span>
+            </div>
+
+            <div class="nextup" style="flex-direction:column;align-items:stretch;gap:8px;padding:14px">
+              <p class="nextup-note" style="margin:0">قدم بعد در مسیر</p>
+              <p class="nextup-title" style="font-size:13.5px">خرید در سوپرمارکت</p>
+              <p class="nextup-note" style="margin:0">بعد از کافه باز می‌شود · A1</p>
+              <span style="display:block;height:1px;background:var(--a-hair);margin-block:4px"></span>
+              <p class="nextup-note" style="margin:0">آشنایی با یک نفر تازه · A1</p>
+              <p class="nextup-note" style="margin:0">رزرو هتل · A2</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ۴. نیمهٔ پنهان ==================== -->
+
+  <section id="feedback">
+    <span class="kicker">نیمهٔ پنهان</span>
+    <h2>لحظه‌هایی که در ماکت دیده نمی‌شوند</h2>
+    <p class="sec-lead">
+      آنچه کاربر را مشتاق نگه می‌دارد بیشتر در لحظهٔ بازخورد است تا در چیدمان. سه لحظه که
+      باید ساخته شوند، هر سه از داده‌ای که همین حالا در <span class="page-ref">Progress</span> هست.
+    </p>
+
+    <div class="faults" style="margin:0">
+      <div style="padding-block:16px;border-top:1px solid var(--line)">
+        <h3>پایان هر مرحله</h3>
+        <p class="fault-body" style="margin-top:6px">
+          یک نوار نتیجه که بالا می‌آید: «گوش دادن تمام شد · ۳ دقیقه ثبت شد» و حلقهٔ هدف یک‌سوم پر
+          می‌شود. گرهٔ بعدی روی مسیر روشن و بزرگ می‌شود. بدون این، پیشرفت نامرئی است.
+        </p>
+      </div>
+      <div style="padding-block:16px;border-top:1px solid var(--line)">
+        <h3>پایان درس</h3>
+        <p class="fault-body" style="margin-top:6px">
+          «سفارش در کافه تمام شد — ۴ واژه به دفترت اضافه شد.» این دقیقاً همان روزی است که
+          تب «مرور لغات» معنا پیدا می‌کند، پس پیوندش باید همین‌جا باشد، نه در دسترسی سریع.
+        </p>
+      </div>
+      <div style="padding-block:16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+        <h3>شروع روز دوم</h3>
+        <p class="fault-body" style="margin-top:6px">
+          زنجیره ۱ است. جملهٔ لئو عوض می‌شود: «دیروز شروع کردی؛ امروز فقط یک قدم تا ۲ روزه شدن.»
+          عدد کوچک را با یک وعدهٔ مشخص بزرگ می‌کند — همان چیزی که در دادهٔ دوا لینگو
+          زنجیرهٔ ۷ روزه را ۲٫۴ برابر می‌کند.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ۵. اجرا ==================== -->
+
+  <section id="build">
+    <span class="kicker">اجرا</span>
+    <h2>به همین ترتیب</h2>
+    <p class="sec-lead">
+      هر مرحله جدا قابل دیدن است. مرحلهٔ ۱ و ۴ بیشترین اثر را دارند؛ اگر وقت کم بود، از همان‌ها شروع کن.
+    </p>
+
+    <ol class="steps">
+      <li>
+        <div>
+          <h3>حذف، قبل از افزودن</h3>
+          <p>بخش «تمرین پیشنهادی» و «دسترسی سریع» از <span class="page-ref">page.tsx</span> بروند. همین یک تغییر، صفحه را از دو دکمه به یک دکمه می‌رساند.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>هدف روزانه در منطق، نه در ظاهر</h3>
+          <p>در <span class="page-ref">dashboard-core.ts</span> یک تابع <span class="page-ref">dailyGoalState(progress, dailyMinutes, date)</span> اضافه شود که دقیقهٔ امروز، هدف و نسبت را برگرداند. تست‌هایش کنار همان فایل، مثل بقیه.</p>
+          <p>دقیقهٔ امروز باید از فعالیت‌های ثبت‌شده حساب شود؛ ساده‌ترین راه: مجموع <span class="page-ref">minutes</span> سناریوهایی که <span class="page-ref">updatedAt</span> آن‌ها امروز است، به‌علاوهٔ یک تخمین برای مرور.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>کوئست‌ها</h3>
+          <p>سه کوئست ثابت که همه از <span class="page-ref">Progress</span> قابل محاسبه‌اند: مرحلهٔ تمام‌شدهٔ امروز، واژه‌های <span class="page-ref">lastSeenAt</span> امروز، و دقیقهٔ گوش دادن. هیچ state تازه‌ای لازم نیست.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>نوار گام‌ها و دکمهٔ حبابی</h3>
+          <p>کامپوننت تازهٔ <span class="page-ref">StepRoad</span> که همان <span class="page-ref">stepIndex</span> و <span class="page-ref">totalSteps</span> موجود را می‌گیرد. صفحهٔ <span class="page-ref">/App/path</span> هم می‌تواند از همین کامپوننت استفاده کند تا دو زبان بصری نسازیم.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>بازخورد پایان مرحله</h3>
+          <p>در <span class="page-ref">scenario/[slug]/lesson</span>، بعد از هر گام یک نوار نتیجه. اگر ساده‌تر خواستی: فقط گرهٔ بعدی در مسیر با انیمیشن روشن شود و حلقهٔ هدف در نوار بالا پر شود.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>فاصلهٔ پایین برای نوار موبایل</h3>
+          <p>به <span class="page-ref">AppShell.module.css</span> یک <span class="page-ref">padding-bottom</span> به اندازهٔ ارتفاع نوار روی <span class="page-ref">.main</span>. این باگ را همین حالا می‌شود جدا درست کرد.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ==================== منابع ==================== -->
+
+  <section id="sources">
+    <span class="kicker">منابع</span>
+    <h2>چیزهایی که خواندم</h2>
+    <ul class="sources">
+      <li><a href="https://blog.duolingo.com/new-duolingo-home-screen-design" target="_blank" rel="noopener">The Science Behind Duolingo's Home Screen Redesign</a> — وبلاگ رسمی دوا لینگو، دربارهٔ تبدیل درخت مهارت به مسیر خطی</li>
+      <li><a href="https://blog.duolingo.com/how-streaks-keep-duolingo-learners-committed-to-their-language-goals" target="_blank" rel="noopener">How Streaks keep Duolingo learners committed</a> — دادهٔ ۷ روز و ۲٫۴ برابر</li>
+      <li><a href="https://brainy.ink/paper/language-learning-app-design" target="_blank" rel="noopener">Language Learning App Design: Home Screen Before and After</a> — تحلیل دقیق قبل/بعد با فایل فیگما</li>
+      <li><a href="https://mascofast.com/blog/duolingo-app-experience-teardown" target="_blank" rel="noopener">Duolingo's App Experience, Broken Down</a> — سلسله‌مراتب بصری و یک مقصد فعال</li>
+      <li><a href="https://blog.logrocket.com/ux-design/using-daily-quests-within-your-product-design-boost-retention/" target="_blank" rel="noopener">Using daily quests to boost retention</a> — اثر زایگارنیک و رینگ‌های نیمه‌پر</li>
+      <li><a href="https://mobbin.com/blog/streaks-are-about-losing-a-study-of-859-streak-designs" target="_blank" rel="noopener">A study of 859 streak designs</a> — چرا واحد زنجیره همیشه «روز» است</li>
+      <li><a href="https://screensdesign.com/articles/learning-app-re-engagement-screen-examples" target="_blank" rel="noopener">Learning app re-engagement screens</a> — صفحهٔ بازگشت باید وضعیت درس را بازسازی کند</li>
+    </ul>
+  </section>
+
+</div>
