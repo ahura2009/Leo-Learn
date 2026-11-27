@@ -4,13 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./AppNav.module.css";
 
-/* چهار مقصد اپ. روی دسکتاپ ستونِ کناری راست، روی باریک‌تر
+/* شش مقصد اپ. روی دسکتاپ ستونِ کناری راست، روی باریک‌تر
    نوار پایین — همان لندینگ، فقط جای دیگر. */
 
 const items = [
   { href: "/App", label: "امروز", icon: "home" },
   { href: "/App/path", label: "مسیر", icon: "path" },
   { href: "/App/grammar", label: "گرامر", icon: "grammar" },
+  { href: "/App/tools", label: "ابزارها", icon: "tools" },
   { href: "/App/progress", label: "پیشرفت", icon: "chart" },
   { href: "/App/profile", label: "پروفایل", icon: "user" },
 ];
@@ -60,6 +61,16 @@ function Icon({ name }: { name: string }) {
         <path d="M12 6.6C10.2 5.2 7.8 4.6 5 4.6v13c2.8 0 5.2.6 7 2" />
         <path d="M12 6.6c1.8-1.4 4.2-2 7-2v13c-2.8 0-5.2.6-7 2" />
         <path d="M12 6.6v13" />
+      </svg>
+    );
+  }
+  if (name === "tools") {
+    return (
+      <svg {...common}>
+        <rect x="3.5" y="3.5" width="7" height="7" rx="2" />
+        <rect x="13.5" y="3.5" width="7" height="7" rx="2" />
+        <rect x="3.5" y="13.5" width="7" height="7" rx="2" />
+        <rect x="13.5" y="13.5" width="7" height="7" rx="2" />
       </svg>
     );
   }

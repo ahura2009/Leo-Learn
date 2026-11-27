@@ -70,7 +70,13 @@
     flex-direction: column;
     gap: 3px;
     flex: 1;
-    padding: 8px 4px;
-    font-size: 11.5px;
+    padding: 8px 2px;
+    font-size: 10.5px;
+  }
+
+  /* شش مقصد جا شود؛ آیکون کمی جمع‌تر */
+  .item svg {
+    width: 18px;
+    height: 18px;
   }
 }
