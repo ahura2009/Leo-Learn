@@ -10,6 +10,7 @@ import styles from "./AppNav.module.css";
 const items = [
   { href: "/App", label: "امروز", icon: "home" },
   { href: "/App/path", label: "مسیر", icon: "path" },
+  { href: "/App/grammar", label: "گرامر", icon: "grammar" },
   { href: "/App/progress", label: "پیشرفت", icon: "chart" },
   { href: "/App/profile", label: "پروفایل", icon: "user" },
 ];
@@ -50,6 +51,15 @@ function Icon({ name }: { name: string }) {
         <path d="M10 20V4" />
         <path d="M16 20v-7" />
         <path d="M22 20H2" />
+      </svg>
+    );
+  }
+  if (name === "grammar") {
+    return (
+      <svg {...common}>
+        <path d="M12 6.6C10.2 5.2 7.8 4.6 5 4.6v13c2.8 0 5.2.6 7 2" />
+        <path d="M12 6.6c1.8-1.4 4.2-2 7-2v13c-2.8 0-5.2.6-7 2" />
+        <path d="M12 6.6v13" />
       </svg>
     );
   }

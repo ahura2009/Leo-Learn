@@ -1,0 +1,235 @@
+/* صفحهٔ یک موضوع گرامر — ساختار همان فهرست، فقط بازتر. */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  max-width: 680px;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  transition: color 0.16s ease;
+}
+
+.back:hover {
+  color: var(--gold);
+}
+
+/* ---------- سربرگ ---------- */
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.levelChip {
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(244, 189, 13, 0.14);
+  color: var(--gold);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.summary {
+  margin: 4px 0 0;
+  font-size: 14.5px;
+  line-height: 1.95;
+  color: var(--text-secondary);
+}
+
+/* ---------- نمونهٔ کاربرد ---------- */
+
+.sample {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 22px;
+  border: 1px solid rgba(244, 189, 13, 0.22);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    160deg,
+    rgba(244, 189, 13, 0.09),
+    rgba(22, 31, 49, 0.86)
+  );
+}
+
+.sampleTag {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+}
+
+.sampleEn {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.sampleFa {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.9;
+  color: var(--text-secondary);
+}
+
+/* ---------- روش مرور ---------- */
+
+.method {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.methodTitle {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.step {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  border-top: 1px solid var(--hairline);
+}
+
+.step:first-child {
+  border-top: 0;
+}
+
+.stepNo {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: rgba(244, 189, 13, 0.12);
+  color: var(--gold);
+  font-size: 11.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stepBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.stepTitle {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.stepText {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+/* ---------- در انتظار محتوا ---------- */
+
+.pending {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 18px 20px;
+  border: 1px dashed var(--hairline-strong);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.pendingTitle {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.pendingText {
+  margin: 0 0 6px;
+  max-width: 52ch;
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: var(--text-secondary);
+}
+
+/* ---------- دسکتاپ / موبایل ---------- */
+
+@media (min-width: 900px) {
+  /* صفحهٔ خواندنی است؛ در عرض پهن وسط می‌نشیند تا کناره‌ها خالی نمانند. */
+  .page {
+    margin-inline: auto;
+  }
+
+  .title {
+    font-size: 34px;
+  }
+
+  .sampleEn {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  .page {
+    padding-bottom: 92px;
+  }
+}
