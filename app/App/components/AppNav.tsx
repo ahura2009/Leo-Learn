@@ -9,7 +9,7 @@ import styles from "./AppNav.module.css";
 
 const items = [
   { href: "/App", label: "امروز", icon: "home" },
-  { href: "/App/path", label: "مسیر", icon: "path" },
+  { href: "/App/practice", label: "تمرین", icon: "practice" },
   { href: "/App/grammar", label: "گرامر", icon: "grammar" },
   { href: "/App/tools", label: "ابزارها", icon: "tools" },
   { href: "/App/progress", label: "پیشرفت", icon: "chart" },
@@ -37,11 +37,12 @@ function Icon({ name }: { name: string }) {
       </svg>
     );
   }
-  if (name === "path") {
+  if (name === "practice") {
     return (
       <svg {...common}>
-        <path d="M5 4v9a4 4 0 0 0 4 4h10" />
-        <path d="m15 13 4 4-4 4" />
+        <circle cx="12" cy="12" r="8.4" />
+        <circle cx="12" cy="12" r="4.4" />
+        <circle cx="12" cy="12" r="0.6" fill="currentColor" stroke="none" />
       </svg>
     );
   }

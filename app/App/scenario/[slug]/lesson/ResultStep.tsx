@@ -47,7 +47,7 @@ export function ResultStep({
       </section>
 
       {next ? (
-        <Link href="/App/path" className={styles.nextCard}>
+        <Link href="/App/practice" className={styles.nextCard}>
           <span className={styles.nextKicker}>سناریوی بعدی</span>
           <span className={styles.nextTitle}>{next.title}</span>
           <span className={styles.nextMeta}>

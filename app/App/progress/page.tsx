@@ -50,8 +50,8 @@ export default function ProgressPage() {
         {completed.length === 0 ? (
           <div className={ui.empty}>
             <p>هنوز هیچ سناریویی کامل نشده.</p>
-            <Link href="/App/path" className={ui.ghost}>
-              رفتن به مسیر
+            <Link href="/App/practice" className={ui.ghost}>
+              رفتن به تمرین‌ها
             </Link>
           </div>
         ) : (

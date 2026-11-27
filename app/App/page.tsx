@@ -32,7 +32,6 @@ export default function TodayPage() {
   const suggestion = dailySuggestion(progress, lesson);
   const today = todayState(progress, lesson, profile.name);
   const wordCount = Object.keys(progress.words).length;
-  const availableCount = scenarioMeta.filter((item) => item.available).length;
   const lessonHref = `/App/scenario/${lesson.meta.slug}`;
 
   return (
@@ -204,7 +203,7 @@ export default function TodayPage() {
         </h2>
 
         <div className={styles.quickGrid}>
-          <Link href="/App/path" className={styles.quickCard}>
+          <Link href="/App/practice" className={styles.quickCard}>
             <span className={styles.quickIcon} aria-hidden="true">
               <svg
                 width="18"
@@ -216,13 +215,14 @@ export default function TodayPage() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                <path d="M5 4v9a4 4 0 0 0 4 4h10" />
-                <path d="m15 13 4 4-4 4" />
+                <circle cx="12" cy="12" r="8.4" />
+                <circle cx="12" cy="12" r="4.4" />
+                <circle cx="12" cy="12" r="0.6" fill="currentColor" stroke="none" />
               </svg>
             </span>
-            <span className={styles.quickName}>سناریوها</span>
+            <span className={styles.quickName}>تمرین موقعیت‌ها</span>
             <span className={styles.quickHint}>
-              {availableCount} آماده · {scenarioMeta.length} در مسیر
+              {scenarioMeta.length} موقعیت برای تمرین
             </span>
           </Link>
 

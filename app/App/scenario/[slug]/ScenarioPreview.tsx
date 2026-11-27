@@ -28,8 +28,8 @@ export function ScenarioPreview({ scenario }: { scenario: Scenario }) {
 
   return (
     <div className={ui.page}>
-      <Link href="/App/path" className={styles.back}>
-        ← بازگشت به مسیر
+      <Link href="/App/practice" className={styles.back}>
+        ← بازگشت به تمرین‌ها
       </Link>
 
       <div className={styles.hero}>
